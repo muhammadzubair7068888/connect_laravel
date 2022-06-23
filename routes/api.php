@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// API'S not to be authenticated ...
+// Sign In API
+Route::post('signin', [ApiController::class, 'signIn']);
+
+Route::middleware('auth:api')->group(function () {
+    // API'S to be authenticated ...
+    Route::get('logout', function (Request $request) {
+        $request->user()->token()->revoke();
+        return response()->json(['success' => true, 'message' => 'You have signed out']);
+    });
 });

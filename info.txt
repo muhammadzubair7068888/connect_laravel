@@ -1,6 +1,9 @@
 .there is a #bootstrap-style use supperadmin/layouts/head-css.blade.php
-files. this id use in  public/assests/js/app.min.js this  create some 
-issues so i remove that id from supperadmin/layouts/head-css.blade.php files 
-.there is a #app-style  use supperadmin/layouts/head-css.blade.php
-files. this id use in  public/assests/js/app.min.js this  create some 
+files. this id use in  public/assests/js/app.min.js this  create some
 issues so i remove that id from supperadmin/layouts/head-css.blade.php files
+.there is a #app-style  use supperadmin/layouts/head-css.blade.php
+files. this id use in  public/assests/js/app.min.js this  create some
+issues so i remove that id from supperadmin/layouts/head-css.blade.php files
+
+=>Sign In
+=>Sign Out
