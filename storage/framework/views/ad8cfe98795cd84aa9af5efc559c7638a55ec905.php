@@ -27,10 +27,25 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.greetings','data' => []] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('greetings'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
                     <div class="mb-3">
+                        <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><?php echo app('translator')->get('New User'); ?></button>
                         
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"><?php echo app('translator')->get('Invite User'); ?></button>
                     </div>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
@@ -71,96 +86,151 @@
         </div>
     </div>
     
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="<?php echo e(route('add.user')); ?>" class="needs-validation"
-                        enctype='multipart/form-data' novalidate>
-                        <?php echo csrf_field(); ?>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="mb-3 position-relative">
-                                    <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Name'); ?></label>
-                                    <input type="text" name="name" class="form-control" id="validationTooltip01"
-                                        placeholder="Name" required>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle"><?php echo app('translator')->get('Add New User'); ?></h5>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="<?php echo e(route('add.user')); ?>" class="needs-validation"
+                            enctype='multipart/form-data' novalidate>
+                            <?php echo csrf_field(); ?>
+                            <div class="mb-3 position-relative">
+                                <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Avatar'); ?></label>
+                                <input type="file" name="file" value="<?php echo e(old('profile')); ?>" class="form-control"
+                                    id="validationTooltip01" placeholder="Name" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Name'); ?></label>
+                                        <input type="text" name="name" value="<?php echo e(old('name')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Email'); ?></label>
+                                        <input type="email" name="email" value="<?php echo e(old('email')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Email" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="mb-3 position-relative">
-                                    <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Email'); ?></label>
-                                    <input type="email" name="email" class="form-control" id="validationTooltip01"
-                                        placeholder="Email" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Height'); ?></label>
+                                        <input type="text" name="height" value="<?php echo e(old('height')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Height" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Starting Weight'); ?></label>
+                                        <input type="text" name="starting_weight" value="<?php echo e(old('starting_weight')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
+                                            required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Handedness'); ?></label>
+                                        <select name="hand_type" id="hand_type" value="<?php echo e(old('hand_type')); ?>"
+                                            class="form-select" required>
+                                            <option value=""><?php echo app('translator')->get('Select'); ?></option>
+                                            <option value="Left"><?php echo app('translator')->get('Left'); ?></option>
+                                            <option value="Right"><?php echo app('translator')->get('Right'); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('DOB'); ?></label>
+                                        <input type="date" name="dob" value="<?php echo e(old('dob')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('School'); ?></label>
+                                        <input type="text" name="school" value="<?php echo e(old('school')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="School" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('level'); ?></label>
+                                        <input type="text" name="level" value="<?php echo e(old('level')); ?>"
+                                            class="form-control" id="validationTooltip01" placeholder="Level" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Password'); ?></label>
+                                        <input type="Password" name="password" class="form-control"
+                                            id="validationTooltip01" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Confirm Password'); ?></label>
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                            id="validationTooltip01" placeholder="Password" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('Role'); ?></label>
-                                    <select id="formrow-inputState" class="form-select">
-                                        <option selected><?php echo app('translator')->get('Select Role'); ?></option>
-                                        <option value="0"><?php echo app('translator')->get('User'); ?></option>
-                                        <option value="1"><?php echo app('translator')->get('Admin'); ?></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('Status'); ?></label>
-                                    <select id="formrow-inputState" class="form-select">
+                                    <select id="formrow-inputState" name="role" value="<?php echo e(old('role')); ?>"
+                                        class="form-select">
                                         <option selected><?php echo app('translator')->get('Select Status'); ?></option>
-                                        <option><?php echo app('translator')->get('Banned'); ?></option>
-                                        <option><?php echo app('translator')->get('Active'); ?></option>
+                                        <option value="admin"><?php echo app('translator')->get('Admin'); ?></option>
+                                        <option value="user"><?php echo app('translator')->get('User'); ?></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('User Status'); ?></label>
+                                    <select id="formrow-inputState" name="user_status"
+                                        value="<?php echo e(old('user_status')); ?>" class="form-select">
+                                        <option selected><?php echo app('translator')->get('Select Status'); ?></option>
+                                        <option value="0"><?php echo app('translator')->get('Banned'); ?></option>
+                                        <option value="1"><?php echo app('translator')->get('Active'); ?></option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <h3 class="text-success"><?php echo app('translator')->get('Permissions'); ?></h3>
-                        </div>
-                        <hr>
 
-                        <div class="form-check form-check-success mb-3">
-                            <input class="large" type="checkbox" id="formCheckcolor2" checked>
-                            <label class="" for="formCheckcolor2">
-                                Checkbox Success
-                            </label>
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                    </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success"><?php echo app('translator')->get('Invite'); ?></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div> <!-- end preview-->
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('script'); ?>
-    <script src="<?php echo e(URL::asset('/assets/libs/datatables/datatables.min.js')); ?>"></script>
-    <script src="<?php echo e(URL::asset('/assets/libs/jszip/jszip.min.js')); ?>"></script>
-    <script src="<?php echo e(URL::asset('/assets/libs/pdfmake/pdfmake.min.js')); ?>"></script>
-    <!-- Datatable init js -->
-    <script src="<?php echo e(URL::asset('/assets/js/pages/datatables.init.js')); ?>"></script>
-    <script src="<?php echo e(URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js')); ?>"></script>
-    <script src="<?php echo e(URL::asset('/assets/js/pages/form-validation.init.js')); ?>"></script>
-    <script>
-        $(document).ready(function() {
-            $("input").change(function() {
-                alert("The text has been changed.");
-                $("p").hide();
-            });
-        });
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
-        $("#role").click(function() {
-
-        });
-    </script>
-<?php $__env->stopSection(); ?>
+        
+        
+    <?php $__env->stopSection(); ?>
+    <?php $__env->startSection('script'); ?>
+        <script src="<?php echo e(URL::asset('/assets/libs/datatables/datatables.min.js')); ?>"></script>
+        
+        <!-- Datatable init js -->
+        <script src="<?php echo e(URL::asset('/assets/js/pages/datatables.init.js')); ?>"></script>
+        
+        
+    <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/supperadmin/contacts-list.blade.php ENDPATH**/ ?>
