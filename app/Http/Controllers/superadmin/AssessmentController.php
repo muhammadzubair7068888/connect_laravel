@@ -54,4 +54,6 @@ class AssessmentController extends Controller
         MechanicalAssessment::where('id',$request->mechanical_id)->delete();
         return redirect()->route('mechanical')->with('success', 'Mechanical Accessment Successfully Delete.');
     }
+
+    // 
 }
