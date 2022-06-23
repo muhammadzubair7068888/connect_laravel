@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->date('dob');
-            $table->text('avatar');
+            $table->text('avatar')->nullable();
             $table->string('height')->nullable();
             $table->string('starting_weight')->nullable();
             $table->string('handedness')->nullable();
@@ -30,12 +30,12 @@ class CreateUsersTable extends Migration
             $table->string('school')->nullable();
             $table->string('level')->nullable();
             $table->string('role')->nullable();
+            $table->string('created_by')->nullable();
             $table->enum('status', [0, 1])->default(1);
             $table->enum('can_create',[0,1])->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
-        User::create(['name' => 'admin','dob'=>'2000-10-10','email' => 'admin@themesbrand.com','password' => Hash::make('123456'),'email_verified_at'=>'2022-01-02 17:04:58','avatar' => 'images/avatar-1.jpg','created_at' => now(),]);
     }
 
     /**

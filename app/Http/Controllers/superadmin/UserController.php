@@ -18,10 +18,9 @@ class UserController extends Controller
     }
 
     public function add_user(Request $request){
-    //  /   return $request->all();
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'height' => 'required',
             'starting_weight' => 'required',
             'hand_type' => 'required',
@@ -29,10 +28,11 @@ class UserController extends Controller
             'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             'school' => 'required',
             'level' => 'required',
-            'password' => 'required',
+            'password' => 'required|confirmed|min:6',
             'role' => 'required',
             'user_status' => 'required',
-        ]); 
+        ]);
+        $user_id = auth()->user()->id; 
         $age =34;
         $user = new User();
         $user->name = $request->name;
@@ -42,7 +42,7 @@ class UserController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $foldername = 'user/profiles/';
-            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('company_logo_light')->extension();
+            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
             $file->move(public_path() . '/' . $foldername, $filename);
             $user->avatar = $foldername . $filename;
         }
@@ -54,7 +54,9 @@ class UserController extends Controller
         $user->level = $request->level;
         $user->role = $request->role;
         $user->status = $request->user_status;
-        $user->can_create = $request->can_create;
+        $user->created_by = $user_id; 
         $user->save();
+        return redirect()->back()->with('success', ' New User Successfully Add.');
+
     }
 }

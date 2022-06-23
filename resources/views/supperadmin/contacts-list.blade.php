@@ -27,11 +27,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <x-greetings />
                     <div class="mb-3">
-                        {{-- <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalScrollable">@lang('New User')</button> --}}
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">@lang('Invite User')</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">@lang('New User')</button>
+                        {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">@lang('Invite User')</button> --}}
                     </div>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
@@ -73,8 +74,10 @@
     </div>
     {{-- <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-         
+        <div class="modal-dialog modal-dialog-scrollable"> --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalScrollableTitle">@lang('Add New User')</h5>
@@ -85,22 +88,22 @@
                             @csrf
                             <div class="mb-3 position-relative">
                                 <label for="validationTooltip01" class="form-label">@lang('Avatar')</label>
-                                <input type="file" name="file" class="form-control" id="validationTooltip01"
-                                    placeholder="Name" required>
+                                <input type="file" name="file" value="{{ old('profile') }}" class="form-control"
+                                    id="validationTooltip01" placeholder="Name" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Name')</label>
-                                        <input type="text" name="name" class="form-control" id="validationTooltip01"
-                                            placeholder="Name" required>
+                                        <input type="text" name="name" value="{{ old('name') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Email')</label>
-                                        <input type="email" name="email" class="form-control" id="validationTooltip01"
-                                            placeholder="Email" required>
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Email" required>
                                     </div>
                                 </div>
                             </div>
@@ -108,16 +111,17 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Height')</label>
-                                        <input type="text" name="height" class="form-control" id="validationTooltip01"
-                                            placeholder="Height" required>
+                                        <input type="text" name="height" value="{{ old('height') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Height" required>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Starting Weight')</label>
-                                        <input type="text" name="starting_weight" class="form-control"
-                                            id="validationTooltip01" placeholder="Starting Weight" required>
+                                        <input type="text" name="starting_weight" value="{{ old('starting_weight') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +129,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Handedness')</label>
-                                        <select name="hand_type" id="hand_type" class="form-control" required>
-                                            <option value="">@lang('Selec')</option>
+                                        <select name="hand_type" id="hand_type" value="{{ old('hand_type') }}"
+                                            class="form-select" required>
+                                            <option value="">@lang('Select')</option>
                                             <option value="Left">@lang('Left')</option>
                                             <option value="Right">@lang('Right')</option>
                                         </select>
@@ -135,8 +140,9 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('DOB')</label>
-                                        <input type="date" name="dob" class="form-control"
-                                            id="validationTooltip01" placeholder="Starting Weight" required>
+                                        <input type="date" name="dob" value="{{ old('dob') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
+                                            required>
                                     </div>
                                 </div>
                             </div>
@@ -144,15 +150,15 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('School')</label>
-                                        <input type="text" name="school" class="form-control"
-                                            id="validationTooltip01" placeholder="School" required>
+                                        <input type="text" name="school" value="{{ old('school') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="School" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('level')</label>
-                                        <input type="text" name="level" class="form-control"
-                                            id="validationTooltip01" placeholder="Level" required>
+                                        <input type="text" name="level" value="{{ old('level') }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Level" required>
                                     </div>
                                 </div>
                             </div>
@@ -160,14 +166,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Password')</label>
-                                        <input type="Password" name="school" class="form-control"
+                                        <input type="Password" name="password" class="form-control"
                                             id="validationTooltip01" placeholder="Password" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Confirm Password')</label>
-                                        <input type="password" name="password" class="form-control"
+                                        <input type="password" name="password_confirmation" class="form-control"
                                             id="validationTooltip01" placeholder="Password" required>
                                     </div>
                                 </div>
@@ -175,19 +181,21 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="validationTooltip01" class="form-label">@lang('Role')</label>
-                                    <select name="role" id="role" class="form-control" required>
-                                        <option value="">@lang('Select User Role')</option>
-                                        <option value="0">@lang('User')</option>
-                                        <option value="1">@lang('Admin')</option>
+                                    <label for="formrow-inputState" class="form-label">@lang('Role')</label>
+                                    <select id="formrow-inputState" name="role" value="{{ old('role') }}"
+                                        class="form-select">
+                                        <option selected>@lang('Select Status')</option>
+                                        <option value="admin">@lang('Admin')</option>
+                                        <option value="user">@lang('User')</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="validationTooltip01" class="form-label">@lang('User Status')</label>
-                                    <select name="user_status" id="user_status" class="form-control" required>
-                                        <option value="">@lang('Select User Status')</option>
-                                        <option value="1">@lang('Banned')</option>
-                                        <option value="0">@lang('Active')</option>
+                                    <label for="formrow-inputState" class="form-label">@lang('User Status')</label>
+                                    <select id="formrow-inputState" name="user_status"
+                                        value="{{ old('user_status') }}" class="form-select">
+                                        <option selected>@lang('Select Status')</option>
+                                        <option value="0">@lang('Banned')</option>
+                                        <option value="1">@lang('Active')</option>
                                     </select>
                                 </div>
                             </div>
@@ -200,9 +208,9 @@
                     </form>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal --> --}}
+        </div><!-- /.modal -->
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -268,27 +276,27 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div> <!-- end preview-->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Datatable init js -->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $("input").change(function() {
-                alert("The text has been changed.");
-                $("p").hide();
+    </div> --}}
+        {{-- </div> <!-- end preview--> --}}
+    @endsection
+    @section('script')
+        <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+        {{-- <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
+        <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script> --}}
+        <!-- Datatable init js -->
+        <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+        {{-- <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+        <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script> --}}
+        {{-- <script>
+            $(document).ready(function() {
+                $("input").change(function() {
+                    alert("The text has been changed.");
+                    $("p").hide();
+                });
             });
-        });
 
-        $("#role").click(function() {
+            $("#role").click(function() {
 
-        });
-    </script>
-@endsection
+            });
+        </script> --}}
+    @endsection
