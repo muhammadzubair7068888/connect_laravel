@@ -63,8 +63,8 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                                                value="<?php echo e(old('email', 'admin@themesbrand.com')); ?>" id="username"
-                                                placeholder="Enter Email" autocomplete="email" autofocus>
+                                                value="<?php echo e(old('email')); ?>" id="username" placeholder="Enter Email"
+                                                autocomplete="email" autofocus>
                                             <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -78,12 +78,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                         </div>
-
-
-
-
                                         <div class="mb-3">
-
                                             <label class="form-label">Password</label>
                                             <div
                                                 class="input-group auth-pass-inputgroup <?php $__errorArgs = ['password'];
@@ -103,7 +98,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                                                    id="userpassword" value="123456" placeholder="Enter password"
+                                                    id="userpassword" value="" placeholder="Enter password"
                                                     aria-label="Password" aria-describedby="password-addon">
                                                 <button class="btn btn-light " type="button" id="password-addon"><i
                                                         class="mdi mdi-eye-outline"></i></button>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Track;
 use App\Models\User;
 
 class ApiController extends Controller
@@ -28,15 +29,16 @@ class ApiController extends Controller
             return response()->json($error, 203);
         }
     }
-    public function profile(){
-      try{
-        $user_id = auth()->user()->id;
-        $user = User::where('id',$user_id)->first();
-        $response = [
+    public function profile()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $user = User::where('id', $user_id)->first();
+            $response = [
                 'status' => 'success',
                 'data' => $user,
             ];
-        return response()->json($response, 200);
+            return response()->json($response, 200);
         } catch (\Throwable $th) {
             $response = [
                 'success' => false,
@@ -45,7 +47,8 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function update_profile(Request $request,$id){
+    public function update_profile(Request $request, $id)
+    {
         try {
             $user = User::find($id);
             if ($request->hasFile('file')) {
@@ -76,14 +79,70 @@ class ApiController extends Controller
             ];
             return response()->json($response, 500);
         }
-        
+    }
+
+    public function index()
+    {
+        try {
+            $user_id  = auth()->user()->id;
+            $tracks = Track::where('user_id', $user_id)->get();
+            $response = [
+                'status' => 'success',
+                'data' => $tracks,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function save(Request $request)
+    {
+        try {
+            $request->validate([
+                'date' => 'required',
+                'weight' => 'required',
+                'arm_pain' => 'required',
+            ]);
+            $user_id = auth()->user()->id;
+            $track = new Track();
+            $track->date = $request->date;
+            $track->weight = $request->weight;
+            $track->arm_pain = $request->arm_pain;
+            $track->user_id = $user_id;
+            $track->save();
+            $response = [
+                'status' => 'success',
+                'data' => $track,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            Track::where('id', $request->track_id)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 }
-// try {
-//   } catch (\Throwable $th) {
-//             $response = [
-//                 'success' => false,
-//                 'message' => $th->getMessage(),
-//             ];
-//             return response()->json($response, 500);
-//         }

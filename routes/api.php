@@ -28,7 +28,13 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('/profile')->group(function () {
         Route::get('/', [ApiController::class, 'profile']);
-        Route::post('update/{id}',[ApiController::class,'update_profile']);
+        Route::post('/update/{id}', [ApiController::class, 'update_profile']);
         // Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
+    });
+
+    Route::prefix('/tracks')->group(function () {
+        Route::get('/index', [ApiController::class, 'index']);
+        Route::post('/index', [TrackController::class, 'save']);
+        Route::post('/del', [TrackController::class, 'delete']);
     });
 });
