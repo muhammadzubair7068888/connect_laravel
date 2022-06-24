@@ -35,10 +35,12 @@ Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->nam
 Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
 
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+Route::get('/your/profile',[SettingController::class, 'profiel'])->name('profile');
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
     Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
 });
+
 Route::prefix('/chat')->group(function () {
     Route::get('/open', [ChatController::class, 'chat'])->name('chat');
 });
@@ -60,6 +62,9 @@ Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');
     Route::get('/new', [UserController::class, 'new_user'])->name('new.user');
     Route::post('add', [UserController::class, 'add_user'])->name('add.user');
+    Route::post('add', [UserController::class, 'add_user'])->name('add.user');
+    Route::get('leaderboard',[UserController::class, 'leaderboard'])->name('leaderboard');
+    Route::get('/gird/view',[UserController::class,'grid_view'])->name('user.grid.view');
 });
 Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');

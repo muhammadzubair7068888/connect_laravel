@@ -1,23 +1,23 @@
-@extends('supperadmin.layouts.master')
 
-@section('title')
-    @lang('translation.Profile')
-@endsection
 
-@section('css')
-    <link href="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.Profile'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')); ?>" rel="stylesheet"
         type="text/css">
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Contacts
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Profile
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-xl-4">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="col-5 align-self-end">
-                            <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
+                            <img src="<?php echo e(URL::asset('/assets/images/profile-img.png')); ?>" alt=""
                                 class="img-fluid">
                         </div>
                     </div>
@@ -40,9 +40,9 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="avatar-md profile-user-wid mb-4">
-                                <img src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
+                                <img src="<?php echo e(isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg')); ?>"
                                     alt="" class="img-thumbnail rounded-circle">
-                                <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5>
+                                <h5 class="font-size-15 text-truncate"><?php echo e(Auth::user()->name); ?></h5>
                             </div>
                         </div>
 
@@ -71,40 +71,40 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">Full Name :</th>
-                                    <td>{{ $user->name }}</td>
+                                    <td><?php echo e($user->name); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">E-mail :</th>
-                                    <td>{{ $user->email }}</td>
+                                    <td><?php echo e($user->email); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Birthdate :</th>
-                                    <td>{{ date('d-m-Y', strtotime($user->dob)) }}</td>
+                                    <td><?php echo e(date('d-m-Y', strtotime($user->dob))); ?></td>
                                 </tr>
 
                                 <tr>
                                     <th scope="row">Age :</th>
-                                    <td>{{ $user->age }}</td>
+                                    <td><?php echo e($user->age); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Height :</th>
-                                    <td>{{ $user->height }}</td>
+                                    <td><?php echo e($user->height); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Starting Weight :</th>
-                                    <td>{{ $user->starting_weight }}</td>
+                                    <td><?php echo e($user->starting_weight); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Handedness :</th>
-                                    <td>{{ $user->handedness }}</td>
+                                    <td><?php echo e($user->handedness); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">School :</th>
-                                    <td>{{ $user->school }}</td>
+                                    <td><?php echo e($user->school); ?></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Level :</th>
-                                    <td>{{ $user->level }}</td>
+                                    <td><?php echo e($user->level); ?></td>
                                 </tr>
 
                             </tbody>
@@ -125,20 +125,34 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" method="POST" enctype="multipart/form-data" id="update-profile">
-                                @csrf
-                                <input type="hidden" value="{{ Auth::user()->id }}" id="data_id">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" value="<?php echo e(Auth::user()->id); ?>" id="data_id">
                                 <div class="mb-3">
                                     <label for="useremail" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="useremail" value="{{ Auth::user()->email }}" name="email"
+                                    <input type="email" class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                        id="useremail" value="<?php echo e(Auth::user()->email); ?>" name="email"
                                         placeholder="Enter email" autofocus>
                                     <div class="text-danger" id="emailError" data-ajax-feedback="email"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ Auth::user()->name }}" id="username" name="name" autofocus
+                                    <input type="text" class="form-control <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                        value="<?php echo e(Auth::user()->name); ?>" id="username" name="name" autofocus
                                         placeholder="Enter username">
                                     <div class="text-danger" id="nameError" data-ajax-feedback="name"></div>
                                 </div>
@@ -146,10 +160,17 @@
                                 <div class="mb-3">
                                     <label for="userdob">Date of Birth</label>
                                     <div class="input-group" id="datepicker1">
-                                        <input type="text" class="form-control @error('dob') is-invalid @enderror"
+                                        <input type="text" class="form-control <?php $__errorArgs = ['dob'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                             placeholder="dd-mm-yyyy" data-date-format="dd-mm-yyyy"
                                             data-date-container='#datepicker1' data-date-end-date="0d"
-                                            value="{{ date('d-m-Y', strtotime(Auth::user()->dob)) }}"
+                                            value="<?php echo e(date('d-m-Y', strtotime(Auth::user()->dob))); ?>"
                                             data-provide="datepicker" name="dob" autofocus id="dob">
                                         <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                     </div>
@@ -159,12 +180,19 @@
                                 <div class="mb-3">
                                     <label for="avatar">Profile Picture</label>
                                     <div class="input-group">
-                                        <input type="file" class="form-control @error('avatar') is-invalid @enderror"
+                                        <input type="file" class="form-control <?php $__errorArgs = ['avatar'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                             id="avatar" name="avatar" autofocus>
                                         <label class="input-group-text" for="avatar">Upload</label>
                                     </div>
                                     <div class="text-start mt-2">
-                                        <img src="{{ asset(Auth::user()->avatar) }}" alt=""
+                                        <img src="<?php echo e(asset(Auth::user()->avatar)); ?>" alt=""
                                             class="rounded-circle avatar-lg">
                                     </div>
                                     <div class="text-danger" role="alert" id="avatarError"
@@ -174,22 +202,22 @@
 
                                 <div class="mt-3 d-grid">
                                     <button class="btn btn-primary waves-effect waves-light UpdateProfile"
-                                        data-id="{{ Auth::user()->id }}" type="submit">Update</button>
+                                        data-id="<?php echo e(Auth::user()->id); ?>" type="submit">Update</button>
                                 </div>
                             </form>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
-        @endsection
-        @section('script')
+        <?php $__env->stopSection(); ?>
+        <?php $__env->startSection('script'); ?>
             <!-- apexcharts -->
-            <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+            <script src="<?php echo e(URL::asset('/assets/libs/apexcharts/apexcharts.min.js')); ?>"></script>
 
-            <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+            <script src="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')); ?>"></script>
 
             <!-- profile init -->
-            <script src="{{ URL::asset('/assets/js/pages/profile.init.js') }}"></script>
+            <script src="<?php echo e(URL::asset('/assets/js/pages/profile.init.js')); ?>"></script>
 
             <script>
                 $('#update-profile').on('submit', function(event) {
@@ -201,7 +229,7 @@
                     $('#dobError').text('');
                     $('#avatarError').text('');
                     $.ajax({
-                        url: "{{ url('update-profile') }}" + "/" + Id,
+                        url: "<?php echo e(url('update-profile')); ?>" + "/" + Id,
                         type: "POST",
                         data: formData,
                         contentType: false,
@@ -228,4 +256,6 @@
                     });
                 });
             </script>
-        @endsection
+        <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/supperadmin/contacts-profile.blade.php ENDPATH**/ ?>

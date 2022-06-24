@@ -191,15 +191,25 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('Role'); ?></label>
-                                    <select id="formrow-inputState" name="role" value="<?php echo e(old('role')); ?>"
-                                        class="form-select">
-                                        <option selected><?php echo app('translator')->get('Select Status'); ?></option>
-                                        <option value="admin"><?php echo app('translator')->get('Admin'); ?></option>
-                                        <option value="user"><?php echo app('translator')->get('User'); ?></option>
-                                    </select>
-                                </div>
+                                <?php if(auth()->user()->role == 'superadmin'): ?>
+                                    <div class="col-md-6">
+                                        <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('Role'); ?></label>
+                                        <select id="formrow-inputState" name="role" value="<?php echo e(old('role')); ?>"
+                                            class="form-select">
+                                            <option selected><?php echo app('translator')->get('Select Status'); ?></option>
+                                            <option value="admin"><?php echo app('translator')->get('Admin'); ?></option>
+                                            <option value="user"><?php echo app('translator')->get('User'); ?></option>
+                                        </select>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="col-md-6">
+                                        <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('Role'); ?></label>
+                                        <select id="formrow-inputState" name="role" value="<?php echo e(old('role')); ?>"
+                                            class="form-select">
+                                            <option value="user" selected><?php echo app('translator')->get('User'); ?></option>
+                                        </select>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="col-md-6">
                                     <label for="formrow-inputState" class="form-label"><?php echo app('translator')->get('User Status'); ?></label>
                                     <select id="formrow-inputState" name="user_status"
@@ -210,7 +220,6 @@
                                     </select>
                                 </div>
                             </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                 <button class="btn btn-success" type="submit">Save</button>

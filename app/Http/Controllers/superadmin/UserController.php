@@ -4,6 +4,7 @@ namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserVelocity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +17,6 @@ class UserController extends Controller
     public function new_user(){
         return view('supperadmin.add_new_user');
     }
-
     public function add_user(Request $request){
         $request->validate([
             'name' => 'required',
@@ -57,6 +57,15 @@ class UserController extends Controller
         $user->created_by = $user_id; 
         $user->save();
         return redirect()->back()->with('success', ' New User Successfully Add.');
-
+    }
+    public function leaderboard(){
+        $user_id = auth()->user()->id;
+        $velocity = UserVelocity::where('user_id',$user_id)->latest()->get();
+        return view('supperadmin.leaderboard',compact('velocity'));
+    }
+    public function grid_view(){
+        $user_id = auth()->user()->id;
+        $users=User::where('created_by',$user_id)->latest()->get();
+        return view('supperadmin.contacts-grid',compact('users'));
     }
 }

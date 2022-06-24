@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt="" height="22">
+                        {{-- <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt="" height="22"> --}}
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="17">
+                        {{-- <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="17"> --}}
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('/assets/images/logo-light.svg') }}" alt="" height="22">
+                        {{-- <img src="{{ URL::asset('/assets/images/logo-light.svg') }}" alt="" height="22"> --}}
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt="" height="19">
+                        {{-- <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt="" height="19"> --}}
                     </span>
                 </a>
             </div>
@@ -156,8 +156,8 @@
 
                                 <div class="col-sm-5">
                                     <div>
-                                        <img src="{{ URL::asset('/assets/images/megamenu-img.png') }}" alt=""
-                                            class="img-fluid mx-auto d-block">
+                                        <img src="{{ URL::asset('/assets/images/megamenu-img.png') }}"
+                                            alt="" class="img-fluid mx-auto d-block">
                                     </div>
                                 </div>
                             </div>
@@ -171,8 +171,9 @@
         <div class="d-flex">
 
             <div class="dropdown d-inline-block d-lg-none ml-2">
-                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item noti-icon waves-effect"
+                    id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <i class="mdi mdi-magnify"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -184,7 +185,8 @@
                                 <input type="text" class="form-control" placeholder="@lang('translation.Search')"
                                     aria-label="Search input">
 
-                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>s
+                                <button class="btn btn-primary" type="submit"><i
+                                        class="mdi mdi-magnify"></i></button>s
                             </div>
                         </div>
                     </form>
@@ -196,27 +198,32 @@
                     aria-haspopup="true" aria-expanded="false">
                     @switch(Session::get('lang'))
                         @case('ru')
-                            <img src="{{ URL::asset('/assets/images/flags/russia.jpg') }}" alt="Header Language" height="16">
+                            <img src="{{ URL::asset('/assets/images/flags/russia.jpg') }}" alt="Header Language"
+                                height="16">
                             <span class="align-middle">Russian</span>
                         @break
 
                         @case('it')
-                            <img src="{{ URL::asset('/assets/images/flags/italy.jpg') }}" alt="Header Language" height="16">
+                            <img src="{{ URL::asset('/assets/images/flags/italy.jpg') }}" alt="Header Language"
+                                height="16">
                             <span class="align-middle">Italian</span>
                         @break
 
                         @case('de')
-                            <img src="{{ URL::asset('/assets/images/flags/germany.jpg') }}" alt="Header Language" height="16">
+                            <img src="{{ URL::asset('/assets/images/flags/germany.jpg') }}" alt="Header Language"
+                                height="16">
                             <span class="align-middle">German</span>
                         @break
 
                         @case('es')
-                            <img src="{{ URL::asset('/assets/images/flags/spain.jpg') }}" alt="Header Language" height="16">
+                            <img src="{{ URL::asset('/assets/images/flags/spain.jpg') }}" alt="Header Language"
+                                height="16">
                             <span class="align-middle">Spanish</span>
                         @break
 
                         @default
-                            <img src="{{ URL::asset('/assets/images/flags/us.jpg') }}" alt="Header Language" height="16">
+                            <img src="{{ URL::asset('/assets/images/flags/us.jpg') }}" alt="Header Language"
+                                height="16">
                             <span class="align-middle">English</span>
                     @endswitch
                 </button>
@@ -224,8 +231,8 @@
 
                     <!-- item-->
                     <a href="{{ url('index/en') }}" class="dropdown-item notify-item language" data-lang="eng">
-                        <img src="{{ URL::asset('/assets/images/flags/us.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">English</span>
+                        <img src="{{ URL::asset('/assets/images/flags/us.jpg') }}" alt="user-image" class="me-1"
+                            height="12"> <span class="align-middle">English</span>
                     </a>
                     <!-- item-->
                     <a href="{{ url('index/es') }}" class="dropdown-item notify-item language" data-lang="sp">
@@ -276,7 +283,8 @@
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('/assets/images/brands/dribbble.png') }}" alt="dribbble">
+                                    <img src="{{ URL::asset('/assets/images/brands/dribbble.png') }}"
+                                        alt="dribbble">
                                     <span>Dribbble</span>
                                 </a>
                             </div>
@@ -285,7 +293,8 @@
                         <div class="row no-gutters">
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('/assets/images/brands/dropbox.png') }}" alt="dropbox">
+                                    <img src="{{ URL::asset('/assets/images/brands/dropbox.png') }}"
+                                        alt="dropbox">
                                     <span>Dropbox</span>
                                 </a>
                             </div>
@@ -421,13 +430,15 @@
                     <a class="dropdown-item" href="contacts-profile"><i
                             class="bx bx-user font-size-16 align-middle me-1"></i> <span
                             key="t-profile">@lang('translation.Profile')</span></a>
-                    <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item" href="#"><i
+                            class="bx bx-wallet font-size-16 align-middle me-1"></i>
                         <span key="t-my-wallet">@lang('translation.My_Wallet')</span></a>
                     <a class="dropdown-item d-block" href="#" data-bs-toggle="modal"
                         data-bs-target=".change-password"><span class="badge bg-success float-end">11</span><i
                             class="bx bx-wrench font-size-16 align-middle me-1"></i> <span
                             key="t-settings">@lang('translation.Settings')</span></a>
-                    <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item" href="#"><i
+                            class="bx bx-lock-open font-size-16 align-middle me-1"></i>
                         <span key="t-lock-screen">@lang('translation.Lock_screen')</span></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"
@@ -458,7 +469,8 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard"
+                            role="button">
                             <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">@lang('translation.Dashboards')</span>
                             <div class="arrow-down"></div>
                         </a>
@@ -472,7 +484,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement"
+                            role="button">
                             <i class="bx bx-tone me-2"></i>
                             <span key="t-ui-elements"> @lang('translation.UI_Elements')</span>
                             <div class="arrow-down"></div>
@@ -487,7 +500,8 @@
                                             key="t-alerts">@lang('translation.Alerts')</a>
                                         <a href="ui-buttons" class="dropdown-item"
                                             key="t-buttons">@lang('translation.Buttons')</a>
-                                        <a href="ui-cards" class="dropdown-item" key="t-cards">@lang('translation.Cards')</a>
+                                        <a href="ui-cards" class="dropdown-item"
+                                            key="t-cards">@lang('translation.Cards')</a>
                                         <a href="ui-carousel" class="dropdown-item"
                                             key="t-carousel">@lang('translation.Carousel')</a>
                                         <a href="ui-dropdowns" class="dropdown-item"
@@ -523,7 +537,8 @@
                                     <div>
                                         <a href="ui-typography" class="dropdown-item"
                                             key="t-typography">@lang('translation.Typography')</a>
-                                        <a href="ui-video" class="dropdown-item" key="t-video">@lang('translation.Video')</a>
+                                        <a href="ui-video" class="dropdown-item"
+                                            key="t-video">@lang('translation.Video')</a>
                                         <a href="ui-general" class="dropdown-item"
                                             key="t-general">@lang('translation.General')</a>
                                         <a href="ui-colors" class="dropdown-item"
@@ -540,14 +555,15 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages"
+                            role="button">
                             <i class="bx bx-customize me-2"></i><span key="t-apps">@lang('translation.Apps')</span>
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-calendar"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-calendar" role="button">
                                     <span key="t-email">@lang('translation.Calendars')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -573,8 +589,8 @@
                                         key="t-read-email">@lang('translation.Read_Email')</a>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-blog"
-                                            role="button">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                            id="topnav-blog" role="button">
                                             <span key="t-email-templates">@lang('translation.Templates')</span>
                                             <div class="arrow-down"></div>
                                         </a>
@@ -591,8 +607,8 @@
                             </div>
 
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ecommerce"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-ecommerce" role="button">
                                     <span key="t-ecommerce">@lang('translation.Ecommerce')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -605,7 +621,8 @@
                                         key="t-orders">@lang('translation.Orders')</a>
                                     <a href="ecommerce-customers" class="dropdown-item"
                                         key="t-customers">@lang('translation.Customers')</a>
-                                    <a href="ecommerce-cart" class="dropdown-item" key="t-cart">@lang('translation.Cart')</a>
+                                    <a href="ecommerce-cart" class="dropdown-item"
+                                        key="t-cart">@lang('translation.Cart')</a>
                                     <a href="ecommerce-checkout" class="dropdown-item"
                                         key="t-checkout">@lang('translation.Checkout')</a>
                                     <a href="ecommerce-shops" class="dropdown-item"
@@ -640,8 +657,8 @@
                             </div>
 
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-project"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-project" role="button">
                                     <span key="t-projects">@lang('translation.Projects')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -672,8 +689,8 @@
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-contact"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-contact" role="button">
                                     <span key="t-contacts">@lang('translation.Contacts')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -706,7 +723,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components"
+                            role="button">
                             <i class="bx bx-collection me-2"></i><span key="t-components">@lang('translation.Components')</span>
                             <div class="arrow-down"></div>
                         </a>
@@ -804,8 +822,10 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-map">
-                                    <a href="maps-google" class="dropdown-item" key="t-g-maps">@lang('translation.Google_Maps')</a>
-                                    <a href="maps-vector" class="dropdown-item" key="t-v-maps">@lang('translation.Vector_Maps')</a>
+                                    <a href="maps-google" class="dropdown-item"
+                                        key="t-g-maps">@lang('translation.Google_Maps')</a>
+                                    <a href="maps-vector" class="dropdown-item"
+                                        key="t-v-maps">@lang('translation.Vector_Maps')</a>
                                     <a href="maps-leaflet" class="dropdown-item"
                                         key="t-l-maps">@lang('translation.Leaflet_Maps')</a>
                                 </div>
@@ -814,14 +834,15 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more"
+                            role="button">
                             <i class="bx bx-file me-2"></i><span key="t-extra-pages">@lang('translation.Extra_Pages')</span>
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-more">
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-invoice"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-invoice" role="button">
                                     <span key="t-invoices">@lang('translation.Invoices')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -869,8 +890,8 @@
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-utility" role="button">
                                     <span key="t-utility">@lang('translation.Utility')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -896,14 +917,15 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layout" role="button">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layout"
+                            role="button">
                             <i class="bx bx-layout me-2"></i><span key="t-layouts">@lang('translation.Layouts')</span>
                             <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-layout">
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-layout-verti"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-layout-verti" role="button">
                                     <span key="t-vertical">@lang('translation.Vertical')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -926,8 +948,8 @@
                             </div>
 
                             <div class="dropdown">
-                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-layout-hori"
-                                    role="button">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#"
+                                    id="topnav-layout-hori" role="button">
                                     <span key="t-horizontal">@lang('translation.Horizontal')</span>
                                     <div class="arrow-down"></div>
                                 </a>
@@ -972,8 +994,8 @@
                         <label for="current_password">Current Password</label>
                         <input id="current-password" type="password"
                             class="form-control @error('current_password') is-invalid @enderror"
-                            name="current_password" autocomplete="current_password" placeholder="Enter Current Password"
-                            value="{{ old('current_password') }}">
+                            name="current_password" autocomplete="current_password"
+                            placeholder="Enter Current Password" value="{{ old('current_password') }}">
                         <div class="text-danger" id="current_passwordError" data-ajax-feedback="current_password">
                         </div>
                     </div>

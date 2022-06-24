@@ -16,7 +16,6 @@ class ApiController extends Controller
         ])) {
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
-
             $response = [
                 'status' => 'success',
                 'message' => 'You have signed in.',

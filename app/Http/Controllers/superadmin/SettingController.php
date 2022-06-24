@@ -7,6 +7,7 @@ use App\Models\CompanySetting;
 use App\Models\EmailTemplate;
 use App\Models\Plugin;
 use App\Models\PluginAttributes;
+use App\Models\User;
 use CodeZero\DotEnvUpdater\DotEnvUpdater;
 use Illuminate\Http\Request;
 
@@ -65,7 +66,6 @@ class SettingController extends Controller
         $data->save();
         return redirect()->back()->with('success', ' Company Profile Updated');
     }
-
     public function get_tempalte($template = null)
     {
         if (!$template) {
@@ -74,10 +74,8 @@ class SettingController extends Controller
         $templates = EmailTemplate::all();
         return view('supperadmin.templates.email_template', compact('templates', 'template'));
     }
-
     public function saveTemplate(Request $req, $name)
     {
-
         try {
             $template = EmailTemplate::where('email_type', $name)->first();
             if (!$template) {
@@ -93,7 +91,6 @@ class SettingController extends Controller
             return redirect()->back()->with('error', 'Unable to update template. Something unexpected happened!');
         }
     }
-
     public function plugin(){
         $google = Plugin::where('name', 'google_login')->first();
         $facebook = Plugin::where('name', 'facebook_login')->first();
@@ -124,10 +121,7 @@ class SettingController extends Controller
             'facebook_clientsecret',
         ));
     }
-
     public function google_creditional(Request $request){
-
-        //return $request->all();
         $p = Plugin::where('name', 'google_login')->first();
         if ($p) {
             $request->enable ? $p->active = 1 : $p->active = 0;
@@ -165,10 +159,7 @@ class SettingController extends Controller
     }
 
     public function facebook_credentials(Request $request){
-
-
         $p = Plugin::where('name', 'facebook_login')->first();
-
         if ($p) {
             $request->enable ? $p->active = 1 : $p->active = 0;
             $p->save();
@@ -202,5 +193,10 @@ class SettingController extends Controller
         $env->set('FACEBOOK_CLIENT_ID', plugin_val('facebook_login', 'client_id'));
         $env->set('FACEBOOK_CLIENT_SECRET', plugin_val('facebook_login', 'client_secret'));
         return redirect()->route('plugin.cards')->with('status', 'Plugin has been updated successfully');
+    }
+    public function profiel(){
+        $user_id = auth()->user()->id;
+        $user = User::where('id',$user_id)->first();
+        return view('supperadmin.contacts-profile',compact('user'));
     }
 }

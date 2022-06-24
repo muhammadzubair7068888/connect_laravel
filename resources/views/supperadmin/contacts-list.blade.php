@@ -180,15 +180,25 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label for="formrow-inputState" class="form-label">@lang('Role')</label>
-                                    <select id="formrow-inputState" name="role" value="{{ old('role') }}"
-                                        class="form-select">
-                                        <option selected>@lang('Select Status')</option>
-                                        <option value="admin">@lang('Admin')</option>
-                                        <option value="user">@lang('User')</option>
-                                    </select>
-                                </div>
+                                @if (auth()->user()->role == 'superadmin')
+                                    <div class="col-md-6">
+                                        <label for="formrow-inputState" class="form-label">@lang('Role')</label>
+                                        <select id="formrow-inputState" name="role" value="{{ old('role') }}"
+                                            class="form-select">
+                                            <option selected>@lang('Select Status')</option>
+                                            <option value="admin">@lang('Admin')</option>
+                                            <option value="user">@lang('User')</option>
+                                        </select>
+                                    </div>
+                                @else
+                                    <div class="col-md-6">
+                                        <label for="formrow-inputState" class="form-label">@lang('Role')</label>
+                                        <select id="formrow-inputState" name="role" value="{{ old('role') }}"
+                                            class="form-select">
+                                            <option value="user" selected>@lang('User')</option>
+                                        </select>
+                                    </div>
+                                @endif
                                 <div class="col-md-6">
                                     <label for="formrow-inputState" class="form-label">@lang('User Status')</label>
                                     <select id="formrow-inputState" name="user_status"
@@ -199,7 +209,6 @@
                                     </select>
                                 </div>
                             </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                 <button class="btn btn-success" type="submit">Save</button>

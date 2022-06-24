@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class AssessmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role');
+    }
     //
     public function phyiscal(){
         $user_id = auth()->user()->id;
@@ -54,6 +58,4 @@ class AssessmentController extends Controller
         MechanicalAssessment::where('id',$request->mechanical_id)->delete();
         return redirect()->route('mechanical')->with('success', 'Mechanical Accessment Successfully Delete.');
     }
-
-    // 
 }
