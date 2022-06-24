@@ -33,14 +33,13 @@ Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Language Translation
 Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->name('email');
 Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
-
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 Route::get('/your/profile',[SettingController::class, 'profiel'])->name('profile');
+Route::post('/your/profile/{id}{',[SettingController::class, 'update_profile'])->name('update.profile');
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
     Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
 });
-
 Route::prefix('/chat')->group(function () {
     Route::get('/open', [ChatController::class, 'chat'])->name('chat');
 });

@@ -139,8 +139,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
-                                        <label for="validationTooltip01" class="form-label">@lang('DOB')</label>
-                                        <input type="date" name="dob" value="{{ old('dob') }}"
+                                        <label for="validationTooltip01" class="form-label">@lang('Age')</label>
+                                        <input type="number" name="age" value="{{ old('age') }}"
                                             class="form-control" id="validationTooltip01" placeholder="Starting Weight"
                                             required>
                                     </div>

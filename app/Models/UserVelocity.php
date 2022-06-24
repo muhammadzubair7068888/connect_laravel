@@ -13,4 +13,8 @@ class UserVelocity extends Model
     {
         return $this->belongsTo(Velocity::class,'velocity_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(user::class, 'user_id');
+    }
 }

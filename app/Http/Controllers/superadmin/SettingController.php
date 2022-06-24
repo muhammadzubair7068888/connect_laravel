@@ -199,4 +199,25 @@ class SettingController extends Controller
         $user = User::where('id',$user_id)->first();
         return view('supperadmin.contacts-profile',compact('user'));
     }
+    public function update_profile(Request $request, $id)
+    {
+        $user = User::find($id);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $foldername = 'user/profiles/';
+            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+            $file->move(public_path() . '/' . $foldername, $filename);
+            $user->avatar = $foldername . $filename;
+        }
+        $user->name = $request->name;
+        $user->height = $request->height;
+        $user->level = $request->level;
+        $user->starting_weight = $request->starting_weight;
+        $user->age = $request->age;
+        $user->handedness = $request->handedeness;
+        $user->school = $request->school;
+        $user->email = $request->email;
+        $user->save();
+        return redirect()->back()->with('success', 'Successfully Update.');
+    }
 }
