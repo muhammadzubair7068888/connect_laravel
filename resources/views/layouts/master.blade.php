@@ -3,22 +3,23 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title') | Skote - Admin & Dashboard Template</title>
+    <title> @yield('title') | Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
-    @include('layouts.head-css')
+    @include('supperadmin.layouts.head-css')
 </head>
 
 @section('body')
+
     <body data-sidebar="dark">
-@show
+    @show
     <!-- Begin page -->
     <div id="layout-wrapper">
-        @include('layouts.topbar')
-        @include('layouts.sidebar')
+        @include('supperadmin.layouts.topbar')
+        @include('supperadmin.layouts.sidebar')
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -30,18 +31,18 @@
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
-            @include('layouts.footer')
+            @include('supperadmin.layouts.footer')
         </div>
         <!-- end main content-->
     </div>
     <!-- END layout-wrapper -->
 
     <!-- Right Sidebar -->
-    @include('layouts.right-sidebar')
+    @include('supperadmin.layouts.right-sidebar')
     <!-- /Right-bar -->
 
     <!-- JAVASCRIPT -->
-    @include('layouts.vendor-scripts')
+    @include('supperadmin.layouts.vendor-scripts')
 </body>
 
 </html>
