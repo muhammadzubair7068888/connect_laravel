@@ -150,8 +150,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 position-relative">
-                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('DOB'); ?></label>
-                                        <input type="date" name="dob" value="<?php echo e(old('dob')); ?>"
+                                        <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Age'); ?></label>
+                                        <input type="number" name="age" value="<?php echo e(old('age')); ?>"
                                             class="form-control" id="validationTooltip01" placeholder="Starting Weight"
                                             required>
                                     </div>

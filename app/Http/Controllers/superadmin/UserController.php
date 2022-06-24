@@ -5,6 +5,7 @@ namespace App\Http\Controllers\superadmin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserVelocity;
+use App\Models\Velocity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,12 +34,11 @@ class UserController extends Controller
             'user_status' => 'required',
         ]);
         $user_id = auth()->user()->id; 
-        $age =34;
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->dob = $request->dob;
+        // $user->dob = $request->dob;
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $foldername = 'user/profiles/';
@@ -49,7 +49,7 @@ class UserController extends Controller
         $user->height = $request->height;
         $user->starting_weight = $request->starting_weight;
         $user->handedness = $request->hand_type;
-        $user->age = $age;
+        $user->age = $request->age;
         $user->school = $request->school;
         $user->level = $request->level;
         $user->role = $request->role;
@@ -60,8 +60,14 @@ class UserController extends Controller
     }
     public function leaderboard(){
         $user_id = auth()->user()->id;
-        $velocity = UserVelocity::where('user_id',$user_id)->latest()->get();
-        return view('supperadmin.leaderboard',compact('velocity'));
+        $velocities = User::where('created_by',$user_id)->get();
+      //  return $velocities[1]->uservelocity;
+    //   if($velocities[1]->uservelocity[0]->id){
+    //     return "SS";
+    //   }else{
+    //     "NNNN";
+    //   }
+        return view('supperadmin.leaderboard',compact('velocities'));
     }
     public function grid_view(){
         $user_id = auth()->user()->id;

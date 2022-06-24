@@ -42,7 +42,7 @@
                             <div class="avatar-md profile-user-wid mb-4">
                                 <img src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                     alt="" class="img-thumbnail rounded-circle">
-                                <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5>
+                                {{-- <h5 class="font-size-15 text-truncate">{{ Auth::user()->name }}</h5> --}}
                             </div>
                         </div>
 
@@ -51,8 +51,8 @@
                                 <br>
                                 <br>
                                 <div class="mt-4">
-                                    <a href="" class="btn btn-primary waves-effect waves-light btn-sm"
-                                        data-bs-toggle="modal" data-bs-target=".update-profile">Edit Profile</a>
+                                    <button type="button" class="btn btn-success waves-effect waves-light"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal">@lang('Edit Profile')</button>
                                 </div>
                             </div>
                         </div>
@@ -70,18 +70,13 @@
                         <table class="table table-nowrap mb-0">
                             <tbody>
                                 <tr>
-                                    <th scope="row">Full Name :</th>
+                                    <th scope="row">Name :</th>
                                     <td>{{ $user->name }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">E-mail :</th>
                                     <td>{{ $user->email }}</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">Birthdate :</th>
-                                    <td>{{ date('d-m-Y', strtotime($user->dob)) }}</td>
-                                </tr>
-
                                 <tr>
                                     <th scope="row">Age :</th>
                                     <td>{{ $user->age }}</td>
@@ -112,120 +107,179 @@
                     </div>
                 </div>
             </div>
-            <!-- end row -->
-
-            <!--  Update Profile example -->
-            <div class="modal fade update-profile" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="myLargeModalLabel">Edit Profile</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" id="update-profile">
-                                @csrf
-                                <input type="hidden" value="{{ Auth::user()->id }}" id="data_id">
-                                <div class="mb-3">
-                                    <label for="useremail" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="useremail" value="{{ Auth::user()->email }}" name="email"
-                                        placeholder="Enter email" autofocus>
-                                    <div class="text-danger" id="emailError" data-ajax-feedback="email"></div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">@lang('Add New User')</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{{ route('update.profile', ['id' => $user->id]) }}"
+                            class="needs-validation" enctype='multipart/form-data' novalidate>
+                            @csrf
+                            <div class="mb-3">
+                                <div class="text-start mt-2">
+                                    <img src="{{ asset(Auth::user()->avatar) }}" alt=""
+                                        class="rounded-circle avatar-lg">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ Auth::user()->name }}" id="username" name="name" autofocus
-                                        placeholder="Enter username">
-                                    <div class="text-danger" id="nameError" data-ajax-feedback="name"></div>
+                                <div class="text-danger" role="alert" id="avatarError" data-ajax-feedback="avatar">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="userdob">Date of Birth</label>
-                                    <div class="input-group" id="datepicker1">
-                                        <input type="text" class="form-control @error('dob') is-invalid @enderror"
-                                            placeholder="dd-mm-yyyy" data-date-format="dd-mm-yyyy"
-                                            data-date-container='#datepicker1' data-date-end-date="0d"
-                                            value="{{ date('d-m-Y', strtotime(Auth::user()->dob)) }}"
-                                            data-provide="datepicker" name="dob" autofocus id="dob">
-                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                    </div>
-                                    <div class="text-danger" id="dobError" data-ajax-feedback="dob"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="avatar">Profile Picture</label>
-                                    <div class="input-group">
-                                        <input type="file" class="form-control @error('avatar') is-invalid @enderror"
-                                            id="avatar" name="avatar" autofocus>
-                                        <label class="input-group-text" for="avatar">Upload</label>
-                                    </div>
-                                    <div class="text-start mt-2">
-                                        <img src="{{ asset(Auth::user()->avatar) }}" alt=""
-                                            class="rounded-circle avatar-lg">
-                                    </div>
-                                    <div class="text-danger" role="alert" id="avatarError"
-                                        data-ajax-feedback="avatar">
+                            </div>
+                            <div class="mb-3 position-relative">
+                                <label for="validationTooltip01" class="form-label">@lang('Profile Image')</label>
+                                <input type="file" name="file" class="form-control" id="validationTooltip01"
+                                    placeholder="Name" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Name')</label>
+                                        <input type="text" name="name" value="{{ $user->name }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Name" required>
                                     </div>
                                 </div>
-
-                                <div class="mt-3 d-grid">
-                                    <button class="btn btn-primary waves-effect waves-light UpdateProfile"
-                                        data-id="{{ Auth::user()->id }}" type="submit">Update</button>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Email')</label>
+                                        <input type="email" name="email" value="{{ $user->email }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Email" required>
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-        @endsection
-        @section('script')
-            <!-- apexcharts -->
-            <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Height')</label>
+                                        <input type="text" name="height" value="{{ $user->height }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Height" required>
 
-            <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Starting Weight')</label>
+                                        <input type="text" name="starting_weight"
+                                            value="{{ $user->starting_weight }}" class="form-control"
+                                            id="validationTooltip01" placeholder="Starting Weight" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Handedness')</label>
+                                        <select name="hand_type" id="hand_type" value="{{ $user->handedness }}"
+                                            class="form-select" required>
+                                            @if ($user->handedness == 'left')
+                                                <option value="Left" selected>@lang('Left')</option>
+                                                <option value="Right">@lang('Right')</option>
+                                            @else
+                                                <option value="Left">@lang('Left')</option>
+                                                <option value="Right" selected>@lang('Right')</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Age')</label>
+                                        <input type="number" name="age" value="{{ $user->age }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Age" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('School')</label>
+                                        <input type="text" name="school" value="{{ $user->school }}"
+                                            class="form-control" id="validationTooltip01" placeholder="School" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('level')</label>
+                                        <input type="text" name="level" value="{{ $user->level }}"
+                                            class="form-control" id="validationTooltip01" placeholder="Level" required>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Password')</label>
+                                        <input type="Password" name="password" class="form-control"
+                                            id="validationTooltip01"  placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="validationTooltip01" class="form-label">@lang('Confirm Password')</label>
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                            id="validationTooltip01" placeholder="Password" required>
+                                    </div>
+                                </div>
+                            </div> --}}
 
-            <!-- profile init -->
-            <script src="{{ URL::asset('/assets/js/pages/profile.init.js') }}"></script>
 
-            <script>
-                $('#update-profile').on('submit', function(event) {
-                    event.preventDefault();
-                    var Id = $('#data_id').val();
-                    let formData = new FormData(this);
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success" type="submit">Save</button>
+                    </div>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+@endsection
+@section('script')
+    <!-- apexcharts -->
+    <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+
+    <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+
+    <!-- profile init -->
+    <script src="{{ URL::asset('/assets/js/pages/profile.init.js') }}"></script>
+
+    <script>
+        $('#update-profile').on('submit', function(event) {
+            event.preventDefault();
+            var Id = $('#data_id').val();
+            let formData = new FormData(this);
+            $('#emailError').text('');
+            $('#nameError').text('');
+            $('#dobError').text('');
+            $('#avatarError').text('');
+            $.ajax({
+                url: "{{ url('update-profile') }}" + "/" + Id,
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
                     $('#emailError').text('');
                     $('#nameError').text('');
                     $('#dobError').text('');
                     $('#avatarError').text('');
-                    $.ajax({
-                        url: "{{ url('update-profile') }}" + "/" + Id,
-                        type: "POST",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function(response) {
-                            $('#emailError').text('');
-                            $('#nameError').text('');
-                            $('#dobError').text('');
-                            $('#avatarError').text('');
-                            if (response.isSuccess == false) {
-                                alert(response.Message);
-                            } else if (response.isSuccess == true) {
-                                setTimeout(function() {
-                                    window.location.reload();
-                                }, 1000);
-                            }
-                        },
-                        error: function(response) {
-                            $('#emailError').text(response.responseJSON.errors.email);
-                            $('#nameError').text(response.responseJSON.errors.name);
-                            $('#dobError').text(response.responseJSON.errors.dob);
-                            $('#avatarError').text(response.responseJSON.errors.avatar);
-                        }
-                    });
-                });
-            </script>
-        @endsection
+                    if (response.isSuccess == false) {
+                        alert(response.Message);
+                    } else if (response.isSuccess == true) {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                },
+                error: function(response) {
+                    $('#emailError').text(response.responseJSON.errors.email);
+                    $('#nameError').text(response.responseJSON.errors.name);
+                    $('#dobError').text(response.responseJSON.errors.dob);
+                    $('#avatarError').text(response.responseJSON.errors.avatar);
+                }
+            });
+        });
+    </script>
+@endsection

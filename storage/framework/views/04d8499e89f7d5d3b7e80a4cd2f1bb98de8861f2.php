@@ -29,7 +29,6 @@
                                 <th><?php echo app('translator')->get('Name'); ?></th>
                                 <th><?php echo app('translator')->get('Weight'); ?></th>
                                 <th><?php echo app('translator')->get('Arm Pain'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs'); ?></th>
                                 <th><?php echo app('translator')->get('Pull Downs 3'); ?></th>
                                 <th><?php echo app('translator')->get('Pull Downs 4'); ?></th>
                                 <th><?php echo app('translator')->get('Pull Downs 5'); ?></th>
@@ -47,26 +46,72 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><?php echo app('translator')->get('Name'); ?></td>
-                                <td><?php echo app('translator')->get('Weight'); ?></td>
-                                <td><?php echo app('translator')->get('Arm Pain'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs 3'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs 4'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs 5'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs 6'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Downs 7'); ?></td>
-                                <td><?php echo app('translator')->get('Mound tdrows'); ?></td>
-                                <td><?php echo app('translator')->get('Long Toss'); ?></td>
-                                <td><?php echo app('translator')->get('plyo 7'); ?></td>
-                                <td><?php echo app('translator')->get('plyo 5'); ?></td>
-                                <td><?php echo app('translator')->get('plyo 3'); ?></td>
-                                <td><?php echo app('translator')->get('Mound Shuffle'); ?></td>
-                                <td><?php echo app('translator')->get('Squat'); ?></td>
-                                <td><?php echo app('translator')->get('Pull Ups'); ?></td>
-                                <td><?php echo app('translator')->get('Vertical Jump'); ?></td>
-                            </tr>
+                            <?php
+                                $j = -1;
+                            ?>
+                            <?php $__empty_1 = true; $__currentLoopData = $velocities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $velocity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php
+                                    $j++;
+                                ?>
+                                <tr>
+                                    <td><?php echo e($velocity->name); ?></td>
+                                    <?php if(isset($velocity->uservelocity[0]->id)): ?>
+                                        <?php if(isset($velocity->uservelocity[$j])): ?>
+                                            <?php if($velocity->uservelocity[$j]->velocity_id == 1): ?>
+                                                <td><?php echo e($velocity->uservelocity[$j]->value); ?></td>
+                                            <?php else: ?>
+                                                <td>0</td>
+                                            <?php endif; ?>
+                                            <?php if($velocity->uservelocity[$j]->velocity_id == 2): ?>
+                                                <td><?php echo e($velocity->uservelocity[$j]->value); ?></td>
+                                            <?php else: ?>
+                                                <td>0</td>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <td>0</td>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <td><?php echo app('translator')->get('Arm Pain'); ?></td>
+                                        <td><?php echo app('translator')->get('Arm Pain'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Downs 3'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Downs 4'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Downs 5'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Downs 6'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Downs 7'); ?></td>
+                                        <td><?php echo app('translator')->get('Mound tdrows'); ?></td>
+                                        <td><?php echo app('translator')->get('Long Toss'); ?></td>
+                                        <td><?php echo app('translator')->get('plyo 7'); ?></td>
+                                        <td><?php echo app('translator')->get('plyo 5'); ?></td>
+                                        <td><?php echo app('translator')->get('plyo 3'); ?></td>
+                                        <td><?php echo app('translator')->get('Mound Shuffle'); ?></td>
+                                        <td><?php echo app('translator')->get('Squat'); ?></td>
+                                        <td><?php echo app('translator')->get('Pull Ups'); ?></td>
+                                        <td><?php echo app('translator')->get('Vertical Jump'); ?></td>
+                                    <?php endif; ?>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                <tr>
+                                    <td><?php echo app('translator')->get('Name'); ?></td>
+                                    <td><?php echo app('translator')->get('Weight'); ?></td>
+                                    <td><?php echo app('translator')->get('Arm Pain'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs 3'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs 4'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs 5'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs 6'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Downs 7'); ?></td>
+                                    <td><?php echo app('translator')->get('Mound tdrows'); ?></td>
+                                    <td><?php echo app('translator')->get('Long Toss'); ?></td>
+                                    <td><?php echo app('translator')->get('plyo 7'); ?></td>
+                                    <td><?php echo app('translator')->get('plyo 5'); ?></td>
+                                    <td><?php echo app('translator')->get('plyo 3'); ?></td>
+                                    <td><?php echo app('translator')->get('Mound Shuffle'); ?></td>
+                                    <td><?php echo app('translator')->get('Squat'); ?></td>
+                                    <td><?php echo app('translator')->get('Pull Ups'); ?></td>
+                                    <td><?php echo app('translator')->get('Vertical Jump'); ?></td>
+                                </tr>
+                            <?php endif; ?>
+
                         </tbody>
                     </table>
                 </div>
