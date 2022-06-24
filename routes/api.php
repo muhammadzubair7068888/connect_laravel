@@ -21,8 +21,8 @@ Route::post('signin', [ApiController::class, 'signIn']);
 
 Route::middleware('auth:api')->group(function () {
     // API'S to be authenticated ...
-    Route::get('logout', function (Request $request) {
+    Route::get('signout', function (Request $request) {
         $request->user()->token()->revoke();
-        return response()->json(['success' => true, 'message' => 'You have signed out']);
+        return response()->json(['success' => true, 'message' => 'You have signed out.']);
     });
 });
