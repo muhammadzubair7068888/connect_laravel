@@ -25,4 +25,10 @@ Route::middleware('auth:api')->group(function () {
         $request->user()->token()->revoke();
         return response()->json(['success' => true, 'message' => 'You have signed out.']);
     });
+
+    Route::prefix('/profile')->group(function () {
+        Route::get('/', [ApiController::class, 'profile']);
+        Route::post('update/{id}',[ApiController::class,'update_profile']);
+        // Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
+    });
 });
