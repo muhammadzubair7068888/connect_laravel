@@ -56,20 +56,15 @@
                                 <tr>
                                     <td>{{ $velocity->name }}</td>
                                     @if (isset($velocity->uservelocity[0]->id))
-                                        @if (isset($velocity->uservelocity[$j]))
-                                            @if ($velocity->uservelocity[$j]->velocity_id == 1)
-                                                <td>{{ $velocity->uservelocity[$j]->value }}</td>
-                                            @else
-                                                <td>0</td>
-                                            @endif
-                                            @if ($velocity->uservelocity[$j]->velocity_id == 2)
-                                                <td>{{ $velocity->uservelocity[$j]->value }}</td>
-                                            @else
-                                                <td>0</td>
-                                            @endif
-                                        @else
-                                            <td>0</td>
-                                        @endif
+                                        @foreach ($velocity->uservelocity as $value)
+                                            @php
+                                                if ($value->id == 1) {
+                                                    $v = $value->value;
+                                                }
+                                                
+                                            @endphp
+                                        @endforeach
+                                        <td>{{ $v }}</td>
                                     @else
                                         <td>@lang('Arm Pain')</td>
                                         <td>@lang('Arm Pain')</td>

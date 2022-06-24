@@ -56,20 +56,15 @@
                                 <tr>
                                     <td><?php echo e($velocity->name); ?></td>
                                     <?php if(isset($velocity->uservelocity[0]->id)): ?>
-                                        <?php if(isset($velocity->uservelocity[$j])): ?>
-                                            <?php if($velocity->uservelocity[$j]->velocity_id == 1): ?>
-                                                <td><?php echo e($velocity->uservelocity[$j]->value); ?></td>
-                                            <?php else: ?>
-                                                <td>0</td>
-                                            <?php endif; ?>
-                                            <?php if($velocity->uservelocity[$j]->velocity_id == 2): ?>
-                                                <td><?php echo e($velocity->uservelocity[$j]->value); ?></td>
-                                            <?php else: ?>
-                                                <td>0</td>
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <td>0</td>
-                                        <?php endif; ?>
+                                        <?php $__currentLoopData = $velocity->uservelocity; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
+                                                if ($value->id == 1) {
+                                                    $v = $value->value;
+                                                }
+                                                
+                                            ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <td><?php echo e($v); ?></td>
                                     <?php else: ?>
                                         <td><?php echo app('translator')->get('Arm Pain'); ?></td>
                                         <td><?php echo app('translator')->get('Arm Pain'); ?></td>
