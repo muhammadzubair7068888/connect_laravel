@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Track;
 use App\Models\User;
+use App\Models\UserVelocity;
+use App\Models\Velocity;
 
 class ApiController extends Controller
 {
+
     public function signIn(Request $request)
     {
         if (Auth::attempt([
@@ -81,7 +85,7 @@ class ApiController extends Controller
         }
     }
 
-    public function index()
+    public function index_track()
     {
         try {
             $user_id  = auth()->user()->id;
@@ -100,7 +104,7 @@ class ApiController extends Controller
         }
     }
 
-    public function save(Request $request)
+    public function save_track(Request $request)
     {
         try {
             $request->validate([
@@ -129,10 +133,146 @@ class ApiController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function delete_track(Request $request)
     {
         try {
             Track::where('id', $request->track_id)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function velocities()
+    {
+        try {
+            $velocities = Velocity::where('user_type', 2)->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $velocities,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function user_velocities()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $user_velocities = UserVelocity::where('user_id', $user_id)->with('velocity_type')->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $user_velocities,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function save_velocity(Request $request)
+    {
+        try {
+            $request->validate([
+
+                'date' => 'required',
+                'value' => 'required',
+                'velocity_type' => 'required',
+            ]);
+            $user_id = auth()->user()->id;
+            $user_velocity = new UserVelocity();
+            $user_velocity->user_id = $user_id;
+            $velocity_type = Velocity::where('name', $request->velocity_type)->value('id');
+            $user_velocity->velocity_id = $velocity_type;
+            $user_velocity->date = $request->date;
+            $user_velocity->value = $request->value;
+            $user_velocity->save();
+            $response = [
+                'status' => 'success',
+                'data' => $user_velocity,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete_velocity(Request $request)
+    {
+        try {
+            $user_velocities = UserVelocity::where('id', $request->velocity_id)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function add_user(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users',
+                'height' => 'required',
+                'starting_weight' => 'required',
+                'hand_type' => 'required',
+                'age' => 'required',
+                // 'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'school' => 'required',
+                'level' => 'required',
+                'password' => 'required|confirmed|min:6',
+                'user_status' => 'required',
+            ]);
+            $user_id = auth()->user()->id;
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            // $user->dob = $request->dob;
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $foldername = 'user/profiles/';
+                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+                $file->move(public_path() . '/' . $foldername, $filename);
+                $user->avatar = $foldername . $filename;
+            }
+            $user->height = $request->height;
+            $user->starting_weight = $request->starting_weight;
+            $user->handedness = $request->hand_type;
+            $user->age = $request->age;
+            $user->school = $request->school;
+            $user->level = $request->level;
+            $user->status = $request->user_status;
+            $user->created_by = $user_id;
+            $user->save();
             $response = [
                 'status' => 'success',
             ];

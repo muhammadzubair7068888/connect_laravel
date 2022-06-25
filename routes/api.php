@@ -33,8 +33,19 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('/tracks')->group(function () {
-        Route::get('/index', [ApiController::class, 'index']);
-        Route::post('/index', [TrackController::class, 'save']);
-        Route::post('/del', [TrackController::class, 'delete']);
+        Route::get('/index', [ApiController::class, 'index_track']);
+        Route::post('/index', [ApiController::class, 'save_track']);
+        Route::post('/del', [ApiController::class, 'delete_track']);
+    });
+
+    Route::prefix('/velocity')->group(function () {
+        Route::get('/velocities', [ApiController::class, 'velocities']);
+        Route::get('/user_velocities', [ApiController::class, 'user_velocities']);
+        Route::post('/index', [ApiController::class, 'save_velocity']);
+        Route::post('/del', [ApiController::class, 'delete_velocity']);
+    });
+
+    Route::prefix('/users')->group(function () {
+        Route::post('add', [ApiController::class, 'add_user']);
     });
 });
