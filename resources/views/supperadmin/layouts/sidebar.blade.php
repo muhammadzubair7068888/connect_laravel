@@ -66,7 +66,7 @@
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="bx bx-user"></i>
-                            <span key="t-contacts">@lang('translation.Contacts')</span>
+                            <span key="t-contacts">@lang('Users')</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="{{ route('user.grid.view') }}" key="t-user-grid">@lang('translation.User_Grid')</a></li>

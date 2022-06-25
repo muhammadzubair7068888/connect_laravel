@@ -49,23 +49,66 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Steven Leicht</td>
-                                <td>leichtsteven@gmail.com</td>
-                                <td>User</td>
-                                <td>Admin</td>
-                                <td>6</td>
-                                <td>180</td>
-                                <td>date</td>
-                                <td>
-                                    <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
-                                    <a style="padding-left:10px;" class="link-success" href='#'> <i
-                                            class="fas fa-edit"></i></a>
-                                    <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
+                            @php
+                                $j = 0;
+                            @endphp
+                            @forelse ($users as $user)
+                                @php
+                                    $j++;
+                                    if ($user->last_login) {
+                                        $timestamp = strtotime($user->last_login);
+                                        $day = date('D', $timestamp);
+                                        $mounth = date('M', $timestamp);
+                                        $year = date('Y', $timestamp);
+                                        $C = ',';
+                                    } else {
+                                        $day = '';
+                                        $mounth = '';
+                                        $year = '';
+                                        $C = '';
+                                    }
+                                    
+                                @endphp
+                                <tr>
+                                    <td>{{ $j }}</td>
+                                    <td>{{ ucfirst($user->name) }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ ucfirst($user->role) }}</td>
+                                    <td>{{ ucfirst(auth()->user()->name) }}</td>
+                                    <td>{{ $user->height }}</td>
+                                    <td>{{ $user->starting_weight }}</td>
+                                    <td>{{ $day }}{{ $C }}&nbsp;{{ $mounth }}&nbsp;{{ $year }}
+                                    </td>
+                                    <td>
+                                        <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
+                                        <a style="padding-left:10px;" class="link-success"
+                                            href='{{ route('update.user', ['id' => $user->id]) }}'> <i
+                                                class="fas fa-edit"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger"
+                                            href='{{ route('delete.user', ['id' => $user->id]) }}'><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td>1</td>
+                                    <td>Steven Leicht</td>
+                                    <td>leichtsteven@gmail.com</td>
+                                    <td>User</td>
+                                    <td>Admin</td>
+                                    <td>6</td>
+                                    <td>180</td>
+                                    <td>date</td>
+                                    <td>
+                                        <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
+                                        <a style="padding-left:10px;" class="link-success" href='#'> <i
+                                                class="fas fa-edit"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -141,8 +184,7 @@
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label">@lang('Age')</label>
                                         <input type="number" name="age" value="{{ old('age') }}"
-                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
-                                            required>
+                                            class="form-control" id="validationTooltip01" placeholder="Age" required>
                                     </div>
                                 </div>
                             </div>
@@ -219,93 +261,14 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('add.user') }}" class="needs-validation"
-                        enctype='multipart/form-data' novalidate>
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="mb-3 position-relative">
-                                    <label for="validationTooltip01" class="form-label">@lang('Name')</label>
-                                    <input type="text" name="name" class="form-control" id="validationTooltip01"
-                                        placeholder="Name" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3 position-relative">
-                                    <label for="validationTooltip01" class="form-label">@lang('Email')</label>
-                                    <input type="email" name="email" class="form-control" id="validationTooltip01"
-                                        placeholder="Email" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">@lang('Role')</label>
-                                    <select id="formrow-inputState" class="form-select">
-                                        <option selected>@lang('Select Role')</option>
-                                        <option value="0">@lang('User')</option>
-                                        <option value="1">@lang('Admin')</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">@lang('Status')</label>
-                                    <select id="formrow-inputState" class="form-select">
-                                        <option selected>@lang('Select Status')</option>
-                                        <option>@lang('Banned')</option>
-                                        <option>@lang('Active')</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <h3 class="text-success">@lang('Permissions')</h3>
-                        </div>
-                        <hr>
-
-                        <div class="form-check form-check-success mb-3">
-                            <input class="large" type="checkbox" id="formCheckcolor2" checked>
-                            <label class="" for="formCheckcolor2">
-                                Checkbox Success
-                            </label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success">@lang('Invite')</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-        {{-- </div> <!-- end preview--> --}}
-    @endsection
-    @section('script')
-        <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-        {{-- <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
+    </div> <!-- end preview-->
+@endsection
+@section('script')
+    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+    {{-- <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
         <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script> --}}
-        <!-- Datatable init js -->
-        <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-        {{-- <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+    <!-- Datatable init js -->
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
         <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script> --}}
-        {{-- <script>
-            $(document).ready(function() {
-                $("input").change(function() {
-                    alert("The text has been changed.");
-                    $("p").hide();
-                });
-            });
-
-            $("#role").click(function() {
-
-            });
-        </script> --}}
-    @endsection
+@endsection

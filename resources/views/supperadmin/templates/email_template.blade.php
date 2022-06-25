@@ -35,10 +35,7 @@
             @lang('Templates')
         @endslot
     @endcomponent
-    {{-- @php
-    $template = 'test-email';
-    $templates = 'test-email';
-    @endphp --}}
+    <x-greetings />
     <div class="col-sm-12 xl-100 ">
 
         <div class="row">

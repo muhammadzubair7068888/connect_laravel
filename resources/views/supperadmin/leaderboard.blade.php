@@ -54,34 +54,76 @@
                                     $j++;
                                 @endphp
                                 <tr>
-                                    <td>{{ $velocity->name }}</td>
+                                    <td>{{ ucfirst($velocity->name) }}</td>
                                     @if (isset($velocity->uservelocity[0]->id))
-                                        @foreach ($velocity->uservelocity as $value)
-                                            @php
-                                                if ($value->id == 1) {
-                                                    $v = $value->value;
-                                                }
-                                                
-                                            @endphp
-                                        @endforeach
-                                        <td>{{ $v }}</td>
+                                        @if (isset($velocity->uservelocity[$j]->id))
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 1)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 2)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 3)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 4)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 5)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 6)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 7)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 8)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 9)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 10)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 11)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 12)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 13)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 14)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 15)->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_id', 16)->value('value') ?? 0 }}
+                                            </td>
+                                        @else
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        @endif
                                     @else
-                                        <td>@lang('Arm Pain')</td>
-                                        <td>@lang('Arm Pain')</td>
-                                        <td>@lang('Pull Downs 3')</td>
-                                        <td>@lang('Pull Downs 4')</td>
-                                        <td>@lang('Pull Downs 5')</td>
-                                        <td>@lang('Pull Downs 6')</td>
-                                        <td>@lang('Pull Downs 7')</td>
-                                        <td>@lang('Mound tdrows')</td>
-                                        <td>@lang('Long Toss')</td>
-                                        <td>@lang('plyo 7')</td>
-                                        <td>@lang('plyo 5')</td>
-                                        <td>@lang('plyo 3')</td>
-                                        <td>@lang('Mound Shuffle')</td>
-                                        <td>@lang('Squat')</td>
-                                        <td>@lang('Pull Ups')</td>
-                                        <td>@lang('Vertical Jump')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
+                                        <td>@lang('0')</td>
                                     @endif
                                 </tr>
                             @empty

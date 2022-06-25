@@ -54,34 +54,92 @@
                                     $j++;
                                 ?>
                                 <tr>
-                                    <td><?php echo e($velocity->name); ?></td>
+                                    <td><?php echo e(ucfirst($velocity->name)); ?></td>
                                     <?php if(isset($velocity->uservelocity[0]->id)): ?>
-                                        <?php $__currentLoopData = $velocity->uservelocity; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php
-                                                if ($value->id == 1) {
-                                                    $v = $value->value;
-                                                }
-                                                
-                                            ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <td><?php echo e($v); ?></td>
+                                        <?php if(isset($velocity->uservelocity[$j]->id)): ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 1)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 2)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 3)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 4)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 5)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 6)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 7)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 8)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 9)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 10)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 11)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 12)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 13)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 14)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 15)->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 16)->value('value') ?? 0); ?>
+
+                                            </td>
+                                        <?php else: ?>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        <?php endif; ?>
                                     <?php else: ?>
-                                        <td><?php echo app('translator')->get('Arm Pain'); ?></td>
-                                        <td><?php echo app('translator')->get('Arm Pain'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Downs 3'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Downs 4'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Downs 5'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Downs 6'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Downs 7'); ?></td>
-                                        <td><?php echo app('translator')->get('Mound tdrows'); ?></td>
-                                        <td><?php echo app('translator')->get('Long Toss'); ?></td>
-                                        <td><?php echo app('translator')->get('plyo 7'); ?></td>
-                                        <td><?php echo app('translator')->get('plyo 5'); ?></td>
-                                        <td><?php echo app('translator')->get('plyo 3'); ?></td>
-                                        <td><?php echo app('translator')->get('Mound Shuffle'); ?></td>
-                                        <td><?php echo app('translator')->get('Squat'); ?></td>
-                                        <td><?php echo app('translator')->get('Pull Ups'); ?></td>
-                                        <td><?php echo app('translator')->get('Vertical Jump'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
                                     <?php endif; ?>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

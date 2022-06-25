@@ -28,7 +28,7 @@
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="bx bx-user"></i>
-                            <span key="t-contacts"><?php echo app('translator')->get('translation.Contacts'); ?></span>
+                            <span key="t-contacts"><?php echo app('translator')->get('Users'); ?></span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="<?php echo e(route('user.grid.view')); ?>" key="t-user-grid"><?php echo app('translator')->get('translation.User_Grid'); ?></a></li>

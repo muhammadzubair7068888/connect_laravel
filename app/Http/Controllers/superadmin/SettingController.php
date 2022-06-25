@@ -100,7 +100,7 @@ class SettingController extends Controller
             $google_clientid = $c_id->value;
             $google_clientsecret = $s_id->value;
         }else{
-            $google_client = '';
+            $google_clientid = '';
             $google_clientsecret = '';
         }
         if($facebook){

@@ -62,23 +62,67 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Steven Leicht</td>
-                                <td>leichtsteven@gmail.com</td>
-                                <td>User</td>
-                                <td>Admin</td>
-                                <td>6</td>
-                                <td>180</td>
-                                <td>date</td>
-                                <td>
-                                    <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
-                                    <a style="padding-left:10px;" class="link-success" href='#'> <i
-                                            class="fas fa-edit"></i></a>
-                                    <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
+                            <?php
+                                $j = 0;
+                            ?>
+                            <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php
+                                    $j++;
+                                    if ($user->last_login) {
+                                        $timestamp = strtotime($user->last_login);
+                                        $day = date('D', $timestamp);
+                                        $mounth = date('M', $timestamp);
+                                        $year = date('Y', $timestamp);
+                                        $C = ',';
+                                    } else {
+                                        $day = '';
+                                        $mounth = '';
+                                        $year = '';
+                                        $C = '';
+                                    }
+                                    
+                                ?>
+                                <tr>
+                                    <td><?php echo e($j); ?></td>
+                                    <td><?php echo e(ucfirst($user->name)); ?></td>
+                                    <td><?php echo e($user->email); ?></td>
+                                    <td><?php echo e(ucfirst($user->role)); ?></td>
+                                    <td><?php echo e(ucfirst(auth()->user()->name)); ?></td>
+                                    <td><?php echo e($user->height); ?></td>
+                                    <td><?php echo e($user->starting_weight); ?></td>
+                                    <td><?php echo e($day); ?><?php echo e($C); ?>&nbsp;<?php echo e($mounth); ?>&nbsp;<?php echo e($year); ?>
+
+                                    </td>
+                                    <td>
+                                        <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
+                                        <a style="padding-left:10px;" class="link-success"
+                                            href='<?php echo e(route('update.user', ['id' => $user->id])); ?>'> <i
+                                                class="fas fa-edit"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger"
+                                            href='<?php echo e(route('delete.user', ['id' => $user->id])); ?>'><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Steven Leicht</td>
+                                    <td>leichtsteven@gmail.com</td>
+                                    <td>User</td>
+                                    <td>Admin</td>
+                                    <td>6</td>
+                                    <td>180</td>
+                                    <td>date</td>
+                                    <td>
+                                        <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
+                                        <a style="padding-left:10px;" class="link-success" href='#'> <i
+                                                class="fas fa-edit"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -152,8 +196,7 @@
                                     <div class="mb-3 position-relative">
                                         <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Age'); ?></label>
                                         <input type="number" name="age" value="<?php echo e(old('age')); ?>"
-                                            class="form-control" id="validationTooltip01" placeholder="Starting Weight"
-                                            required>
+                                            class="form-control" id="validationTooltip01" placeholder="Age" required>
                                     </div>
                                 </div>
                             </div>
@@ -230,16 +273,14 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        
-        
-    <?php $__env->stopSection(); ?>
-    <?php $__env->startSection('script'); ?>
-        <script src="<?php echo e(URL::asset('/assets/libs/datatables/datatables.min.js')); ?>"></script>
-        
-        <!-- Datatable init js -->
-        <script src="<?php echo e(URL::asset('/assets/js/pages/datatables.init.js')); ?>"></script>
-        
-        
-    <?php $__env->stopSection(); ?>
+    </div> <!-- end preview-->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('/assets/libs/datatables/datatables.min.js')); ?>"></script>
+    
+    <!-- Datatable init js -->
+    <script src="<?php echo e(URL::asset('/assets/js/pages/datatables.init.js')); ?>"></script>
+    
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/supperadmin/contacts-list.blade.php ENDPATH**/ ?>

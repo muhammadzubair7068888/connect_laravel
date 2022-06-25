@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanySetting;
 use App\Models\User;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +49,13 @@ class HomeController extends Controller
 
     public function root()
     {
+         $date = date('Y-m-d');
+        // $timestamp = strtotime($date);
+        // return $day = date('Y', $timestamp);
+        $user_id =  auth()->user()->id;
+        $admin = User::find($user_id);
+        session()->put('admin', $admin);
+        User::where('id',$user_id)->update(array('last_login'=>$date));
         return view('supperadmin.index');
         // return view('index');
     }

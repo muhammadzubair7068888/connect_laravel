@@ -11,9 +11,67 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
-    public function index(){
-        return  view('supperadmin.contacts-list');
+    // public function login(Request $req)
+    // {
+    //     return $date = now();
+    //     $admin = User::where('email', $req->email)->first();
+    //     if (!$admin || !Hash::check($req->password, $admin->password)) {
+    //         return redirect()->back()->with('error', 'Email or Password is invalid!');
+    //     } else {
+    //         session()->put('admin', $admin);
+           
+    //     }
+    //     return redirect()->route('root');
+    // }
+
+    // public function logout()
+    // {
+    //     session()->pull('admin');
+    //     return redirect()->route('login');
+    // }
+
+    public function index($id = null){
+        $get_id = $id;
+        $user_id = auth()->user()->id;
+        $users = User::where('created_by',$user_id)->latest()->get();
+        return  view('supperadmin.contacts-list',compact('users', 'get_id'));
+    }
+    public function update_user($id){
+         $user = User::find($id);
+        return view('supperadmin.update_user',compact('user'));
+    }
+    public function update_user_save(Request $request, $id){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'height' => 'required',
+            'starting_weight' => 'required',
+            'hand_type' => 'required',
+            'age' => 'required',
+            'school' => 'required',
+            'level' => 'required',
+            'role' => 'required',
+            'user_status' => 'required',
+        ]);
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->height = $request->height;
+        $user->starting_weight = $request->starting_weight;
+        $user->handedness = $request->hand_type;
+        $user->age = $request->age;
+        $user->school = $request->school;
+        $user->level = $request->level;
+        $user->role = $request->role;
+        $user->status = $request->user_status;
+        $user->save();
+        return redirect()->route('users')->with('success', 'User Successfully Update.');
+    }
+    public function delete_user($id)
+    {
+        $user = User::where('id',$id)->orWhere('created_by',$id)->delete();
+        return redirect()->route('users')->with('success', 'User Successfully Delete.');
+
     }
     public function new_user(){
         return view('supperadmin.add_new_user');
@@ -25,7 +83,7 @@ class UserController extends Controller
             'height' => 'required',
             'starting_weight' => 'required',
             'hand_type' => 'required',
-            'dob' => 'required',
+            'age' => 'required',
             'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
             'school' => 'required',
             'level' => 'required',
@@ -61,12 +119,6 @@ class UserController extends Controller
     public function leaderboard(){
         $user_id = auth()->user()->id;
         $velocities = User::where('created_by',$user_id)->get();
-      //  return $velocities[1]->uservelocity;
-    //   if($velocities[1]->uservelocity[0]->id){
-    //     return "SS";
-    //   }else{
-    //     "NNNN";
-    //   }
         return view('supperadmin.leaderboard',compact('velocities'));
     }
     public function grid_view(){

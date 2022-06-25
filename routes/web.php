@@ -23,14 +23,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+ Auth::routes();
+//Route::get('admin', [UserController::class, 'index'])->name('index');
+// Route::post('admin', [UserController::class, 'login'])->name('login');
+// Route::post('admin/logout', [UserController::class, 'logout'])->name('logout');
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::prefix('')->middleware('isAuthUser')->group(function () {
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 //Language Translation
+
 Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->name('email');
 Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
@@ -61,9 +66,11 @@ Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');
     Route::get('/new', [UserController::class, 'new_user'])->name('new.user');
     Route::post('add', [UserController::class, 'add_user'])->name('add.user');
-    Route::post('add', [UserController::class, 'add_user'])->name('add.user');
+    Route::get('/update/{id}', [UserController::class, 'update_user'])->name('update.user');
+    Route::post('/update/{id}',[UserController::class, 'update_user_save'])->name('update.user.save');
     Route::get('leaderboard',[UserController::class, 'leaderboard'])->name('leaderboard');
     Route::get('/gird/view',[UserController::class,'grid_view'])->name('user.grid.view');
+    Route::get('delete/{id}',[UserController::class,'delete_user'])->name('delete.user');
 });
 Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');
@@ -90,3 +97,4 @@ Route::prefix('/assessment')->group(function () {
     Route::post('mechanical/del',[AssessmentController::class, 'delete_mechanical'])->name('delete.mechanical');
 });
 Route::view('admin/dashboard','supperadmin.index')->name('dashboard');
+});

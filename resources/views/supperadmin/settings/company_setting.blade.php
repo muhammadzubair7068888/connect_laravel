@@ -15,6 +15,7 @@
     @endcomponent
     <div class="card">
         <div class="card-body">
+            <x-greetings />
             <form action="{{ route('company_setting') }}" method="POST" enctype="multipart/form-data"
                 class="needs-validation" novalidate>
                 @csrf
