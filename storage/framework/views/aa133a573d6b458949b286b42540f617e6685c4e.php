@@ -17,7 +17,7 @@
                         
                     </span>
                     <span class="logo-lg">
-                        
+                        <img src="<?php echo e(URL::asset('/assets/images/logo.png')); ?>" alt="" height="60">
                     </span>
                 </a>
             </div>

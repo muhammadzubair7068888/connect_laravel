@@ -220,4 +220,11 @@ class SettingController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Successfully Update.');
     }
+    public function site_setting(){
+        return view('supperadmin.settings.site_setting');
+    }
+    public function shadule_calender(){
+        return view('supperadmin.calendar');
+    }
 }
+// supperadmin.settings.site_setting

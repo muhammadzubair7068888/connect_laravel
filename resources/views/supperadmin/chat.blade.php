@@ -83,7 +83,7 @@
                                                     <i class="mdi mdi-circle font-size-10"></i>
                                                 </div>
                                                 <div class="flex-shrink-0 align-self-center me-3">
-                                                    <img src="assets/images/users/avatar-2.jpg"
+                                                    <img src="{{ asset('assets/images/users/avatar-2.jpg') }}"
                                                         class="rounded-circle avatar-xs" alt="">
                                                 </div>
 
@@ -103,7 +103,7 @@
                                                     <i class="mdi mdi-circle text-success font-size-10"></i>
                                                 </div>
                                                 <div class="flex-shrink-0 align-self-center me-3">
-                                                    <img src="assets/images/users/avatar-3.jpg"
+                                                    <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
                                                         class="rounded-circle avatar-xs" alt="">
                                                 </div>
 
@@ -144,7 +144,7 @@
                                                     <i class="mdi mdi-circle text-warning font-size-10"></i>
                                                 </div>
                                                 <div class="flex-shrink-0 align-self-center me-3">
-                                                    <img src="assets/images/users/avatar-4.jpg"
+                                                    <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
                                                         class="rounded-circle avatar-xs" alt="">
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
@@ -188,7 +188,7 @@
                                                     <i class="mdi mdi-circle text-success font-size-10"></i>
                                                 </div>
                                                 <div class="flex-shrink-0 align-self-center me-3">
-                                                    <img src="assets/images/users/avatar-6.jpg"
+                                                    <img src="{{ asset('assets/images/users/avatar-6.jpg') }}"
                                                         class="rounded-circle avatar-xs" alt="">
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">

@@ -93,31 +93,7 @@
                 <?php endif; ?>
 
                 <?php if(auth()->user()->role == 'superadmin'): ?>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-mail-send"></i>
-                            <span key="t-email"><?php echo app('translator')->get('translation.Email'); ?></span>
-                        </a>
-                        <ul class="supperadmin.sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.email-inbox" key="t-inbox"><?php echo app('translator')->get('translation.Inbox'); ?></a></li>
-                            
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <span class="badge rounded-pill badge-soft-success float-end"
-                                        key="t-new"><?php echo app('translator')->get('translation.New'); ?></span>
-                                    <span key="t-email-templates"><?php echo app('translator')->get('translation.Templates'); ?></span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="supperadmin.email-template-basic"
-                                            key="supperadmin.t-basic-action"><?php echo app('translator')->get('translation.Basic_Action'); ?></a></li>
-                                    <li><a href="supperadmin.email-template-alert"
-                                            key="t-alert-email"><?php echo app('translator')->get('translation.Alert_Email'); ?></a></li>
-                                    <li><a href="supperadmin.email-template-billing"
-                                            key="t-bill-email"><?php echo app('translator')->get('translation.Billing_Email'); ?></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    
                 <?php endif; ?>
 
                 <?php if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'): ?>
@@ -130,7 +106,7 @@
                 <?php endif; ?>
 
                 <li>
-                    <a href="supperadmin.calendar" class="waves-effect">
+                    <a href="<?php echo e(route('calendar')); ?>" class="waves-effect">
                         <i class="bx bxs-calendar-event"></i>
                         <span key="t-dashboards"><?php echo app('translator')->get('translation.Calendars'); ?></span>
                     </a>
@@ -146,17 +122,7 @@
                 <?php endif; ?>
 
                 <?php if(auth()->user()->role == 'superadmin'): ?>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-certification"></i>
-                            <span key="t-contacts"><?php echo app('translator')->get('Template'); ?></span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="<?php echo e(route('email', ['template' => 'test-email'])); ?>"
-                                    key="t-profile"><?php echo app('translator')->get('Email'); ?></a></li>
-                            
-                        </ul>
-                    </li>
+                    
                 <?php endif; ?>
 
                 <?php if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'): ?>
@@ -166,7 +132,7 @@
                             <span key="t-contacts"><?php echo app('translator')->get('Settings'); ?></span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.settings.site_setting" key="t-profile"><?php echo app('translator')->get('Site Setting'); ?></a>
+                            <li><a href="<?php echo e(route('site.setting')); ?>" key="t-profile"><?php echo app('translator')->get('Site Setting'); ?></a>
                             </li>
                             <li><a href="<?php echo e(route('show_setting')); ?>" key="t-profile"><?php echo app('translator')->get('Company Setting'); ?></a>
                             </li>
@@ -181,11 +147,12 @@
                             <span key="t-contacts"><?php echo app('translator')->get('General Settings'); ?></span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.generalsettings.language" key="t-profile"><?php echo app('translator')->get('Languages'); ?></a>
+                            <li><a href="#" key="t-profile"><?php echo app('translator')->get('Languages'); ?></a>
                             </li>
-                            <li><a href="supperadmin.generalsettings.currencie"
-                                    key="Currencies"><?php echo app('translator')->get('Currencies'); ?></a>
+                            <li><a href="#" key="Currencies"><?php echo app('translator')->get('Currencies'); ?></a>
                             </li>
+                            <li><a href="<?php echo e(route('email', ['template' => 'test-email'])); ?>"
+                                    key="t-profile"><?php echo app('translator')->get('Email'); ?></a></li>
                         </ul>
                     </li>
                 <?php endif; ?>

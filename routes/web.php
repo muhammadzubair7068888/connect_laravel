@@ -41,9 +41,12 @@ Route::post('/save-email-template/{name}', [SettingController::class, 'saveTempl
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 Route::get('/your/profile',[SettingController::class, 'profiel'])->name('profile');
 Route::post('/your/profile/{id}{',[SettingController::class, 'update_profile'])->name('update.profile');
+Route::get('site/setting',[SettingController::class,'site_setting'])->name('site.setting');
+Route::get('calendar',[SettingController::class, 'shadule_calender'])->name('calendar');
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
     Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
+  
 });
 Route::prefix('/chat')->group(function () {
     Route::get('/open', [ChatController::class, 'chat'])->name('chat');
@@ -76,7 +79,6 @@ Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');
     Route::post('/index', [TrackController::class, 'save'])->name('save.tracks');
     Route::post('/del',[TrackController::class,'delete'])->name('delete.track');
-
 });
 Route::prefix('/velocity')->group(function () {
     Route::get('/index', [VelocityController::class, 'index'])->name('velocity');
