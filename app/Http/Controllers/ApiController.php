@@ -243,7 +243,7 @@ class ApiController extends Controller
 
     public function add_user(Request $request)
     {
-        // try {
+         try {
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|unique:users',
@@ -257,16 +257,11 @@ class ApiController extends Controller
                 'password' => 'required|confirmed|min:6',
                 'user_status' => 'required',
             ]);
-        if (!$request->file('file')) {
-          return 0;
-        } 
-           // return $request->all();
             $user_id = auth()->user()->id;
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-          return  $request->files('file');
             if ($request->file('file')) {
                 $file = $request->file('file');
                 $foldername = 'user/profiles/';
@@ -287,13 +282,13 @@ class ApiController extends Controller
                 'status' => 'success',
             ];
             return response()->json($response, 200);
-        // } catch (\Throwable $th) {
-        //     $response = [
-        //         'success' => false,
-        //         'message' => $th->getMessage(),
-        //     ];
-        //     return response()->json($response, 500);
-        // }
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
     public function user_get()
     {
