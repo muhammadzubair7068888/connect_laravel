@@ -237,53 +237,56 @@ class ApiController extends Controller
         }
     }
 
+    public function user_profile(Request $request){
+        return $request->file('file');
+    }
+
     public function add_user(Request $request)
     {
         // try {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'height' => 'required',
-            'starting_weight' => 'required',
-            'hand_type' => 'required',
-            'age' => 'required',
-            //'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'school' => 'required',
-            'level' => 'required',
-            'password' => 'required|confirmed',
-            'user_status' => 'required',
-        ]);
-        // if (!$request->file_exists('file')) {
-        //     dd('no file');
-        // }
-        // return $request->all();
-        $user_id = auth()->user()->id;
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        //   return  $request->files('file');
-        if ($request->file('file')) {
-            $file = $request->file('file');
-            $foldername = 'user/profiles/';
-            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-            $file->move(public_path() . '/' . $foldername, $filename);
-            $user->avatar = $foldername . $filename;
-        }
-        $user->height = $request->height;
-        $user->starting_weight = $request->starting_weight;
-        $user->handedness = $request->hand_type;
-        $user->age = $request->age;
-        $user->school = $request->school;
-        $user->level = $request->level;
-        $user->status = $request->user_status;
-        $user->created_by = $user_id;
-        $user->role = 'User';
-        $user->save();
-        $response = [
-            'status' => 'success',
-        ];
-        return response()->json($response, 200);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users',
+                'height' => 'required',
+                'starting_weight' => 'required',
+                'hand_type' => 'required',
+                'age' => 'required',
+                //'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'school' => 'required',
+                'level' => 'required',
+                'password' => 'required|confirmed|min:6',
+                'user_status' => 'required',
+            ]);
+        if (!$request->file('file')) {
+          return 0;
+        } 
+           // return $request->all();
+            $user_id = auth()->user()->id;
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+          return  $request->files('file');
+            if ($request->file('file')) {
+                $file = $request->file('file');
+                $foldername = 'user/profiles/';
+                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+                $file->move(public_path() . '/' . $foldername, $filename);
+                $user->avatar = $foldername . $filename;
+            }
+            $user->height = $request->height;
+            $user->starting_weight = $request->starting_weight;
+            $user->handedness = $request->hand_type;
+            $user->age = $request->age;
+            $user->school = $request->school;
+            $user->level = $request->level;
+            $user->status = $request->user_status;
+            $user->created_by = $user_id;
+            $user->save();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
         // } catch (\Throwable $th) {
         //     $response = [
         //         'success' => false,
