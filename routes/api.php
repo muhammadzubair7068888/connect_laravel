@@ -25,28 +25,25 @@ Route::middleware('auth:api')->group(function () {
         $request->user()->token()->revoke();
         return response()->json(['success' => true, 'message' => 'You have signed out.']);
     });
-
     Route::prefix('/profile')->group(function () {
         Route::get('/', [ApiController::class, 'profile']);
         Route::post('/update/{id}', [ApiController::class, 'update_profile']);
         // Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
     });
-
     Route::prefix('/tracks')->group(function () {
         Route::get('/index', [ApiController::class, 'index_track']);
         Route::post('/index', [ApiController::class, 'save_track']);
         Route::post('/del', [ApiController::class, 'delete_track']);
     });
-
     Route::prefix('/velocity')->group(function () {
         Route::get('/velocities', [ApiController::class, 'velocities']);
         Route::get('/user_velocities', [ApiController::class, 'user_velocities']);
         Route::post('/index', [ApiController::class, 'save_velocity']);
         Route::post('/del', [ApiController::class, 'delete_velocity']);
     });
-
+ 
     Route::prefix('/users')->group(function () {
-        Route::post('add', [ApiController::class, 'add_user']);
+        Route::post('/add', [ApiController::class, 'add_user']);
         Route::get('/all',[ApiController::class, 'user_get']);
         Route::post('/update/{id?}', [ApiController::class, 'update_user_save']);
         Route::get('/delete/{id}',[ApiController::class, 'user_delete']);

@@ -234,6 +234,10 @@ class ApiController extends Controller
         }
     }
 
+    public function user_profile(Request $request){
+        return $request->file('file');
+    }
+
     public function add_user(Request $request)
     {
         // try {
@@ -250,8 +254,8 @@ class ApiController extends Controller
                 'password' => 'required|confirmed|min:6',
                 'user_status' => 'required',
             ]);
-        if (!$request->file_exists('file')) {
-            dd('no file');
+        if (!$request->file('file')) {
+          return 0;
         } 
            // return $request->all();
             $user_id = auth()->user()->id;
