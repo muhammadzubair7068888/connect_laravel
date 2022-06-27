@@ -26,6 +26,8 @@ class ApiController extends Controller
             $user_id = auth()->user();
             User::where('id',$user_id)->update(array('last_login' => $date));
             $user = Auth::user();
+            $user_id = auth()->user()->id;
+            User::where('id', $user_id)->update(array('last_login' => $date));
             $token = $user->createToken('api-application')->accessToken;
             $response = [
                 'status' => 'success',
@@ -324,10 +326,12 @@ class ApiController extends Controller
     {
         try {
             $user_id = auth()->user()->id;
+            $user_name = auth()->user()->name;
             $user = User::where('created_by', $user_id)->latest()->get();
             $response = [
                 'status' => 'success',
                 'data' => $user,
+                'user_name' => $user_name
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -395,7 +399,8 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function user_delete($id){
+    public function user_delete($id)
+    {
         try {
             $user = User::where('id', $id)->delete();   
             $response = [
