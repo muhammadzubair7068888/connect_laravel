@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get('admin', [UserController::class, 'index'])->name('index');
 // Route::post('admin', [UserController::class, 'login'])->name('login');
 // Route::post('admin/logout', [UserController::class, 'logout'])->name('logout');
+// \Artisan::call('passport:install');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::prefix('')->middleware('isAuthUser')->group(function () {

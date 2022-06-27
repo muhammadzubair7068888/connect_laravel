@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,10 @@ class ApiController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ])) {
+            $date = date('Y-m-d');
+           // $user = Auth::user();
+            $user_id = auth()->user();
+            User::where('id',$user_id)->update(array('last_login' => $date));
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
             $response = [
@@ -55,6 +60,30 @@ class ApiController extends Controller
     public function update_profile(Request $request, $id)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required',
+                'height' => 'required',
+                'starting_weight' => 'required',
+                'hand_type' => 'required',
+                'age' => 'required',
+                'school' => 'required',
+                'level' => 'required',
+                'user_status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            if ($request->password) {
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required|confirmed|min:6',
+                ]);
+                if ($validator->fails()) {
+                    $response = $validator->errors();
+                    return response()->json($response, 422);
+                }
+            }
             $user = User::find($id);
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
@@ -190,7 +219,6 @@ class ApiController extends Controller
     {
         try {
             $request->validate([
-
                 'date' => 'required',
                 'value' => 'required',
                 'velocity_type' => 'required',
@@ -241,9 +269,9 @@ class ApiController extends Controller
     public function add_user(Request $request)
     {
          try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'email' => 'required|unique:users',
+                'email' => 'required',
                 'height' => 'required',
                 'starting_weight' => 'required',
                 'hand_type' => 'required',
@@ -254,6 +282,10 @@ class ApiController extends Controller
                 'password' => 'required|confirmed|min:6',
                 'user_status' => 'required',
             ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
             $user_id = auth()->user()->id;
             $user = new User();
             $user->name = $request->name;
@@ -274,6 +306,7 @@ class ApiController extends Controller
             $user->level = $request->level;
             $user->status = $request->user_status;
             $user->created_by = $user_id;
+            $user->role = 'user';
             $user->save();
             $response = [
                 'status' => 'success',
@@ -294,6 +327,7 @@ class ApiController extends Controller
             $user = User::where('created_by', $user_id)->latest()->get();
             $response = [
                 'status' => 'success',
+                'data' => $user,
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -301,13 +335,13 @@ class ApiController extends Controller
                 'success' => false,
                 'message' => $th->getMessage(),
             ];
-            return response()->json($response, 500);
+            return response()->json($response, 500); 
         }
     }
-    public function update_user_save(Request $request, $id=null)
+    public function update_user_save(Request $request, $id)
     {
-        return $id;
         try {
+        
             $validator =Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required',
@@ -317,14 +351,25 @@ class ApiController extends Controller
                 'age' => 'required',
                 'school' => 'required',
                 'level' => 'required',
-                'role' => 'required',
                 'user_status' => 'required',
             ]);
             if ($validator->fails()) {
                 $response = $validator->errors();
                 return response()->json($response, 422);
             }
+            if ($request->password) {
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required|confirmed|min:6',
+                ]);
+                if ($validator->fails()) {
+                    $response = $validator->errors();
+                    return response()->json($response, 422);
+                }
+            }
             $user = User::find($id);
+            if($request->password){
+                $user->password = $request->password;
+            }
             $user->name = $request->name;
             $user->email = $request->email;
             $user->height = $request->height;
@@ -335,6 +380,7 @@ class ApiController extends Controller
             $user->level = $request->level;
             $user->role = $request->role;
             $user->status = $request->user_status;
+            $user->role = 'user';
             $user->save();
             $response = [
                 'status' => 'success',
@@ -351,7 +397,7 @@ class ApiController extends Controller
     }
     public function user_delete($id){
         try {
-            $user = User::where('id', $id)->orWhere('created_by', $id)->delete();   
+            $user = User::where('id', $id)->delete();   
             $response = [
                 'status' => 'success',
             ];
@@ -363,6 +409,68 @@ class ApiController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+    public function question()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $questionnaires = Questionnaire::where('user_id', $user_id)->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $questionnaires,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+       
+    }
+    public function save_question(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(),[
+                'question' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user_id = auth()->user()->id;
+            $question = new Questionnaire();
+            $question->user_id = $user_id;
+            $question->name = $request->question;
+            $question->save();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    public function delete_question($id){
+        try {
+            Questionnaire::where('id', $id)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+     
     }
     
 }
