@@ -9,6 +9,7 @@ use App\Models\Track;
 use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
+use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
@@ -84,7 +85,6 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
     public function index_track()
     {
         try {
@@ -103,7 +103,6 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
     public function save_track(Request $request)
     {
         try {
@@ -237,7 +236,7 @@ class ApiController extends Controller
 
     public function add_user(Request $request)
     {
-        try {
+        // try {
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|unique:users',
@@ -245,19 +244,23 @@ class ApiController extends Controller
                 'starting_weight' => 'required',
                 'hand_type' => 'required',
                 'age' => 'required',
-                // 'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+                //'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'school' => 'required',
                 'level' => 'required',
                 'password' => 'required|confirmed|min:6',
                 'user_status' => 'required',
             ]);
+        if (!$request->file_exists('file')) {
+            dd('no file');
+        } 
+           // return $request->all();
             $user_id = auth()->user()->id;
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            // $user->dob = $request->dob;
-            if ($request->hasFile('file')) {
+          return  $request->files('file');
+            if ($request->file('file')) {
                 $file = $request->file('file');
                 $foldername = 'user/profiles/';
                 $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
@@ -277,6 +280,23 @@ class ApiController extends Controller
                 'status' => 'success',
             ];
             return response()->json($response, 200);
+        // } catch (\Throwable $th) {
+        //     $response = [
+        //         'success' => false,
+        //         'message' => $th->getMessage(),
+        //     ];
+        //     return response()->json($response, 500);
+        // }
+    }
+    public function user_get()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $user = User::where('created_by', $user_id)->latest()->get();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
         } catch (\Throwable $th) {
             $response = [
                 'success' => false,
@@ -285,4 +305,65 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
+    public function update_user_save(Request $request, $id=null)
+    {
+        return $id;
+        try {
+            $validator =Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required',
+                'height' => 'required',
+                'starting_weight' => 'required',
+                'hand_type' => 'required',
+                'age' => 'required',
+                'school' => 'required',
+                'level' => 'required',
+                'role' => 'required',
+                'user_status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->height = $request->height;
+            $user->starting_weight = $request->starting_weight;
+            $user->handedness = $request->hand_type;
+            $user->age = $request->age;
+            $user->school = $request->school;
+            $user->level = $request->level;
+            $user->role = $request->role;
+            $user->status = $request->user_status;
+            $user->save();
+            $response = [
+                'status' => 'success',
+                'data' => $user,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    public function user_delete($id){
+        try {
+            $user = User::where('id', $id)->orWhere('created_by', $id)->delete();   
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
 }
