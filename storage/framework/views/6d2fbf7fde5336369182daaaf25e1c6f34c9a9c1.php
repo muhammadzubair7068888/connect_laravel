@@ -3,9 +3,12 @@
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('Physical Assessment'); ?>
 <?php $__env->stopSection(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<?php $__env->startSection('css'); ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link href="<?php echo e(URL::asset('/assets/libs/select2/select2.min.css')); ?>" rel="stylesheet" type="text/css" />
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <?php $__env->startComponent('components.breadcrumb'); ?>
         <?php $__env->slot('li_1'); ?>
@@ -75,13 +78,21 @@
                                             <?php echo e($phy->status == 3 ? 'checked' : ''); ?>
 
                                             onclick="status_change(<?php echo e($phy->id); ?>,<?php echo e(3); ?>)" /></td>
-                                    <td style="text-align:center;">
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"
-                                                onclick="delete_ph_assessment(<?php echo e($phy); ?>)"></i></a>
-                                        <a style="padding-left:10px;" class="link-info" href='#'><i
-                                                class="fas fa-share"></i></a>
-                                    </td>
+                                    <?php if($phy->parent_id): ?>
+                                        <td>
+
+                                        </td>
+                                    <?php else: ?>
+                                        <td style="text-align:center;">
+                                            <a style="padding-left:10px;" class="link-danger" href='#'><i
+                                                    class="fas fa-trash-alt"
+                                                    onclick="delete_ph_assessment(<?php echo e($phy); ?>)"></i></a>
+                                            <a style="padding-left:10px;" class="link-info" href='#'><i
+                                                    class="fas fa-share"
+                                                    onclick="shair_phy_assessment(<?php echo e($phy); ?>)"></i></a>
+                                        </td>
+                                    <?php endif; ?>
+
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <?php endif; ?>
@@ -157,6 +168,43 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><?php echo app('translator')->get('Shair Physical Assessment'); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="shair_form" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <input type="hidden" id="shair_id" name="physical_id">
+                                    <label class="form-label"><?php echo app('translator')->get('Select Admin'); ?></label>
+                                    <select class="form-control select2" name="user">
+                                        <option>Select</option>
+                                        <optgroup label="Admin">
+                                            <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                            <?php endif; ?>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end preview-->
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js')); ?>"></script>
@@ -167,13 +215,37 @@
     <script src="<?php echo e(URL::asset('/assets/libs/pdfmake/pdfmake.min.js')); ?>"></script>
     <!-- Datatable init js -->
     <script src="<?php echo e(URL::asset('/assets/js/pages/datatables.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/select2/select2.min.js')); ?>"></script>
 
     <script>
         function delete_ph_assessment(phy) {
-
             $('#delete_id').val(phy.id);
             $('#staticBackdrop').modal('show');
         }
+
+        function shair_phy_assessment(phy) {
+            $('#shair_id').val(phy.id);
+            $('#sahir_exampleModal').modal('show');
+        }
+        $('#shair_form').on('submit', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            alert(form_data);
+            $.ajax({
+                url: "<?php echo e(route('shair.pysical')); ?>",
+                method: "POST",
+                data: form_data,
+                dataType: "json",
+                success: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Saved", "Status SuccessFully Change", "success");
+                },
+                error: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Not Saved", "Status SuccessFully Change", "error");
+                }
+            })
+        });
 
         function status_change(id, status) {
             var s_data = status;

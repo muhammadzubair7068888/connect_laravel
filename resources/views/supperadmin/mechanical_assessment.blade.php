@@ -3,9 +3,11 @@
 @section('title')
     @lang('Mechanical Assessment')
 @endsection
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+@section('css')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+@endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
@@ -59,13 +61,21 @@
                                     <td><input type="radio" name="{{ $mach->id }}" id=""
                                             {{ $mach->status == 3 ? 'checked' : '' }}
                                             onclick="status_change({{ $mach->id }},{{ 3 }})" /></td>
-                                    <td style="text-align:center;">
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"
-                                                onclick="delete_mh_assessment({{ $mach }})"></i></a>
-                                        <a style="padding-left:10px;" class="link-info" href='#'><i
-                                                class="fas fa-share"></i></a>
-                                    </td>
+                                    @if ($mach->parent_id)
+                                        <td style="text-align:center;">
+
+                                        </td>
+                                    @else
+                                        <td style="text-align:center;">
+                                            <a style="padding-left:10px;" class="link-danger" href='#'><i
+                                                    class="fas fa-trash-alt"
+                                                    onclick="delete_mh_assessment({{ $mach }})"></i></a>
+                                            <a style="padding-left:10px;" class="link-info" href='#'><i
+                                                    class="fas fa-share"
+                                                    onclick="shair_mach_assessment({{ $mach }})"></i></a>
+                                        </td>
+                                    @endif
+
                                 </tr>
                             @empty
                             @endforelse
@@ -141,6 +151,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@lang('Shair Physical Assessment')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="shair_form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <input type="hidden" id="shair_id" name="mechanical_id">
+                                    <label class="form-label">@lang('Select Admin')</label>
+                                    <select class="form-control select2" name="user">
+                                        <option>Select</option>
+                                        <optgroup label="Admin">
+                                            @forelse ($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end preview-->
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
@@ -157,6 +203,30 @@
             $('#delete_id').val(mach.id);
             $('#staticBackdrop').modal('show');
         }
+
+        function shair_mach_assessment(mach) {
+            $('#shair_id').val(mach.id);
+            $('#sahir_exampleModal').modal('show');
+        }
+
+        $('#shair_form').on('submit', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            $.ajax({
+                url: "{{ route('shair.mechanical') }}",
+                method: "POST",
+                data: form_data,
+                dataType: "json",
+                success: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Saved", "Successfully Shair", "success");
+                },
+                error: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Not Saved", "Somethings is wrong", "error");
+                }
+            })
+        });
 
         function status_change(id, status) {
             var s_data = status;
