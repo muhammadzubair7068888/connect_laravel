@@ -22,9 +22,8 @@ class ApiController extends Controller
             'password' => $request->password,
         ])) {
             $date = date('Y-m-d');
-           // $user = Auth::user();
             $user_id = auth()->user()->id;
-            User::where('id',$user_id)->update(array('last_login' => $date));
+            User::where('id', $user_id)->update(['last_login' => $date]);
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
             $response = [
@@ -262,13 +261,14 @@ class ApiController extends Controller
         }
     }
 
-    public function user_profile(Request $request){
+    public function user_profile(Request $request)
+    {
         return $request->file('file');
     }
 
     public function add_user(Request $request)
     {
-         try {
+        try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required',
@@ -337,14 +337,14 @@ class ApiController extends Controller
                 'success' => false,
                 'message' => $th->getMessage(),
             ];
-            return response()->json($response, 500); 
+            return response()->json($response, 500);
         }
     }
     public function update_user_save(Request $request, $id)
     {
         try {
-        
-            $validator =Validator::make($request->all(), [
+
+            $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required',
                 'height' => 'required',
@@ -369,7 +369,14 @@ class ApiController extends Controller
                 }
             }
             $user = User::find($id);
-            if($request->password){
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $foldername = 'user/profiles/';
+                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+                $file->move(public_path() . '/' . $foldername, $filename);
+                $user->avatar = $foldername . $filename;
+            }
+            if ($request->password) {
                 $user->password = $request->password;
             }
             $user->name = $request->name;
@@ -400,7 +407,7 @@ class ApiController extends Controller
     public function user_delete($id)
     {
         try {
-            $user = User::where('id', $id)->delete();   
+            $user = User::where('id', $id)->delete();
             $response = [
                 'status' => 'success',
             ];
@@ -430,12 +437,11 @@ class ApiController extends Controller
             ];
             return response()->json($response, 500);
         }
-       
     }
     public function save_question(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(),[
+            $validator = Validator::make($request->all(), [
                 'question' => 'required',
             ]);
             if ($validator->fails()) {
@@ -459,7 +465,8 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function delete_question($id){
+    public function delete_question($id)
+    {
         try {
             Questionnaire::where('id', $id)->delete();
             $response = [

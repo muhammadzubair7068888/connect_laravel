@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('created_by')->nullable();
             $table->string('last_login')->nullable();
             $table->enum('status', [0, 1])->default(1);
-            $table->enum('can_create',[0,1])->default(0);
+            $table->enum('can_create', [0, 1])->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

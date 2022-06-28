@@ -43,14 +43,14 @@ Route::middleware('auth:api')->group(function () {
     });
     Route::prefix('/users')->group(function () {
         Route::post('/add', [ApiController::class, 'add_user']);
-        Route::get('/all',[ApiController::class, 'user_get']);
+        Route::get('/all', [ApiController::class, 'user_get']);
         Route::post('/update/{id}', [ApiController::class, 'update_user_save']);
-        Route::get('/delete/{id}',[ApiController::class, 'user_delete']);
+        Route::post('/delete/{id}', [ApiController::class, 'user_delete']);
     });
     Route::prefix('/questionnaire')->group(function () {
         Route::get('/index', [ApiController::class, 'question']);
         Route::post('/save', [ApiController::class, 'save_question']);
-        Route::get('/del/{id}', [ApiController::class, 'delete_question']);
+        Route::post('/del/{id}', [ApiController::class, 'delete_question']);
     });
     // Route::prefix('/assessment')->groupt(function (){
     //     Route::post('/assessment/physical',[ApiController::class,'save_physical']);
