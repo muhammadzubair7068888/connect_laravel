@@ -9,4 +9,8 @@ class Questionnaire extends Model
 {
     use HasFactory;
     protected $table = "questionnaires";
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

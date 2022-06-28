@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('status')->comment('Acceptable = 1 , Caution = 2 , Opportunity = 3')->nullable();
+            $table->string('status')->comment('Acceptable = 1 , Caution = 2 , Opportunity = 3')->default(0);
             $table->timestamps();
         });
     }

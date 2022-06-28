@@ -75,6 +75,8 @@ Route::prefix('/users')->group(function () {
     Route::get('leaderboard',[UserController::class, 'leaderboard'])->name('leaderboard');
     Route::get('/gird/view',[UserController::class,'grid_view'])->name('user.grid.view');
     Route::get('delete/{id}',[UserController::class,'delete_user'])->name('delete.user');
+    Route::get('/view/{id}', [UserController::class, 'user_view'])->name('user.view');
+
 });
 Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');
@@ -98,6 +100,8 @@ Route::prefix('/assessment')->group(function () {
     Route::get('/mechanical', [AssessmentController::class, 'mechanical'])->name('mechanical');
     Route::post('/mechanical', [AssessmentController::class, 'add_mechanical'])->name('add.mechanical');
     Route::post('mechanical/del',[AssessmentController::class, 'delete_mechanical'])->name('delete.mechanical');
+    Route::get('/update/phy/{id}/{status}', [AssessmentController::class, 'physical_update_status'])->name('physical.update.status');
+    Route::get('/update/mach/{id}/{status}', [AssessmentController::class, 'mechanical_update_status'])->name('mechanical.update.status');    
 });
 Route::view('admin/dashboard','supperadmin.index')->name('dashboard');
 });

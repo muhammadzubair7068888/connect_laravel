@@ -3,8 +3,9 @@
 @section('title')
     @lang('Mechanical Assessment')
 @endsection
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
@@ -21,8 +22,8 @@
                     <x-greetings />
                     <div class="d-flex flex-wrap gap-3">
                         <div>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                data-bs-whatever="@mdo">@lang('New Label')</button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">@lang('New Label')</button>
                         </div>
                     </div>
                     <br>
@@ -31,8 +32,11 @@
                             <tr>
                                 <th class="col-1">@lang('#')</th>
                                 <th>@lang('Label')</th>
-                                {{-- <th>@lang('status')</th> --}}
+                                <th class="col-1">@lang('Acceptable')</th>
+                                <th class="col-1">@lang('Caution')</th>
+                                <th class="col-1">@lang('Opportunity')</th>
                                 <th class="col-1">@lang('Action')</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +50,15 @@
                                 <tr>
                                     <td>{{ $j }}</td>
                                     <td>{{ $mach->name }}</td>
+                                    <td><input type="radio" name="{{ $mach->id }}" id=""
+                                            {{ $mach->status == 1 ? 'checked' : '' }}
+                                            onclick="status_change({{ $mach->id }},{{ 1 }})" /></td>
+                                    <td><input type="radio" name="{{ $mach->id }}" id=""
+                                            {{ $mach->status == 2 ? 'checked' : '' }}
+                                            onclick="status_change({{ $mach->id }},{{ 2 }})" /></td>
+                                    <td><input type="radio" name="{{ $mach->id }}" id=""
+                                            {{ $mach->status == 3 ? 'checked' : '' }}
+                                            onclick="status_change({{ $mach->id }},{{ 3 }})" /></td>
                                     <td style="text-align:center;">
                                         <a style="padding-left:10px;" class="link-danger" href='#'><i
                                                 class="fas fa-trash-alt"
@@ -55,36 +68,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td>{{ $j }}</td>
-                                    <td>Systems Administrator</td>
-                                    <td style="text-align:center;">
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"></i></a>
-                                        <a style="padding-left:10px;" class="link-info" href='#'><i
-                                                class="fas fa-share"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $j }}</td>
-                                    <td>Software Engineer</td>
-                                    <td style="text-align:center;">
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"></i></a>
-                                        <a style="padding-left:10px;" class="link-info" href='#'><i
-                                                class="fas fa-share"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $j }}</td>
-                                    <td>Personnel Lead</td>
-                                    <td style="text-align:center;">
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"></i></a>
-                                        <a style="padding-left:10px;" class="link-info" href='#'><i
-                                                class="fas fa-share"></i></a>
-                                    </td>
-                                </tr>
                             @endforelse
 
                         </tbody>
@@ -173,6 +156,22 @@
         function delete_mh_assessment(mach) {
             $('#delete_id').val(mach.id);
             $('#staticBackdrop').modal('show');
+        }
+
+        function status_change(id, status) {
+            var s_data = status;
+            $.ajax({
+                url: "{{ url('assessment/update/mach') }}" + "/" + id + "/" + status,
+                type: "GET",
+                data: {},
+                dataType: "json",
+                success: function(response) {
+                    swal("Saved", "Status SuccessFully Change", "success")
+                },
+                error: function(response) {
+                    alert("Failed")
+                }
+            });
         }
     </script>
 @endsection

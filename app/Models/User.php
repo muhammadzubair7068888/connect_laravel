@@ -47,4 +47,22 @@ class User extends Authenticatable
     public function uservelocity(){
         return $this->hasMany(UserVelocity::class);
     }
+    public function scopeWithUser($query)
+    {
+        $query->with('physical_assessment');
+        $query->with('mechanica_assessment');
+        $query->with('question');
+    }
+    public function physical_assessment()
+    {
+        return $this->hasMany(PhysicalAssessment::class);
+    }
+    public function mechanica_assessment()
+    {
+        return $this->hasMany(MechanicalAssessment::class);
+    }
+    public function question()
+    {
+        return $this->hasMany(Questionnaire::class);
+    }
 }

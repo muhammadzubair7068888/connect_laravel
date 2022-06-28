@@ -23,11 +23,9 @@ class ApiController extends Controller
         ])) {
             $date = date('Y-m-d');
            // $user = Auth::user();
-            $user_id = auth()->user();
+            $user_id = auth()->user()->id;
             User::where('id',$user_id)->update(array('last_login' => $date));
             $user = Auth::user();
-            $user_id = auth()->user()->id;
-            User::where('id', $user_id)->update(array('last_login' => $date));
             $token = $user->createToken('api-application')->accessToken;
             $response = [
                 'status' => 'success',
@@ -475,7 +473,5 @@ class ApiController extends Controller
             ];
             return response()->json($response, 500);
         }
-     
     }
-    
 }

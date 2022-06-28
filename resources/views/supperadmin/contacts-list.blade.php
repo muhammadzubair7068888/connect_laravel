@@ -80,7 +80,8 @@
                                     <td>{{ $day }}{{ $C }}&nbsp;{{ $mounth }}&nbsp;{{ $year }}
                                     </td>
                                     <td>
-                                        <a href='#' class="link-primary"> <i class="fa fa-eye"></i></a>
+                                        <a href='{{ route('user.view', ['id' => $user->id]) }}' class="link-primary"> <i
+                                                class="fa fa-eye"></i></a>
                                         <a style="padding-left:10px;" class="link-success"
                                             href='{{ route('update.user', ['id' => $user->id]) }}'> <i
                                                 class="fas fa-edit"></i></a>

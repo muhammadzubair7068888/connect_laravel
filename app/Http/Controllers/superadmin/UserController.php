@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MechanicalAssessment;
+use App\Models\PhysicalAssessment;
+use App\Models\Questionnaire;
 use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
@@ -114,6 +117,37 @@ class UserController extends Controller
         $user->status = $request->user_status;
         $user->created_by = $user_id; 
         $user->save();
+        if($user->role == 'user'){
+            $phy_assessment = PhysicalAssessment::where('user_id',$user_id)->get();
+            if($phy_assessment){
+                foreach ($phy_assessment as $phy) {
+                    $user_phy_assessment = new PhysicalAssessment();
+                    $user_phy_assessment->user_id = $user->id;
+                    $user_phy_assessment->name = $phy->name;
+                    $user_phy_assessment->status = 0;
+                    $user_phy_assessment->save();
+                }
+            }
+            $mach_assessment = MechanicalAssessment::where('user_id',$user_id)->get();
+            if($mach_assessment){
+                foreach ($mach_assessment as $mach) {
+                    $user_mach_assessment = new MechanicalAssessment();
+                    $user_mach_assessment->user_id = $user->id;
+                    $user_mach_assessment->name = $mach_assessment->name;
+                    $user->mach_assessment->status = 0;
+                    $user_mach_assessment->save();
+                }
+            }
+            $questions = Questionnaire::where('user_id',$user_id)->get();
+            if($questions){
+                foreach($questions as $question){
+                    $user_question = new Questionnaire();
+                    $user_question->name = $$question->name;
+                    $user_question->user_id = $user->id;
+                    $user_question->save();
+                }
+            }
+        }
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }
     public function leaderboard(){
@@ -125,5 +159,9 @@ class UserController extends Controller
         $user_id = auth()->user()->id;
         $users=User::where('created_by',$user_id)->latest()->get();
         return view('supperadmin.contacts-grid',compact('users'));
+    }
+    public function user_view($id){
+         $user = User::where('id',$id)->first();
+        return view('supperadmin.user_view',compact('user'));
     }
 }

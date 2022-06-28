@@ -52,4 +52,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/save', [ApiController::class, 'save_question']);
         Route::get('/del/{id}', [ApiController::class, 'delete_question']);
     });
+    // Route::prefix('/assessment')->groupt(function (){
+    //     Route::post('/assessment/physical',[ApiController::class,'save_physical']);
+    // });
 });
