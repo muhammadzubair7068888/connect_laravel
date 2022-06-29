@@ -1,18 +1,13 @@
-@extends('layouts.master')
 
-@section('title')
-    @lang('translation.Chartjs_Charts')
-@endsection
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            Charts
-        @endslot
-        @slot('title')
-            Chartjs Charts
-        @endslot
-    @endcomponent
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.Chartjs_Charts'); ?> <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?> Charts <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?> Chartjs Charts <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-xl-6">
@@ -180,9 +175,12 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-@endsection
-@section('script')
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <!-- Chart JS -->
-    <script src="{{ URL::asset('/assets/libs/chart-js/chart-js.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/chartjs.init.js') }}"></script>
-@endsection
+    <script src="<?php echo e(URL::asset('/assets/libs/chart-js/chart-js.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/js/pages/chartjs.init.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/charts-chartjs.blade.php ENDPATH**/ ?>

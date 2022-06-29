@@ -17,7 +17,7 @@
         <div class="card-body">
             <x-greetings />
             <form action="{{ route('update.user.save', ['id' => $user->id]) }}" method="post" class="needs-validation"
-                novalidate>
+                enctype='multipart/form-data' novalidate>
                 @csrf
                 <div class="mb-3">
                     <div class="text-start mt-2">
@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label">@lang('Picture')</label>
-                            <input type="file" name="file" class="form-control" id="" placeholder="Name">
+                            <input type="file" name="file" class="form-control">
                             <div class="valid-feedback">
                                 @lang('Looks good!')
                             </div>

@@ -10,6 +10,7 @@ use App\Models\PluginAttributes;
 use App\Models\User;
 use CodeZero\DotEnvUpdater\DotEnvUpdater;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
@@ -201,6 +202,21 @@ class SettingController extends Controller
     }
     public function update_profile(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'height' => 'required',
+            'starting_weight' => 'required',
+            'hand_type' => 'required',
+            'age' => 'required',
+            'file' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'school' => 'required',
+            'level' => 'required',
+        ]);
+        if($request->password){
+            $request->validate([
+                'password' => 'required|confirmed|min:6',
+            ]);
+        }
         $user = User::find($id);
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -208,6 +224,9 @@ class SettingController extends Controller
             $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
             $file->move(public_path() . '/' . $foldername, $filename);
             $user->avatar = $foldername . $filename;
+        }
+        if($request->password){
+            $user->password = Hash::make($request->password);
         }
         $user->name = $request->name;
         $user->height = $request->height;

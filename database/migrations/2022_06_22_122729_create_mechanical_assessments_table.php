@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('mechanical_assessments', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('parent_id')->nullable();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('status')->comment('Acceptable = 1 , Caution = 2 , Opportunity = 3')->nullable();

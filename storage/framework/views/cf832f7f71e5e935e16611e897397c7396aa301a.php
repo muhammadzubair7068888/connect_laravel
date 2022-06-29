@@ -31,7 +31,7 @@
 <?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
 <?php endif; ?>
             <form action="<?php echo e(route('update.user.save', ['id' => $user->id])); ?>" method="post" class="needs-validation"
-                novalidate>
+                enctype='multipart/form-data' novalidate>
                 <?php echo csrf_field(); ?>
                 <div class="mb-3">
                     <div class="text-start mt-2">
@@ -43,7 +43,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label"><?php echo app('translator')->get('Picture'); ?></label>
-                            <input type="file" name="file" class="form-control" id="" placeholder="Name">
+                            <input type="file" name="file" class="form-control">
                             <div class="valid-feedback">
                                 <?php echo app('translator')->get('Looks good!'); ?>
                             </div>

@@ -32,8 +32,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::prefix('')->middleware('isAuthUser')->group(function () {
 //Update User Details
-Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+// Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+// Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 //Language Translation
 
@@ -102,6 +102,8 @@ Route::prefix('/assessment')->group(function () {
     Route::post('mechanical/del',[AssessmentController::class, 'delete_mechanical'])->name('delete.mechanical');
     Route::get('/update/phy/{id}/{status}', [AssessmentController::class, 'physical_update_status'])->name('physical.update.status');
     Route::get('/update/mach/{id}/{status}', [AssessmentController::class, 'mechanical_update_status'])->name('mechanical.update.status');    
+    Route::post('/shair/physical',[AssessmentController::class, 'shair_physical_assessment'])->name('shair.pysical');
+    Route::post('/shair/mechanical', [AssessmentController::class, 'shair_mechanical_assessment'])->name('shair.mechanical');
 });
 Route::view('admin/dashboard','supperadmin.index')->name('dashboard');
 });

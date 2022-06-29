@@ -57,6 +57,13 @@ class UserController extends Controller
             'user_status' => 'required',
         ]);
         $user = User::find($id);
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $foldername = 'user/profiles/';
+            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+            $file->move(public_path() . '/' . $foldername, $filename);
+            $user->avatar = $foldername . $filename;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->height = $request->height;
@@ -117,42 +124,44 @@ class UserController extends Controller
         $user->status = $request->user_status;
         $user->created_by = $user_id; 
         $user->save();
-        if($user->role == 'user'){
-            $phy_assessment = PhysicalAssessment::where('user_id',$user_id)->get();
-            if($phy_assessment){
-                foreach ($phy_assessment as $phy) {
-                    $user_phy_assessment = new PhysicalAssessment();
-                    $user_phy_assessment->user_id = $user->id;
-                    $user_phy_assessment->name = $phy->name;
-                    $user_phy_assessment->status = 0;
-                    $user_phy_assessment->save();
-                }
+        $phy_assessment = PhysicalAssessment::where('user_id',$user_id)->get();
+        if($phy_assessment){
+            foreach ($phy_assessment as $phy) {
+                $user_phy_assessment = new PhysicalAssessment();
+                $user_phy_assessment->user_id = $user->id;
+                $user_phy_assessment->name = $phy->name;
+                $user_phy_assessment->status = 0;
+                $user_phy_assessment->save();
             }
-            $mach_assessment = MechanicalAssessment::where('user_id',$user_id)->get();
-            if($mach_assessment){
-                foreach ($mach_assessment as $mach) {
-                    $user_mach_assessment = new MechanicalAssessment();
-                    $user_mach_assessment->user_id = $user->id;
-                    $user_mach_assessment->name = $mach_assessment->name;
-                    $user->mach_assessment->status = 0;
-                    $user_mach_assessment->save();
-                }
+        }
+        $mach_assessment = MechanicalAssessment::where('user_id',$user_id)->get();
+        if($mach_assessment){
+            foreach ($mach_assessment as $mach) {
+                $user_mach_assessment = new MechanicalAssessment();
+                $user_mach_assessment->user_id = $user->id;
+                $user_mach_assessment->name = $mach->name;
+                $user_mach_assessment->status = 0;
+                $user_mach_assessment->save();
             }
-            $questions = Questionnaire::where('user_id',$user_id)->get();
-            if($questions){
-                foreach($questions as $question){
-                    $user_question = new Questionnaire();
-                    $user_question->name = $$question->name;
-                    $user_question->user_id = $user->id;
-                    $user_question->save();
-                }
+        }
+        $questions = Questionnaire::where('user_id',$user_id)->get();
+        if($questions){
+            foreach($questions as $question){
+                $user_question = new Questionnaire();
+                $user_question->name = $$question->name;
+                $user_question->user_id = $user->id;
+                $user_question->save();
             }
         }
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }
     public function leaderboard(){
         $user_id = auth()->user()->id;
-        $velocities = User::where('created_by',$user_id)->get();
+        if(auth()->user()->role == 'admin' || auth()->user()->role == 'admin'){
+            $velocities = User::where('created_by', $user_id)->get();
+        }else{
+            $velocities = User::where('id', $user_id)->get();
+        }
         return view('supperadmin.leaderboard',compact('velocities'));
     }
     public function grid_view(){
@@ -161,7 +170,7 @@ class UserController extends Controller
         return view('supperadmin.contacts-grid',compact('users'));
     }
     public function user_view($id){
-         $user = User::where('id',$id)->first();
+        $user = User::where('id',$id)->first();
         return view('supperadmin.user_view',compact('user'));
     }
 }

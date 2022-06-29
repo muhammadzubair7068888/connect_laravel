@@ -11,7 +11,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+  //  protected $with = ['physical_assessment', 'mechanica_assessment', 'question'];
     /**
      * The attributes that are mass assignable.
      *
@@ -50,14 +50,14 @@ class User extends Authenticatable
     public function scopeWithUser($query)
     {
         $query->with('physical_assessment');
-        $query->with('mechanica_assessment');
+        $query->with('mechanical_assessment');
         $query->with('question');
     }
     public function physical_assessment()
     {
         return $this->hasMany(PhysicalAssessment::class);
     }
-    public function mechanica_assessment()
+    public function mechanical_assessment()
     {
         return $this->hasMany(MechanicalAssessment::class);
     }
