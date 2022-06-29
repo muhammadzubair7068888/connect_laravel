@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Track;
+use App\Models\MechanicalAssessment;
+use App\Models\PhysicalAssessment;
 use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
@@ -308,6 +310,37 @@ class ApiController extends Controller
             $user->created_by = $user_id;
             $user->role = 'user';
             $user->save();
+            // if ($user->role == 'user') {
+            //     $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
+            //     if ($phy_assessment) {
+            //         foreach ($phy_assessment as $phy) {
+            //             $user_phy_assessment = new PhysicalAssessment();
+            //             $user_phy_assessment->user_id = $user->id;
+            //             $user_phy_assessment->name = $phy->name;
+            //             $user_phy_assessment->status = 0;
+            //             $user_phy_assessment->save();
+            //         }
+            //     }
+            //     $mach_assessment = MechanicalAssessment::where('user_id', $user_id)->get();
+            //     if ($mach_assessment) {
+            //         foreach ($mach_assessment as $mach) {
+            //             $user_mach_assessment = new MechanicalAssessment();
+            //             $user_mach_assessment->user_id = $user->id;
+            //             $user_mach_assessment->name = $mach_assessment->name;
+            //             $user->mach_assessment->status = 0;
+            //             $user_mach_assessment->save();
+            //         }
+            //     }
+            //     $questions = Questionnaire::where('user_id', $user_id)->get();
+            //     if ($questions) {
+            //         foreach ($questions as $question) {
+            //             $user_question = new Questionnaire();
+            //             $user_question->name = $$question->name;
+            //             $user_question->user_id = $user->id;
+            //             $user_question->save();
+            //         }
+            //     }
+            // }
             $response = [
                 'status' => 'success',
             ];
@@ -471,6 +504,228 @@ class ApiController extends Controller
             Questionnaire::where('id', $id)->delete();
             $response = [
                 'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function phyiscal()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $physical = PhysicalAssessment::where('user_id', $user_id)->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $physical,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function add_phyiscal(Request $request)
+    {
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'label' => 'required',
+                // 'status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user_id = auth()->user()->id;
+            $physical = new PhysicalAssessment();
+            $physical->user_id = $user_id;
+            $physical->name = $request->label;
+            $physical->status = 1;
+            $physical->save();
+            $his_users = User::where('created_by', $user_id)->where('role', 'user')->get();
+            if ($his_users) {
+                foreach ($his_users as $user) {
+                    $user_phy_assessment = new PhysicalAssessment();
+                    $user_phy_assessment->name = $request->label;
+                    $user_phy_assessment->user_id = $user->id;
+                    $user_phy_assessment->status = 0;
+                    $user_phy_assessment->save();
+                }
+            }
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete_phyiscal(Request $request)
+    {
+        try {
+            $physical = PhysicalAssessment::where('id', $request->physical_id)->first();
+            PhysicalAssessment::where('name', $physical->name)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function physical_update_status(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            PhysicalAssessment::where('id', $request->id)->update(array('status' => $request->status));
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function mechanical()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $mechaniacl = MechanicalAssessment::where('user_id', $user_id)->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $mechaniacl,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function add_mechanical(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'label' => 'required',
+                // 'status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user_id = auth()->user()->id;
+            $mechaniacl = new MechanicalAssessment();
+            $mechaniacl->user_id = $user_id;
+            $mechaniacl->name = $request->label;
+            $mechaniacl->status = 1;
+            $mechaniacl->save();
+            $his_users = User::where('created_by', $user_id)->where('role', 'user')->get();
+            if ($his_users) {
+                foreach ($his_users as $user) {
+                    $user_mach_assessment = new MechanicalAssessment();
+                    $user_mach_assessment->name = $request->label;
+                    $user_mach_assessment->user_id = $user->id;
+                    $user_mach_assessment->status = 0;
+                    $user_mach_assessment->save();
+                }
+            }
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete_mechanical(Request $request)
+    {
+        try {
+            $mechaniacl = MechanicalAssessment::where('id', $request->mechanical_id)->first();
+            MechanicalAssessment::where('name', $mechaniacl->name)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function mechanical_update_status(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'status' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            MechanicalAssessment::where('id', $request->id)->update(array('status' => $request->status));
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    public function user_view($id)
+    {
+        try {
+            $user = User::where('id', $id)->WithUser()->first();
+            $response = [
+                'status' => 'success',
+                'data' => $user,
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {

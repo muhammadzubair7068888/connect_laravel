@@ -43,6 +43,7 @@ Route::middleware('auth:api')->group(function () {
     });
     Route::prefix('/users')->group(function () {
         Route::post('/add', [ApiController::class, 'add_user']);
+        Route::get('/view/{id}', [ApiController::class, 'user_view']);
         Route::get('/all', [ApiController::class, 'user_get']);
         Route::post('/update/{id}', [ApiController::class, 'update_user_save']);
         Route::post('/delete/{id}', [ApiController::class, 'user_delete']);
@@ -52,7 +53,14 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/save', [ApiController::class, 'save_question']);
         Route::post('/del/{id}', [ApiController::class, 'delete_question']);
     });
-    // Route::prefix('/assessment')->groupt(function (){
-    //     Route::post('/assessment/physical',[ApiController::class,'save_physical']);
-    // });
+    Route::prefix('/assessment')->group(function () {
+        Route::get('/physical/index', [ApiController::class, 'phyiscal']);
+        Route::post('/physical/add', [ApiController::class, 'add_phyiscal']);
+        Route::post('/physical/del', [ApiController::class, 'delete_phyiscal']);
+        Route::post('/physical/update', [ApiController::class, 'physical_update_status']);
+        Route::get('/mechanical/index', [ApiController::class, 'mechanical']);
+        Route::post('/mechanical/add', [ApiController::class, 'add_mechanical']);
+        Route::post('/mechanical/del', [ApiController::class, 'delete_mechanical']);
+        Route::post('/mechanical/update', [ApiController::class, 'mechanical_update_status']);
+    });
 });
