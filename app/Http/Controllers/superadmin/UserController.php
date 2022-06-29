@@ -57,6 +57,13 @@ class UserController extends Controller
             'user_status' => 'required',
         ]);
         $user = User::find($id);
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $foldername = 'user/profiles/';
+            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+            $file->move(public_path() . '/' . $foldername, $filename);
+            $user->avatar = $foldername . $filename;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->height = $request->height;
@@ -132,8 +139,8 @@ class UserController extends Controller
             foreach ($mach_assessment as $mach) {
                 $user_mach_assessment = new MechanicalAssessment();
                 $user_mach_assessment->user_id = $user->id;
-                $user_mach_assessment->name = $mach_assessment->name;
-                $user->mach_assessment->status = 0;
+                $user_mach_assessment->name = $mach->name;
+                $user_mach_assessment->status = 0;
                 $user_mach_assessment->save();
             }
         }
