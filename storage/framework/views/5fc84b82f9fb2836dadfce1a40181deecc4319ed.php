@@ -39,10 +39,10 @@
                 <?php endif; ?>
 
                 <li>
-                    <a href="supperadmin.apps-filemanager" class="waves-effect">
+                    <a href="<?php echo e(route('file')); ?>" class="waves-effect">
                         <i class="bx bx-file"></i>
                         
-                        <span key="t-file-manager"><?php echo app('translator')->get('translation.File_Manager'); ?></span>
+                        <span key="t-file-manager"><?php echo app('translator')->get('Files'); ?></span>
                     </a>
                 </li>
 
