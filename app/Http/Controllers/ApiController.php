@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ExerciseType;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Track;
+use App\Models\Exercise;
+use App\Models\ExerciseDetail;
 use App\Models\MechanicalAssessment;
 use App\Models\PhysicalAssessment;
 use App\Models\User;
@@ -310,37 +313,37 @@ class ApiController extends Controller
             $user->created_by = $user_id;
             $user->role = 'user';
             $user->save();
-            // if ($user->role == 'user') {
-            //     $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
-            //     if ($phy_assessment) {
-            //         foreach ($phy_assessment as $phy) {
-            //             $user_phy_assessment = new PhysicalAssessment();
-            //             $user_phy_assessment->user_id = $user->id;
-            //             $user_phy_assessment->name = $phy->name;
-            //             $user_phy_assessment->status = 0;
-            //             $user_phy_assessment->save();
-            //         }
-            //     }
-            //     $mach_assessment = MechanicalAssessment::where('user_id', $user_id)->get();
-            //     if ($mach_assessment) {
-            //         foreach ($mach_assessment as $mach) {
-            //             $user_mach_assessment = new MechanicalAssessment();
-            //             $user_mach_assessment->user_id = $user->id;
-            //             $user_mach_assessment->name = $mach_assessment->name;
-            //             $user->mach_assessment->status = 0;
-            //             $user_mach_assessment->save();
-            //         }
-            //     }
-            //     $questions = Questionnaire::where('user_id', $user_id)->get();
-            //     if ($questions) {
-            //         foreach ($questions as $question) {
-            //             $user_question = new Questionnaire();
-            //             $user_question->name = $$question->name;
-            //             $user_question->user_id = $user->id;
-            //             $user_question->save();
-            //         }
-            //     }
-            // }
+            if ($user->role == 'user') {
+                $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
+                if ($phy_assessment) {
+                    foreach ($phy_assessment as $phy) {
+                        $user_phy_assessment = new PhysicalAssessment();
+                        $user_phy_assessment->user_id = $user->id;
+                        $user_phy_assessment->name = $phy->name;
+                        $user_phy_assessment->status = 0;
+                        $user_phy_assessment->save();
+                    }
+                }
+                $mach_assessment = MechanicalAssessment::where('user_id', $user_id)->get();
+                if ($mach_assessment) {
+                    foreach ($mach_assessment as $mach) {
+                        $user_mach_assessment = new MechanicalAssessment();
+                        $user_mach_assessment->user_id = $user->id;
+                        $user_mach_assessment->name = $mach->name;
+                        $user_mach_assessment->status = 0;
+                        $user_mach_assessment->save();
+                    }
+                }
+                $questions = Questionnaire::where('user_id', $user_id)->get();
+                if ($questions) {
+                    foreach ($questions as $question) {
+                        $user_question = new Questionnaire();
+                        $user_question->name = $question->name;
+                        $user_question->user_id = $user->id;
+                        $user_question->save();
+                    }
+                }
+            }
             $response = [
                 'status' => 'success',
             ];
@@ -486,6 +489,15 @@ class ApiController extends Controller
             $question->user_id = $user_id;
             $question->name = $request->question;
             $question->save();
+            $his_user = User::where('created_by', $user_id)->where('role', 'user')->get();
+            if ($his_user) {
+                foreach ($his_user as $user) {
+                    $user_question = new Questionnaire();
+                    $user_question->user_id = $user->id;
+                    $user_question->name = $request->question;
+                    $user_question->save();
+                }
+            }
             $response = [
                 'status' => 'success',
             ];
@@ -550,7 +562,7 @@ class ApiController extends Controller
             $physical = new PhysicalAssessment();
             $physical->user_id = $user_id;
             $physical->name = $request->label;
-            $physical->status = 1;
+            $physical->status = 0;
             $physical->save();
             $his_users = User::where('created_by', $user_id)->where('role', 'user')->get();
             if ($his_users) {
@@ -652,7 +664,7 @@ class ApiController extends Controller
             $mechaniacl = new MechanicalAssessment();
             $mechaniacl->user_id = $user_id;
             $mechaniacl->name = $request->label;
-            $mechaniacl->status = 1;
+            $mechaniacl->status = 0;
             $mechaniacl->save();
             $his_users = User::where('created_by', $user_id)->where('role', 'user')->get();
             if ($his_users) {
@@ -726,6 +738,94 @@ class ApiController extends Controller
             $response = [
                 'status' => 'success',
                 'data' => $user,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function index()
+    {
+
+        try {
+            $user_id = auth()->user()->id;
+            $exercises = Exercise::where('user_id', $user_id)->with("exercise_type")->get();
+            $response = [
+                'status' => 'success',
+                'data' => $exercises,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function types()
+    {
+
+        try {
+            $exercises_types = ExerciseType::latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $exercises_types,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function save_exercises(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'ex_type' => 'required',
+                'description' => 'required',
+                'title' => 'required',
+                'link' => 'required',
+                'sets' => 'required',
+                'reps' => 'required',
+                'notes' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user_id = auth()->user()->id;
+            $exercise = new Exercise();
+            $exercise->name = $request->name;
+            $exercise->user_id = $user_id;
+            $type = ExerciseType::where("name", $request->ex_type)->value("id");
+            $exercise->exercises_type_id = $type;
+            $exercise->description = $request->description;
+            $exercise->save();
+
+            for ($i = 0; $i < count($request->title); $i++) {
+                $exercise_detail = new ExerciseDetail();
+                $exercise_detail->title = $request->title[$i];
+                $exercise_detail->link = $request->link[$i];
+                $exercise_detail->sets = $request->sets[$i];
+                $exercise_detail->reps = $request->reps[$i];
+                $exercise_detail->notes = $request->notes[$i];
+                $exercise_detail->exercise_id = $exercise->id;
+                $exercise_detail->save();
+            }
+            $response = [
+                'status' => 'success',
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {

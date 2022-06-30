@@ -63,4 +63,13 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/mechanical/del', [ApiController::class, 'delete_mechanical']);
         Route::post('/mechanical/update', [ApiController::class, 'mechanical_update_status']);
     });
+    Route::prefix('/exercises')->group(function () {
+        Route::get('/index', [ApiController::class, 'index']);
+        Route::get('/types', [ApiController::class, 'types']);
+        Route::post('/add', [ApiController::class, 'save_exercises']);
+        // Route::get('/detail/{id}', [ExerciseController::class, 'detail_exercises'])->name('view.exercise.detail');
+        // Route::get('/edit/{id}', [ExerciseController::class, 'edit_exercises'])->name('edit.exercise');
+        // Route::post('/edit/{id}', [ExerciseController::class, 'save_edit_exercises'])->name('save.edit_exercise');
+        // Route::post('/del',[ExerciseController::class, 'delete_exercise'])->name('delete.exercise');
+    });
 });
