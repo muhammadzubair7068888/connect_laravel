@@ -148,7 +148,7 @@ class UserController extends Controller
         if($questions){
             foreach($questions as $question){
                 $user_question = new Questionnaire();
-                $user_question->name = $$question->name;
+                $user_question->name = $question->name;
                 $user_question->user_id = $user->id;
                 $user_question->save();
             }

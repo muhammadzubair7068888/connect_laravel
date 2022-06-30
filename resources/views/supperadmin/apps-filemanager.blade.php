@@ -29,7 +29,8 @@
                                             <i class="mdi mdi-plus me-1"></i> Create New
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-folder me-1"></i> Folder</a>
+                                            <a class="dropdown-item" href="#"><i class="bx bx-folder me-1"></i>
+                                                Folder</a>
                                             <a class="dropdown-item" href="#"><i class="bx bx-file me-1"></i> File</a>
                                         </div>
                                     </div>
@@ -143,7 +144,8 @@
                                         <form class="mt-4 mt-sm-0 float-sm-end d-flex align-items-center">
                                             <div class="search-box mb-2 me-2">
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control bg-light border-light rounded"
+                                                    <input type="text"
+                                                        class="form-control bg-light border-light rounded"
                                                         placeholder="Search...">
                                                     <i class="bx bx-search-alt search-icon"></i>
                                                 </div>
@@ -176,8 +178,9 @@
                                                 <div class="">
                                                     <div class="float-end ms-2">
                                                         <div class="dropdown mb-2">
-                                                            <a class="font-size-16 text-muted dropdown-toggle" role="button"
-                                                                data-bs-toggle="dropdown" aria-haspopup="true">
+                                                            <a class="font-size-16 text-muted dropdown-toggle"
+                                                                role="button" data-bs-toggle="dropdown"
+                                                                aria-haspopup="true">
                                                                 <i class="mdi mdi-dots-horizontal"></i>
                                                             </a>
 
@@ -289,8 +292,7 @@
                                                     <div class="d-flex">
                                                         <div class="overflow-hidden me-auto">
                                                             <h5 class="font-size-14 text-truncate mb-1"><a
-                                                                    href="javascript: void(0);"
-                                                                    class="text-body">Project
+                                                                    href="javascript: void(0);" class="text-body">Project
                                                                     A</a></h5>
                                                             <p class="text-muted text-truncate mb-0">06 Files</p>
                                                         </div>
@@ -380,8 +382,7 @@
                                                     <div class="d-flex">
                                                         <div class="overflow-hidden me-auto">
                                                             <h5 class="font-size-14 text-truncate mb-1"><a
-                                                                    href="javascript: void(0);"
-                                                                    class="text-body">Sketch
+                                                                    href="javascript: void(0);" class="text-body">Sketch
                                                                     Design</a></h5>
                                                             <p class="text-muted text-truncate mb-0">12 Files</p>
                                                         </div>

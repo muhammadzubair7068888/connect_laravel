@@ -77,10 +77,10 @@
                 @endif
 
                 <li>
-                    <a href="supperadmin.apps-filemanager" class="waves-effect">
+                    <a href="{{ route('file') }}" class="waves-effect">
                         <i class="bx bx-file"></i>
                         {{-- <span class="badge rounded-pill bg-success float-end" key="t-new">@lang('translation.New')</span> --}}
-                        <span key="t-file-manager">@lang('translation.File_Manager')</span>
+                        <span key="t-file-manager">@lang('Files')</span>
                     </a>
                 </li>
 

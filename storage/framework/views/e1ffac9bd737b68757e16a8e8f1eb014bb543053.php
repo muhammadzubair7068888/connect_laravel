@@ -1,21 +1,31 @@
-<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.Form_Advanced'); ?> <?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.Form_Advanced'); ?>
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
     <link href="<?php echo e(URL::asset('/assets/libs/select2/select2.min.css')); ?>" rel="stylesheet" type="text/css" />
-    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')); ?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo e(URL::asset('/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.css')); ?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css')); ?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')); ?>" rel="stylesheet"
+        type="text/css">
+    <link href="<?php echo e(URL::asset('/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.css')); ?>" rel="stylesheet"
+        type="text/css">
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css')); ?>" rel="stylesheet"
+        type="text/css">
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-touchspin/bootstrap-touchspin.min.css')); ?>" rel="stylesheet"
+        type="text/css" />
     <link rel="stylesheet" href="<?php echo e(URL::asset('/assets/libs/datepicker/datepicker.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-
     <?php $__env->startComponent('components.breadcrumb'); ?>
-        <?php $__env->slot('li_1'); ?> Forms <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Form Advanced <?php $__env->endSlot(); ?>
+        <?php $__env->slot('li_1'); ?>
+            Forms
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            Form Advanced
+        <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -244,7 +254,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Toggle Palette Only</label>
-                            <input type="text" class="form-control" id="colorpicker-togglepaletteonly" value="#50a5f1">
+                            <input type="text" class="form-control" id="colorpicker-togglepaletteonly"
+                                value="#50a5f1">
                         </div>
 
                         <div class="mb-3">
@@ -253,7 +264,8 @@
                         </div>
                         <div>
                             <label class="form-label">Show Input And Initial</label>
-                            <input type="text" class="form-control" id="colorpicker-showinput-intial" value="#f46a6a">
+                            <input type="text" class="form-control" id="colorpicker-showinput-intial"
+                                value="#f46a6a">
                         </div>
 
                     </form>
@@ -336,9 +348,9 @@
                         <div class="mb-4">
                             <label>Multiple Date</label>
                             <div class="input-group" id="datepicker3">
-                                <input type="text" class="form-control" placeholder="dd M, yyyy" data-provide="datepicker"
-                                    data-date-container='#datepicker3' data-date-format="dd M, yyyy"
-                                    data-date-multidate="true">
+                                <input type="text" class="form-control" placeholder="dd M, yyyy"
+                                    data-provide="datepicker" data-date-container='#datepicker3'
+                                    data-date-format="dd M, yyyy" data-date-multidate="true">
 
                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                             </div><!-- input-group -->
@@ -401,7 +413,8 @@
                         <p class="text-muted mb-2">
                             The badge will show up by default when the remaining chars are 10 or less:
                         </p>
-                        <input type="text" class="form-control" maxlength="25" name="defaultconfig" id="defaultconfig" />
+                        <input type="text" class="form-control" maxlength="25" name="defaultconfig"
+                            id="defaultconfig" />
                     </div>
 
                     <div class="mt-3">
@@ -461,8 +474,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Example with postfix (large)</label>
-                            <input data-toggle="touchspin" value="18.20" type="text" data-step="0.1" data-decimals="2"
-                                data-bts-postfix="%">
+                            <input data-toggle="touchspin" value="18.20" type="text" data-step="0.1"
+                                data-decimals="2" data-bts-postfix="%">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">With prefix </label>
@@ -660,13 +673,15 @@
                                         </li>
                                         <li class="list-group-item">
                                             <div class="form-check">
-                                                <input class="form-check-input" id="trigger" type="checkbox" name="trigger">
+                                                <input class="form-check-input" id="trigger" type="checkbox"
+                                                    name="trigger">
                                                 <label class="form-check-label" for="trigger">trigger</label>
                                             </div>
                                         </li>
                                         <li class="list-group-item">
                                             <div class="form-check">
-                                                <input class="form-check-input" id="inline" type="checkbox" name="inline">
+                                                <input class="form-check-input" id="inline" type="checkbox"
+                                                    name="inline">
                                                 <label class="form-check-label" for="inline">inline</label>
                                             </div>
                                         </li>
@@ -756,11 +771,13 @@
                                     </div>
                                     <div class="btn-group mb-3 d-flex" role="group">
                                         <button type="button" class="btn btn-primary" data-method="pick">Pick</button>
-                                        <button type="button" class="btn btn-primary" data-method="update">Update</button>
+                                        <button type="button" class="btn btn-primary"
+                                            data-method="update">Update</button>
                                     </div>
                                     <div class="btn-group mb-3 d-flex" role="group">
                                         <button type="button" class="btn btn-primary" data-method="reset">Reset</button>
-                                        <button type="button" class="btn btn-primary" data-method="destroy">Destroy</button>
+                                        <button type="button" class="btn btn-primary"
+                                            data-method="destroy">Destroy</button>
                                     </div>
                                 </div>
                             </div>
@@ -771,7 +788,6 @@
         </div>
     </div>
     <!-- end row -->
-
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('/assets/libs/select2/select2.min.js')); ?>"></script>

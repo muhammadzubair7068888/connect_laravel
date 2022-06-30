@@ -218,6 +218,8 @@
     <script src="<?php echo e(URL::asset('/assets/libs/select2/select2.min.js')); ?>"></script>
 
     <script>
+        
+
         function delete_ph_assessment(phy) {
             $('#delete_id').val(phy.id);
             $('#staticBackdrop').modal('show');

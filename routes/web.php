@@ -3,6 +3,7 @@
 use App\Http\Controllers\superadmin\AssessmentController;
 use App\Http\Controllers\superadmin\ChatController;
 use App\Http\Controllers\superadmin\ExerciseController;
+use App\Http\Controllers\superadmin\FileController;
 use App\Http\Controllers\superadmin\QuestionnaireController;
 use App\Http\Controllers\superadmin\SettingController;
 use App\Http\Controllers\superadmin\UserController;
@@ -76,7 +77,6 @@ Route::prefix('/users')->group(function () {
     Route::get('/gird/view',[UserController::class,'grid_view'])->name('user.grid.view');
     Route::get('delete/{id}',[UserController::class,'delete_user'])->name('delete.user');
     Route::get('/view/{id}', [UserController::class, 'user_view'])->name('user.view');
-
 });
 Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');
@@ -105,5 +105,11 @@ Route::prefix('/assessment')->group(function () {
     Route::post('/shair/physical',[AssessmentController::class, 'shair_physical_assessment'])->name('shair.pysical');
     Route::post('/shair/mechanical', [AssessmentController::class, 'shair_mechanical_assessment'])->name('shair.mechanical');
 });
+    Route::prefix('/files')->group(function () {
+        Route::get('/index/{id?}', [FileController::class, 'index'])->name('file');
+        Route::post('/index',[FileController::class, 'save_file'])->name('save.file');
+        Route::post('/delete', [FileController::class, 'delete_file'])->name('delete.file');
+        Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
+    });
 Route::view('admin/dashboard','supperadmin.index')->name('dashboard');
 });
