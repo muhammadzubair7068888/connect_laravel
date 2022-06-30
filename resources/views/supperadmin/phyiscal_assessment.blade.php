@@ -217,7 +217,7 @@
         $('#shair_form').on('submit', function(event) {
             event.preventDefault();
             var form_data = $(this).serialize();
-            alert(form_data);
+
             $.ajax({
                 url: "{{ route('shair.pysical') }}",
                 method: "POST",

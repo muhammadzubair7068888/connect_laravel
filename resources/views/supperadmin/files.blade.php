@@ -62,7 +62,6 @@
                             @php
                                 $j++;
                                 $pdf = explode('pdf', $file->file);
-                                
                             @endphp
                             <tr class="tablerow">
                                 <td>{{ $j }}</td>
@@ -197,6 +196,11 @@
             $('#staticBackdrop').modal('show');
         }
 
+        function delete_file_js(file) {
+            $('#delete_id').val(file);
+            $('#staticBackdrop').modal('show');
+        }
+
         function getval(id) {
             $.ajax({
                 url: "{{ url('files/index') }}" + "/" + id,
@@ -206,20 +210,37 @@
                 success: function(data) {
                     var i = 0;
                     var res = '';
+                    var view = '';
                     $.each(data, function(key, value) {
+
                         i++;
                         var url = "{{ url('/files/download') }}" + "/" + value.id;
+                        var viewurl = "{{ asset('/uploads') }}" + "/" + value.file;
+                        let text = value.file
+                        const arr = text.split("pdf");
+                        if (typeof arr[1] !== 'undefined') {
+
+                        } else {
+                            view +=
+                                '<a class="link-primary view-video"data-link=' + viewurl +
+                                'data-name="name" data-target="#myModal"data-toggle="modal" >' +
+                                '<i class = "fa fa-eye" >' + '</i>' + '</a>';
+                        }
                         res +=
                             '<tr>' +
                             '<td>' + i + '</td>' +
                             '<td>' + value.title + '</td>' +
                             '<td>' + value.file + '</td>' +
                             '<td>' +
+                            view +
                             ' <a style="padding-left:10px;" class="link-warning" href=' +
                             url + '>' +
                             '<i class="bx bx-download">' +
                             '</i>' +
                             '</a>' +
+                            '<a style="padding-left:10px;" class="link-danger">' +
+                            '<i class="fas fa-trash-alt" onclick = "delete_file_js(' + value.id +
+                            ')" >' +
                             '</td>' +
                             '</tr>';
                     });
