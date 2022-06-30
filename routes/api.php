@@ -45,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/add', [ApiController::class, 'add_user']);
         Route::get('/view/{id}', [ApiController::class, 'user_view']);
         Route::get('/all', [ApiController::class, 'user_get']);
+        Route::get('', [ApiController::class, 'user_all']);
         Route::post('/update/{id}', [ApiController::class, 'update_user_save']);
         Route::post('/delete/{id}', [ApiController::class, 'user_delete']);
     });
@@ -67,9 +68,15 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/index', [ApiController::class, 'index']);
         Route::get('/types', [ApiController::class, 'types']);
         Route::post('/add', [ApiController::class, 'save_exercises']);
-        // Route::get('/detail/{id}', [ExerciseController::class, 'detail_exercises'])->name('view.exercise.detail');
+        Route::get('/detail/{id}', [ApiController::class, 'detail_exercises']);
+        Route::post('/edit/{id}', [ApiController::class, 'save_edit_exercises']);
+        Route::post('/del', [ApiController::class, 'delete_exercise']);
         // Route::get('/edit/{id}', [ExerciseController::class, 'edit_exercises'])->name('edit.exercise');
-        // Route::post('/edit/{id}', [ExerciseController::class, 'save_edit_exercises'])->name('save.edit_exercise');
-        // Route::post('/del',[ExerciseController::class, 'delete_exercise'])->name('delete.exercise');
+    });
+    Route::prefix('/files')->group(function () {
+        // Route::get('/index/{id?}', [FileController::class, 'index'])->name('file');
+        Route::post('/index', [ApiController::class, 'save_file']);
+        // Route::post('/delete', [FileController::class, 'delete_file'])->name('delete.file');
+        // Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
 });

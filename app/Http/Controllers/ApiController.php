@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Questionnaire;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ExerciseType;
@@ -362,6 +363,26 @@ class ApiController extends Controller
             $user_id = auth()->user()->id;
             $user_name = auth()->user()->name;
             $user = User::where('created_by', $user_id)->latest()->get();
+            $response = [
+                'status' => 'success',
+                'data' => $user,
+                'user_name' => $user_name
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    public function user_all()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $user_name = auth()->user()->name;
+            $user = User::where('created_by', $user_id)->orWhere('id', $user_id)->latest()->get();
             $response = [
                 'status' => 'success',
                 'data' => $user,
@@ -823,6 +844,125 @@ class ApiController extends Controller
                 $exercise_detail->notes = $request->notes[$i];
                 $exercise_detail->exercise_id = $exercise->id;
                 $exercise_detail->save();
+            }
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function detail_exercises($id)
+    {
+        try {
+            $exercise_detail = ExerciseDetail::where('exercise_id', $id)->get();
+
+            $response = [
+                'status' => 'success',
+                'data' => $exercise_detail,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function save_edit_exercises(Request $request, $id)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'ex_type' => 'required',
+                'description' => 'required',
+                'title' => 'required',
+                'link' => 'required',
+                'sets' => 'required',
+                'reps' => 'required',
+                'notes' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $exercise = Exercise::find($id);
+            $exercise->name = $request->name;
+            $type = ExerciseType::where("name", $request->ex_type)->value("id");
+            $exercise->exercises_type_id = $type;
+            $exercise->description = $request->description;
+            $exercise->save();
+            ExerciseDetail::where('exercise_id', $id)->delete();
+            for ($i = 0; $i < count($request->title); $i++) {
+                $exercise_detail = new ExerciseDetail();
+                $exercise_detail->title = $request->title[$i];
+                $exercise_detail->link = $request->link[$i];
+                $exercise_detail->sets = $request->sets[$i];
+                $exercise_detail->reps = $request->reps[$i];
+                $exercise_detail->notes = $request->notes[$i];
+                $exercise_detail->exercise_id = $exercise->id;
+                $exercise_detail->save();
+            }
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete_exercise(Request $request)
+    {
+        try {
+            Exercise::where('id', $request->exercise_id)->delete();
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function save_file(Request $request)
+    {
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,qt,pdf',
+                'id' => 'required'
+            ]);
+            if ($validator->fails()) {
+                $response = $validator->errors();
+                return response()->json($response, 422);
+            }
+            $user_id = $request->id;
+            $files = new File();
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = time() . '_' . $request->file->getClientOriginalName();
+                $file->move('uploads', $fileName);
+                $files->file = $fileName;
+                $files->user_id = $user_id;
+                $files->title = $request->title;
+                $files->save();
             }
             $response = [
                 'status' => 'success',
