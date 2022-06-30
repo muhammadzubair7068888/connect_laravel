@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Models\ExerciseDetail;
 use App\Models\ExerciseType;
+use App\Models\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ExerciseController extends Controller
 {
@@ -14,8 +16,9 @@ class ExerciseController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
+        $users = User::where('role','admin')->latest()->get();
         $exercises = Exercise::where('user_id', $user_id)->get();
-        return view('supperadmin.exercises', compact('exercises'));
+        return view('supperadmin.exercises', compact('exercises', 'users'));
     }
     public function add_exercises()
     {
@@ -80,6 +83,7 @@ class ExerciseController extends Controller
         $exercise->name = $request->name;
         $exercise->exercises_type_id = $request->ex_type;
         $exercise->description = $request->description;
+        $exercise->copy_id = Null;
         $exercise->save();
         ExerciseDetail::where('exercise_id', $id)->delete();
         for ($i = 0; $i < count($request->title); $i++) {
@@ -98,5 +102,57 @@ class ExerciseController extends Controller
     {
         Exercise::where('id', $request->exercise_id)->delete();
         return redirect()->route('exercises')->with('success', 'Exercises  Successfully Delete.');
+    }
+    public function copy_exercise($id){
+        $user_id = auth()->user()->id;
+        $exercise = Exercise::find($id);
+        $name = $exercise->name."-Copy";
+        $copy_exercise = new Exercise();
+        $copy_exercise->user_id = $user_id;
+        $copy_exercise->name = $name;
+        $copy_exercise->exercises_type_id = $exercise->exercises_type_id;
+        $copy_exercise->description = $exercise->description;
+        $copy_exercise->copy_id = $id;
+        $copy_exercise->save();
+        foreach($exercise->excercise_detail as $detail){
+            $copy_detail = new ExerciseDetail();
+            $copy_detail->title = $detail->title;
+            $copy_detail->link = $detail->link;
+            $copy_detail->sets = $detail->sets;
+            $copy_detail->reps = $detail->reps;
+            $copy_detail->notes = $detail->notes;
+            $copy_detail->exercise_id = $copy_exercise->id;
+            $copy_detail->save(); 
+        }
+        return redirect()->route('exercises')->with('success', 'Exercises  Successfully Copy.');
+        // $exercises = Exercise::where('user_id', $user_id)->get();
+        // return response()->json($exercises);
+    }
+    public function shair_exercise(Request $request){
+        $id = $request->exercise_id;
+        $user_id = $request->user;
+        $parent_id = Exercise::where('parent_id', $id)->where('user_id', $user_id)->first();
+        if ($parent_id) {
+            return response()->json("success");
+        }
+        $exercise = Exercise::find($id);
+        $shair_exercise = new Exercise();
+        $shair_exercise->name = $exercise->name;
+        $shair_exercise->user_id = $user_id;
+        $shair_exercise->exercises_type_id = $exercise->exercises_type_id;
+        $shair_exercise->description = $exercise->description;
+        $shair_exercise->parent_id = $id;
+        $shair_exercise->save();
+        foreach($exercise->excercise_detail as $detail){
+            $shair_detail = new ExerciseDetail();
+            $shair_detail->title = $detail->title;
+            $shair_detail->link = $detail->link;
+            $shair_detail->sets = $detail->sets;
+            $shair_detail->reps = $detail->reps;
+            $shair_detail->notes = $detail->notes;
+            $shair_detail->exercise_id = $shair_exercise->id;
+            $shair_detail->save(); 
+        }
+        return response()->json("success");
     }
 }

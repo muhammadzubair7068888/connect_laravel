@@ -30,18 +30,22 @@
                         <div class="mb-3 position-relative">
                             <label for="recipient-name" class="form-label">@lang('Type')</label>
                             <select name="ex_type" id="type" class="form-control" required>
-                                @forelse ($exercises_types as $type)
-                                    @if ($type->id == $exercises->exercise_id)
-                                        <option value="{{ $type->id }}" selected>{{ $type->name }}</option>
-                                    @else
+                                @if ($exercises->copy_id)
+                                    <option value="">@lang('Selec Type')</option>
+                                    @forelse ($exercises_types as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endif
-
-                                @empty
-                                    <option value="saab">@lang('Lifting')</option>
-                                    <option value="mercedes">@lang('Mobility')</option>
-                                    <option value="audi">@lang('Throwing')</option>
-                                @endforelse
+                                    @empty
+                                    @endforelse
+                                @else
+                                    @forelse ($exercises_types as $type)
+                                        @if ($type->id == $exercises->exercise_id)
+                                            <option value="{{ $type->id }}" selected>{{ $type->name }}</option>
+                                        @else
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endif
+                                    @empty
+                                    @endforelse
+                                @endif
                             </select>
                         </div>
                     </div>

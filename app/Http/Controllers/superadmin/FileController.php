@@ -16,7 +16,7 @@ class FileController extends Controller
             $user_id= auth()->user()->id;
         }else{
             $user_id = $id;
-            $files = File::where('user_id', 1)->get();
+            $files = File::where('user_id', $user_id)->get();
             return response()->json($files);
         }
         $users = User::where('created_by',auth()->user()->id)->latest()->get();

@@ -66,6 +66,8 @@ Route::prefix('/exercises')->group(function () {
     Route::get('/edit/{id}', [ExerciseController::class, 'edit_exercises'])->name('edit.exercise');
     Route::post('/edit/{id}', [ExerciseController::class, 'save_edit_exercises'])->name('save.edit_exercise');
     Route::post('/del',[ExerciseController::class, 'delete_exercise'])->name('delete.exercise');
+    Route::get('/copy/{id}',[ExerciseController::class, 'copy_exercise'])->name('copy.exercise');
+    Route::post('/shair', [ExerciseController::class, 'shair_exercise'])->name('shair.exercise');
 });
 Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');
@@ -87,6 +89,7 @@ Route::prefix('/velocity')->group(function () {
     Route::get('/index', [VelocityController::class, 'index'])->name('velocity');
     Route::post('/index',[VelocityController::class,'save_velocity'])->name('save.velocity');
     Route::post('/del', [VelocityController::class, 'delte_velocity'])->name('delete.velocity');
+    Route::get('/dashboard',[VelocityController::class,'chart_velocity'])->name('chart.velocity');
 });
 Route::prefix('/questionnaire')->group(function () {
     Route::get('/index', [QuestionnaireController::class, 'index'])->name('questionnaire');
