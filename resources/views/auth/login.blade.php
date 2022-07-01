@@ -1,4 +1,4 @@
-@extends('layouts.master-without-nav')
+@extends('supperadmin.layouts.master-without-nav')
 
 @section('title')
     @lang('translation.Login')
@@ -43,8 +43,9 @@
                                     <a href="index" class="auth-logo-dark">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
-                                                    class="rounded-circle" height="34">
+                                                <img src="{{ URL::asset('/assets/images/logo.png') }}" alt=""
+                                                    class="rounded-circle"
+                                                    style="object-fit: cover; object-position: 0% 0%;" height="34">
                                             </span>
                                         </div>
                                     </a>

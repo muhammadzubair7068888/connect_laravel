@@ -33,7 +33,7 @@ class AssessmentController extends Controller
         $physical->name = $request->label;
         $physical->status = $request->status;
         $physical->save();
-        $his_users = User::where('created_by',$user_id)->get();
+        $his_users = User::where('created_by',$user_id)->where('role','user')->get();
         if($his_users){
             foreach($his_users as $user){
                 $user_phy_assessment = new PhysicalAssessment();
@@ -67,7 +67,7 @@ class AssessmentController extends Controller
         $mechaniacl->name = $request->label;
         $mechaniacl->status = $request->status;
         $mechaniacl->save();
-        $his_users = User::where('created_by', $user_id)->get();
+        $his_users = User::where('created_by', $user_id)->where('role','user')->get();
         if ($his_users) {
             foreach ($his_users as $user) {
                 $user_mach_assessment = new MechanicalAssessment();

@@ -9,12 +9,11 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
                 <li>
-                    <a href="{{ route('dashboard') }}" class="waves-effect">
+                    <a href="{{ route('chart.velocity') }}" class="waves-effect">
                         <i class="bx bx-home-alt"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
                         <span key="t-dashboards">@lang('translation.Dashboards')</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="{{ route('leaderboard') }}" class="waves-effect">
                         <i class="bx bx-building"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}

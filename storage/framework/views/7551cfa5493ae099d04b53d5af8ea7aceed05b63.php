@@ -43,22 +43,26 @@
                         <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
                             data-bs-target="#exampleModal"><?php echo app('translator')->get('New File'); ?></button>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Single Select</label>
-                                <select class="form-control select2" id="select_user" onchange="getval(this);">
-                                    <option value=""></option>
-                                    <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                        <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                        <option value="AK"></option>
-                                        <option value="HI">Hawaii</option>
-                                    <?php endif; ?>
-                                </select>
+                    <?php if(auth()->user()->role == 'user'): ?>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><?php echo app('translator')->get('Select User'); ?></label>
+                                    <select class="form-control select2" id="select_user">
+                                        <option value="<?php echo e(auth()->user()->id); ?>"><?php echo app('translator')->get('Me'); ?></option>
+                                        <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                            <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                            <option value="AK"></option>
+                                            <option value="HI">Hawaii</option>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
+
                     <h4 class="card-title"><?php echo app('translator')->get('Files'); ?></h4>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>

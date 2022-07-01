@@ -157,7 +157,7 @@ class UserController extends Controller
     }
     public function leaderboard(){
         $user_id = auth()->user()->id;
-        if(auth()->user()->role == 'admin' || auth()->user()->role == 'admin'){
+        if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'){
             $velocities = User::where('created_by', $user_id)->get();
         }else{
             $velocities = User::where('id', $user_id)->get();

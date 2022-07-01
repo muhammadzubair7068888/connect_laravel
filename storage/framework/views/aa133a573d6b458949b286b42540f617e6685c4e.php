@@ -252,10 +252,7 @@
             </div>
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
-                <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="bx bx-customize"></i>
-                </button>
+                
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <div class="px-lg-2">
                         <div class="row g-0">
@@ -421,14 +418,12 @@
                             key="t-profile"><?php echo app('translator')->get('translation.Profile'); ?></span></a>
                     <a class="dropdown-item" href="#"><i
                             class="bx bx-wallet font-size-16 align-middle me-1"></i>
-                        <span key="t-my-wallet"><?php echo app('translator')->get('translation.My_Wallet'); ?></span></a>
+                        <span key="t-my-wallet"><?php echo app('translator')->get('Contact Us'); ?></span></a>
                     <a class="dropdown-item d-block" href="#" data-bs-toggle="modal"
                         data-bs-target=".change-password"><span class="badge bg-success float-end">11</span><i
                             class="bx bx-wrench font-size-16 align-middle me-1"></i> <span
                             key="t-settings"><?php echo app('translator')->get('translation.Settings'); ?></span></a>
-                    <a class="dropdown-item" href="#"><i
-                            class="bx bx-lock-open font-size-16 align-middle me-1"></i>
-                        <span key="t-lock-screen"><?php echo app('translator')->get('translation.Lock_screen'); ?></span></a>
+                    
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i

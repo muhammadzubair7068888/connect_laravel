@@ -43,8 +43,9 @@
                                     <a href="index" class="auth-logo-dark">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="<?php echo e(URL::asset('/assets/images/logo.svg')); ?>" alt=""
-                                                    class="rounded-circle" height="34">
+                                                <img src="<?php echo e(URL::asset('/assets/images/logo.png')); ?>" alt=""
+                                                    class="rounded-circle"
+                                                    style="object-fit: cover; object-position: 0% 0%;" height="34">
                                             </span>
                                         </div>
                                     </a>
@@ -149,4 +150,4 @@ unset($__errorArgs, $__bag); ?>
         <!-- end account-pages -->
     <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/auth/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('supperadmin.layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/auth/login.blade.php ENDPATH**/ ?>

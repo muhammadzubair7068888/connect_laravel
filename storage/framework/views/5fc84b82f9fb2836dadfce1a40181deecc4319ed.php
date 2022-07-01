@@ -9,12 +9,11 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
                 <li>
-                    <a href="<?php echo e(route('dashboard')); ?>" class="waves-effect">
+                    <a href="<?php echo e(route('chart.velocity')); ?>" class="waves-effect">
                         <i class="bx bx-home-alt"></i>
                         <span key="t-dashboards"><?php echo app('translator')->get('translation.Dashboards'); ?></span>
                     </a>
                 </li>
-
                 <li>
                     <a href="<?php echo e(route('leaderboard')); ?>" class="waves-effect">
                         <i class="bx bx-building"></i>

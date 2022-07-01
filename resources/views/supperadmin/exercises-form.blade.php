@@ -66,8 +66,13 @@
                         <div class="mb-3 position-relative">
                             <label for="validationTooltip01" class="form-label">@lang('Link')</label>
                             <input type="text" name="link[]" class="form-control" id="validationTooltip01"
-                                placeholder="Link" required>
-
+                                pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
+                                placeholder="Find your website ranking... Eg - site.com"
+                                oninvalid="setCustomValidity('Please Enter URL.')"
+                                onchange="try{setCustomValidity('')}catch(e){}" required>
+                            <div class="invalid-feedback">
+                                Please Enter URL.
+                            </div>
                         </div>
                     </div>
                 </div>

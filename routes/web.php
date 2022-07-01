@@ -90,6 +90,7 @@ Route::prefix('/velocity')->group(function () {
     Route::post('/index',[VelocityController::class,'save_velocity'])->name('save.velocity');
     Route::post('/del', [VelocityController::class, 'delte_velocity'])->name('delete.velocity');
     Route::get('/dashboard',[VelocityController::class,'chart_velocity'])->name('chart.velocity');
+    Route::post('dashboard/search',[VelocityController::class,'search_velocity'])->name('search.velocity');
 });
 Route::prefix('/questionnaire')->group(function () {
     Route::get('/index', [QuestionnaireController::class, 'index'])->name('questionnaire');
