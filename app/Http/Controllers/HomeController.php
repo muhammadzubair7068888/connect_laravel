@@ -56,7 +56,7 @@ class HomeController extends Controller
         $admin = User::find($user_id);
         session()->put('admin', $admin);
         User::where('id',$user_id)->update(array('last_login'=>$date));
-        return view('supperadmin.index');
+        return redirect()->route('chart.velocity');
         // return view('index');
     }
     /*Language Translation*/

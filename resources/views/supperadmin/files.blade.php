@@ -29,22 +29,26 @@
                         <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">@lang('New File')</button>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Single Select</label>
-                                <select class="form-control select2" id="select_user" onchange="getval(this);">
-                                    <option value=""></option>
-                                    @forelse ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @empty
-                                        <option value="AK"></option>
-                                        <option value="HI">Hawaii</option>
-                                    @endforelse
-                                </select>
+                    @if (auth()->user()->role == 'user')
+                    @else
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">@lang('Select User')</label>
+                                    <select class="form-control select2" id="select_user">{{-- onchange="getval(this);" --}}
+                                        <option value="{{ auth()->user()->id }}">@lang('Me')</option>
+                                        @forelse ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @empty
+                                            <option value="AK"></option>
+                                            <option value="HI">Hawaii</option>
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
+
                     <h4 class="card-title">@lang('Files')</h4>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>

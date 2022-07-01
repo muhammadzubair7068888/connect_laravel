@@ -36,8 +36,7 @@
                     </div>
                     <div class="card-body p-0 ps-4">
                         <h5 class="fw-bold">Mail Settings</h5>
-                        <a href="supperadmin.plugin.mail_setting"> <button id="google+" class="btn btn-dark"
-                                data-bs-toggle="modal">
+                        <a href="#"> <button id="google+" class="btn btn-dark" data-bs-toggle="modal">
                                 Update</button></a>
                     </div>
                 </div>

@@ -956,7 +956,7 @@ var options = {
   }]
 },
   chart = new ApexCharts(document.querySelector("#line_chart_datalabel11"), options);
-      chart.render();
+  chart.render();
 
       //Seated Long Toss
     
@@ -1478,8 +1478,8 @@ var options = {
   chart = new ApexCharts(document.querySelector("#line_chart_datalabel17"), options);
       chart.render();
 
-      // Vertical Jump
-      // Arm Pain
+      // Pull Down Velocity
+     
    options = {
   chart: {
     height: 380,
@@ -1500,11 +1500,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Weight",
-    data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "Pull Down Velocity",
+    data: pull_down_velocity//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Weight",
+    text: "Pull Down Velocity",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1536,10 +1536,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Wight"
+      text: "Pull Down Velocity"
     },
-    min: 5,
-    max: 40
+  min: -1.0,
+    max: 1.0
   },
   legend: {
     position: "top",
@@ -1565,7 +1565,436 @@ var options = {
   chart = new ApexCharts(document.querySelector("#line_chart_datalabel18"), options);
       chart.render();
 
+      // Long Toss Distance
 
+       options = {
+  chart: {
+    height: 380,
+    type: "line",
+    zoom: {
+      enabled: !1
+    },
+    toolbar: {
+      show: !1
+    }
+  },
+  colors: ["#556ee6", "#34c38f"],
+  dataLabels: {
+    enabled: !1
+  },
+  stroke: {
+    width: [3, 3],
+    curve: "straight"
+  },
+  series: [{
+    name: "Long Toss Distance",
+    data: long_toss_distance//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+  }, ],
+  title: {
+    text: "Long Toss Distance",
+    align: "left",
+    style: {
+      fontWeight: "500"
+    }
+  },
+  grid: {
+    row: {
+      colors: ["transparent", "transparent"],
+      opacity: .2
+    },
+    borderColor: "#f1f1f1"
+  },
+  markers: {
+    style: "inverted",
+    size: 6
+  },
+  xaxis: {
+
+    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' + currentYear + '-' + currentMonth + '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3', '' + currentYear + '-' + currentMonth + '-' + '4',
+      '' + currentYear + '-' + currentMonth + '-' + '5', '' + currentYear + '-' + currentMonth + '-' + '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' + currentYear + '-' + currentMonth + '-' + '8',
+      '' + currentYear + '-' + currentMonth + '-' + '9', '' + currentYear + '-' + currentMonth + '-' + '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' + currentYear + '-' + currentMonth + '-' + '12', '' +
+      currentYear + '-' + currentMonth + '-' + '13', '' + currentYear + '-' + currentMonth + '-' + '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' + currentYear + '-' + currentMonth + '-' + '16',
+      '' + currentYear + '-' + currentMonth + '-' + '17', '' + currentYear + '-' + currentMonth + '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19', '' + currentYear + '-' + currentMonth + '-' + '20',
+      '' + currentYear + '-' + currentMonth + '-' + '21', '' + currentYear + '-' + currentMonth + '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23', '' + currentYear + '-' + currentMonth + '-' + '24',
+    '' + currentYear + '-' + currentMonth + '-' + '25', '' + currentYear + '-' + currentMonth + '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27', '' + currentYear + '-' + currentMonth + '-' + '28'],
+    title: {
+      text: "Month"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "Long Toss Distance"
+    },
+   min: -1.0,
+    max: 1.0
+  },
+  legend: {
+    position: "top",
+    horizontalAlign: "right",
+    floating: !0,
+    offsetY: -25,
+    offsetX: -5
+  },
+  responsive: [{
+    breakpoint: 600,
+    options: {
+      chart: {
+        toolbar: {
+          show: !1
+        }
+      },
+      legend: {
+        show: !1
+      }
+    }
+  }]
+},
+  chart = new ApexCharts(document.querySelector("#line_chart_datalabel19"), options);
+      chart.render();
+      
+      // Pylo7
+       options = {
+  chart: {
+    height: 380,
+    type: "line",
+    zoom: {
+      enabled: !1
+    },
+    toolbar: {
+      show: !1
+    }
+  },
+  colors: ["#556ee6", "#34c38f"],
+  dataLabels: {
+    enabled: !1
+  },
+  stroke: {
+    width: [3, 3],
+    curve: "straight"
+  },
+  series: [{
+    name: "Pylo7",
+    data: pylo7//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+  }, ],
+  title: {
+    text: "Pylo7",
+    align: "left",
+    style: {
+      fontWeight: "500"
+    }
+  },
+  grid: {
+    row: {
+      colors: ["transparent", "transparent"],
+      opacity: .2
+    },
+    borderColor: "#f1f1f1"
+  },
+  markers: {
+    style: "inverted",
+    size: 6
+  },
+  xaxis: {
+
+    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' + currentYear + '-' + currentMonth + '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3', '' + currentYear + '-' + currentMonth + '-' + '4',
+      '' + currentYear + '-' + currentMonth + '-' + '5', '' + currentYear + '-' + currentMonth + '-' + '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' + currentYear + '-' + currentMonth + '-' + '8',
+      '' + currentYear + '-' + currentMonth + '-' + '9', '' + currentYear + '-' + currentMonth + '-' + '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' + currentYear + '-' + currentMonth + '-' + '12', '' +
+      currentYear + '-' + currentMonth + '-' + '13', '' + currentYear + '-' + currentMonth + '-' + '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' + currentYear + '-' + currentMonth + '-' + '16',
+      '' + currentYear + '-' + currentMonth + '-' + '17', '' + currentYear + '-' + currentMonth + '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19', '' + currentYear + '-' + currentMonth + '-' + '20',
+      '' + currentYear + '-' + currentMonth + '-' + '21', '' + currentYear + '-' + currentMonth + '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23', '' + currentYear + '-' + currentMonth + '-' + '24',
+    '' + currentYear + '-' + currentMonth + '-' + '25', '' + currentYear + '-' + currentMonth + '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27', '' + currentYear + '-' + currentMonth + '-' + '28'],
+    title: {
+      text: "Month"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "Pylo7"
+    },
+  min: -1.0,
+    max: 1.0
+  },
+  legend: {
+    position: "top",
+    horizontalAlign: "right",
+    floating: !0,
+    offsetY: -25,
+    offsetX: -5
+  },
+  responsive: [{
+    breakpoint: 600,
+    options: {
+      chart: {
+        toolbar: {
+          show: !1
+        }
+      },
+      legend: {
+        show: !1
+      }
+    }
+  }]
+},
+  chart = new ApexCharts(document.querySelector("#line_chart_datalabel20"), options);
+      chart.render();
+
+            // Pylo5
+       options = {
+  chart: {
+    height: 380,
+    type: "line",
+    zoom: {
+      enabled: !1
+    },
+    toolbar: {
+      show: !1
+    }
+  },
+  colors: ["#556ee6", "#34c38f"],
+  dataLabels: {
+    enabled: !1
+  },
+  stroke: {
+    width: [3, 3],
+    curve: "straight"
+  },
+  series: [{
+    name: "Pylo5",
+    data: pylo5//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+  }, ],
+  title: {
+    text: "Pylo5",
+    align: "left",
+    style: {
+      fontWeight: "500"
+    }
+  },
+  grid: {
+    row: {
+      colors: ["transparent", "transparent"],
+      opacity: .2
+    },
+    borderColor: "#f1f1f1"
+  },
+  markers: {
+    style: "inverted",
+    size: 6
+  },
+  xaxis: {
+
+    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' + currentYear + '-' + currentMonth + '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3', '' + currentYear + '-' + currentMonth + '-' + '4',
+      '' + currentYear + '-' + currentMonth + '-' + '5', '' + currentYear + '-' + currentMonth + '-' + '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' + currentYear + '-' + currentMonth + '-' + '8',
+      '' + currentYear + '-' + currentMonth + '-' + '9', '' + currentYear + '-' + currentMonth + '-' + '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' + currentYear + '-' + currentMonth + '-' + '12', '' +
+      currentYear + '-' + currentMonth + '-' + '13', '' + currentYear + '-' + currentMonth + '-' + '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' + currentYear + '-' + currentMonth + '-' + '16',
+      '' + currentYear + '-' + currentMonth + '-' + '17', '' + currentYear + '-' + currentMonth + '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19', '' + currentYear + '-' + currentMonth + '-' + '20',
+      '' + currentYear + '-' + currentMonth + '-' + '21', '' + currentYear + '-' + currentMonth + '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23', '' + currentYear + '-' + currentMonth + '-' + '24',
+    '' + currentYear + '-' + currentMonth + '-' + '25', '' + currentYear + '-' + currentMonth + '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27', '' + currentYear + '-' + currentMonth + '-' + '28'],
+    title: {
+      text: "Month"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "Pylo5"
+    },
+ min: -1.0,
+    max: 1.0
+  },
+  legend: {
+    position: "top",
+    horizontalAlign: "right",
+    floating: !0,
+    offsetY: -25,
+    offsetX: -5
+  },
+  responsive: [{
+    breakpoint: 600,
+    options: {
+      chart: {
+        toolbar: {
+          show: !1
+        }
+      },
+      legend: {
+        show: !1
+      }
+    }
+  }]
+},
+  chart = new ApexCharts(document.querySelector("#line_chart_datalabel21"), options);
+      chart.render();
+
+                  // Pylo3
+       options = {
+  chart: {
+    height: 380,
+    type: "line",
+    zoom: {
+      enabled: !1
+    },
+    toolbar: {
+      show: !1
+    }
+  },
+  colors: ["#556ee6", "#34c38f"],
+  dataLabels: {
+    enabled: !1
+  },
+  stroke: {
+    width: [3, 3],
+    curve: "straight"
+  },
+  series: [{
+    name: "Pylo3",
+    data: pylo3//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+  }, ],
+  title: {
+    text: "Pylo3",
+    align: "left",
+    style: {
+      fontWeight: "500"
+    }
+  },
+  grid: {
+    row: {
+      colors: ["transparent", "transparent"],
+      opacity: .2
+    },
+    borderColor: "#f1f1f1"
+  },
+  markers: {
+    style: "inverted",
+    size: 6
+  },
+  xaxis: {
+
+    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' + currentYear + '-' + currentMonth + '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3', '' + currentYear + '-' + currentMonth + '-' + '4',
+      '' + currentYear + '-' + currentMonth + '-' + '5', '' + currentYear + '-' + currentMonth + '-' + '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' + currentYear + '-' + currentMonth + '-' + '8',
+      '' + currentYear + '-' + currentMonth + '-' + '9', '' + currentYear + '-' + currentMonth + '-' + '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' + currentYear + '-' + currentMonth + '-' + '12', '' +
+      currentYear + '-' + currentMonth + '-' + '13', '' + currentYear + '-' + currentMonth + '-' + '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' + currentYear + '-' + currentMonth + '-' + '16',
+      '' + currentYear + '-' + currentMonth + '-' + '17', '' + currentYear + '-' + currentMonth + '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19', '' + currentYear + '-' + currentMonth + '-' + '20',
+      '' + currentYear + '-' + currentMonth + '-' + '21', '' + currentYear + '-' + currentMonth + '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23', '' + currentYear + '-' + currentMonth + '-' + '24',
+    '' + currentYear + '-' + currentMonth + '-' + '25', '' + currentYear + '-' + currentMonth + '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27', '' + currentYear + '-' + currentMonth + '-' + '28'],
+    title: {
+      text: "Month"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "Pylo3"
+    },
+ min: -1.0,
+    max: 1.0
+  },
+  legend: {
+    position: "top",
+    horizontalAlign: "right",
+    floating: !0,
+    offsetY: -25,
+    offsetX: -5
+  },
+  responsive: [{
+    breakpoint: 600,
+    options: {
+      chart: {
+        toolbar: {
+          show: !1
+        }
+      },
+      legend: {
+        show: !1
+      }
+    }
+  }]
+},
+  chart = new ApexCharts(document.querySelector("#line_chart_datalabel22"), options);
+      chart.render();
+
+                  // Deadlift
+       options = {
+  chart: {
+    height: 380,
+    type: "line",
+    zoom: {
+      enabled: !1
+    },
+    toolbar: {
+      show: !1
+    }
+  },
+  colors: ["#556ee6", "#34c38f"],
+  dataLabels: {
+    enabled: !1
+  },
+  stroke: {
+    width: [3, 3],
+    curve: "straight"
+  },
+  series: [{
+    name: "Deadlift",
+    data: deadlift//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+  }, ],
+  title: {
+    text: "Deadlift",
+    align: "left",
+    style: {
+      fontWeight: "500"
+    }
+  },
+  grid: {
+    row: {
+      colors: ["transparent", "transparent"],
+      opacity: .2
+    },
+    borderColor: "#f1f1f1"
+  },
+  markers: {
+    style: "inverted",
+    size: 6
+  },
+  xaxis: {
+
+    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' + currentYear + '-' + currentMonth + '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3', '' + currentYear + '-' + currentMonth + '-' + '4',
+      '' + currentYear + '-' + currentMonth + '-' + '5', '' + currentYear + '-' + currentMonth + '-' + '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' + currentYear + '-' + currentMonth + '-' + '8',
+      '' + currentYear + '-' + currentMonth + '-' + '9', '' + currentYear + '-' + currentMonth + '-' + '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' + currentYear + '-' + currentMonth + '-' + '12', '' +
+      currentYear + '-' + currentMonth + '-' + '13', '' + currentYear + '-' + currentMonth + '-' + '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' + currentYear + '-' + currentMonth + '-' + '16',
+      '' + currentYear + '-' + currentMonth + '-' + '17', '' + currentYear + '-' + currentMonth + '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19', '' + currentYear + '-' + currentMonth + '-' + '20',
+      '' + currentYear + '-' + currentMonth + '-' + '21', '' + currentYear + '-' + currentMonth + '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23', '' + currentYear + '-' + currentMonth + '-' + '24',
+    '' + currentYear + '-' + currentMonth + '-' + '25', '' + currentYear + '-' + currentMonth + '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27', '' + currentYear + '-' + currentMonth + '-' + '28'],
+    title: {
+      text: "Month"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "Deadlift"
+    },
+    min: -1.0,
+    max: 1.0
+  },
+  legend: {
+    position: "top",
+    horizontalAlign: "right",
+    floating: !0,
+    offsetY: -25,
+    offsetX: -5
+  },
+  responsive: [{
+    breakpoint: 600,
+    options: {
+      chart: {
+        toolbar: {
+          show: !1
+        }
+      },
+      legend: {
+        show: !1
+      }
+    }
+  }]
+},
+  chart = new ApexCharts(document.querySelector("#line_chart_datalabel23"), options);
+      chart.render();
 /***/ }),
 
 /***/ "./resources/scss/bootstrap.scss":

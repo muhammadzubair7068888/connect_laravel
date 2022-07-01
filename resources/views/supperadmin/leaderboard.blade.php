@@ -7,6 +7,12 @@
 @section('css')
     <!-- DataTables -->
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/libs/datepicker/datepicker.min.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @endsection
 
 @section('content')
@@ -23,6 +29,30 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <form id="dashboard-graph-setting-form">
+                        @csrf
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <label>Date Range</label>
+                                <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
+                                    data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                                    <input type="text" class="form-control" name="start" placeholder="Start Date"
+                                        autocomplete="off" />
+                                    <input type="text" class="form-control" name="end" placeholder="End Date"
+                                        autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="mb-3" style="margin-top: 27px;">
+                                    <button type="submit" class="btn btn-success">@lang('Search')</button>
+                                    <button type="button" class="btn btn-light" id="btnClear">@lang('Clear')</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
@@ -163,4 +193,18 @@
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Datatable init js -->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#btnClear').click(function() {
+
+                $('#dashboard-graph-setting-form input[type="text"]').val('');
+                /*Clear textarea using id */
+                $('#dashboard-graph-setting-form #user').val('');
+
+            });
+        });
+    </script>
 @endsection

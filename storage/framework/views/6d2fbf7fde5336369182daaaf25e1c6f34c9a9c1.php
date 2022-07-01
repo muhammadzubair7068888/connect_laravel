@@ -232,7 +232,7 @@
         $('#shair_form').on('submit', function(event) {
             event.preventDefault();
             var form_data = $(this).serialize();
-            alert(form_data);
+
             $.ajax({
                 url: "<?php echo e(route('shair.pysical')); ?>",
                 method: "POST",

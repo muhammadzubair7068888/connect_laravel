@@ -29,7 +29,7 @@ class FileController extends Controller
         $request->validate([
             'file' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,qt,pdf',
         ]);
-        $user_id = $request->id;
+        $user_id = auth()->user()->id;
         $files = new File();
         if ($request->hasFile('file')) {
             $file = $request->file('file');
