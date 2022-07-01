@@ -941,6 +941,31 @@ class ApiController extends Controller
         }
     }
 
+    public function files($id = null)
+    {
+
+        try {
+            if ($id == null || empty($id)) {
+                $user_id = auth()->user()->id;
+            } else {
+                $u_id = User::where("name", $id)->value("id");
+                $user_id = $u_id;
+            }
+            $files = File::where('user_id', $user_id)->get();
+            $response = [
+                'status' => 'success',
+                'data' => $files,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
     public function save_file(Request $request)
     {
 
@@ -953,7 +978,8 @@ class ApiController extends Controller
                 $response = $validator->errors();
                 return response()->json($response, 422);
             }
-            $user_id = $request->id;
+            $id = User::where("name", $request->id)->value("id");
+            $user_id = $id;
             $files = new File();
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
@@ -964,6 +990,23 @@ class ApiController extends Controller
                 $files->title = $request->title;
                 $files->save();
             }
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function delete_file(Request $request)
+    {
+        try {
+            File::where('id', $request->file_id)->delete();
             $response = [
                 'status' => 'success',
             ];

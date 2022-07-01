@@ -74,9 +74,9 @@ Route::middleware('auth:api')->group(function () {
         // Route::get('/edit/{id}', [ExerciseController::class, 'edit_exercises'])->name('edit.exercise');
     });
     Route::prefix('/files')->group(function () {
-        // Route::get('/index/{id?}', [FileController::class, 'index'])->name('file');
+        Route::get('/index/{id?}', [ApiController::class, 'files']);
         Route::post('/index', [ApiController::class, 'save_file']);
-        // Route::post('/delete', [FileController::class, 'delete_file'])->name('delete.file');
+        Route::post('/delete', [ApiController::class, 'delete_file']);
         // Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
 });
