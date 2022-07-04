@@ -75,10 +75,12 @@ Route::prefix('/users')->group(function () {
     Route::post('add', [UserController::class, 'add_user'])->name('add.user');
     Route::get('/update/{id}', [UserController::class, 'update_user'])->name('update.user');
     Route::post('/update/{id}',[UserController::class, 'update_user_save'])->name('update.user.save');
-    Route::get('leaderboard',[UserController::class, 'leaderboard'])->name('leaderboard');
+    Route::get('/leaderboard',[UserController::class, 'leaderboard'])->name('leaderboard');
     Route::get('/gird/view',[UserController::class,'grid_view'])->name('user.grid.view');
     Route::get('delete/{id}',[UserController::class,'delete_user'])->name('delete.user');
     Route::get('/view/{id}', [UserController::class, 'user_view'])->name('user.view');
+    Route::post('/leaderboard/filter', [UserController::class, 'filter_leaderboard'])->name('filter.leaderboard');
+
 });
 Route::prefix('/tracks')->group(function () {
     Route::get('/index', [TrackController::class, 'index'])->name('tracks');
@@ -91,6 +93,7 @@ Route::prefix('/velocity')->group(function () {
     Route::post('/del', [VelocityController::class, 'delte_velocity'])->name('delete.velocity');
     Route::get('/dashboard',[VelocityController::class,'chart_velocity'])->name('chart.velocity');
     Route::post('dashboard/search',[VelocityController::class,'search_velocity'])->name('search.velocity');
+    Route::post('/graph/settings',[VelocityController::class,'update_setting'])->name('graph.setting');
 });
 Route::prefix('/questionnaire')->group(function () {
     Route::get('/index', [QuestionnaireController::class, 'index'])->name('questionnaire');

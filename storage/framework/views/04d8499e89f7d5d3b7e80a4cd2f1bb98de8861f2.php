@@ -29,10 +29,24 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="dashboard-graph-setting-form">
+                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.greetings','data' => []] + (isset($attributes) ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('greetings'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
+                    <form id="dashboard-graph-setting-form" action="<?php echo e(route('filter.leaderboard')); ?>" method="post">
                         <?php echo csrf_field(); ?>
                         <div class="row">
-
                             <div class="col-sm-4">
                                 <label>Date Range</label>
                                 <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
@@ -49,30 +63,15 @@
                                     <button type="button" class="btn btn-light" id="btnClear"><?php echo app('translator')->get('Clear'); ?></button>
                                 </div>
                             </div>
-
-
                         </div>
                     </form>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th><?php echo app('translator')->get('Name'); ?></th>
-                                <th><?php echo app('translator')->get('Weight'); ?></th>
-                                <th><?php echo app('translator')->get('Arm Pain'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs 3'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs 4'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs 5'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs 6'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Downs 7'); ?></th>
-                                <th><?php echo app('translator')->get('Mound Throws'); ?></th>
-                                <th><?php echo app('translator')->get('Long Toss'); ?></th>
-                                <th><?php echo app('translator')->get('plyo 7'); ?></th>
-                                <th><?php echo app('translator')->get('plyo 5'); ?></th>
-                                <th><?php echo app('translator')->get('plyo 3'); ?></th>
-                                <th><?php echo app('translator')->get('Mound Shuffle'); ?></th>
-                                <th><?php echo app('translator')->get('Squat'); ?></th>
-                                <th><?php echo app('translator')->get('Pull Ups'); ?></th>
-                                <th><?php echo app('translator')->get('Vertical Jump'); ?></th>
+                                <?php $__currentLoopData = $velocity_names; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $velocity_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <th><?php echo e($velocity_name->name); ?></th>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,73 +86,78 @@
                                     <td><?php echo e(ucfirst($velocity->name)); ?></td>
                                     <?php if(isset($velocity->uservelocity[0]->id)): ?>
                                         <?php if(isset($velocity->uservelocity[$j]->id)): ?>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 1)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'weight')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 2)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'arm_pain')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 3)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 4)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_3')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 5)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_4')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 6)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_5')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 7)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_6')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 8)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_7')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 9)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 10)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'long_toss_distance')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 11)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_7')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 12)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_5')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 13)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_3')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 14)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'bench')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 15)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'squat')->value('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_id', 16)->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'deadlift')->value('value') ?? 0); ?>
+
+                                            </td>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0); ?>
 
                                             </td>
                                         <?php else: ?>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
+                                            <td><?php echo app('translator')->get('0'); ?></td>
                                         <?php endif; ?>
                                     <?php else: ?>
+                                        <td><?php echo app('translator')->get('0'); ?></td>
                                         <td><?php echo app('translator')->get('0'); ?></td>
                                         <td><?php echo app('translator')->get('0'); ?></td>
                                         <td><?php echo app('translator')->get('0'); ?></td>
@@ -224,5 +228,6 @@
         });
     </script>
 <?php $__env->stopSection(); ?>
+
 
 <?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/supperadmin/leaderboard.blade.php ENDPATH**/ ?>

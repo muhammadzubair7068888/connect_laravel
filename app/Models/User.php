@@ -65,4 +65,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Questionnaire::class);
     }
+    public function velocities()
+    {
+        return $this->hasMany(Velocity::class);
+    }
 }

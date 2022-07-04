@@ -18,142 +18,208 @@ class VelocitySeeder extends Seeder
         //
         Velocity::create([
             'name' => 'Weight',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'weight',
+            'label' => 'weight_label',
+            
         ]);
         Velocity::create([
             'name' => 'Arm Pain',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'arm_pain',
+            'label' => 'arm_pain_label',
         ]);
         Velocity::create([
             'name' => 'Standing Long Toss',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_velocity',
+            'label' => 'pull_down_velocity_label',
         ]);
         Velocity::create([
             'name' => 'Mound Throws Velocity',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'mound_throws_velocity',
+            'label' => 'mound_throws_velocity_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 3',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_3',
+            'label' => 'pull_down_3_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 4',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_4',
+            'label' => 'pull_down_4_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 5',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_5',
+            'label' => 'pull_down_5_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 6',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_6',
+            'label' => 'pull_down_6_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 7',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pull_down_7',
+            'label' => 'pull_down_7_label',
         ]);
         Velocity::create([
             'name' => 'Double Crow Hop Distance',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'long_toss_distance',
+            'label' => 'long_toss_distance_label',
         ]);
         Velocity::create([
             'name' => 'kneeling long toss',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pylo_7',
+            'label' => 'pylo_7_label',
         ]);
         Velocity::create([
             'name' => 'seated long toss',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pylo_5',
+            'label' => 'pylo_5_label',
         ]);
         Velocity::create([
             'name' => 'Bench',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'pylo_3',
+            'label' => 'pylo_3_label',
         ]);
         Velocity::create([
             'name' => 'Mound Shuffle',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'bench',
+            'label' => 'bench_label',
         ]);
         Velocity::create([
             'name' => 'Squat',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'squat',
+            'label' => 'squat_label',
         ]);
         Velocity::create([
             'name' => 'pull ups',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'deadlift',
+            'label' => 'deadlift_label',
         ]);
         Velocity::create([
             'name' => 'Vertical Jump',
-            'user_type' => 1,
+            'admin_id' => 1,
+            'key' => 'vertical_jump',
+            'label' => 'vertical_jumb_label',
         ]);
-
-
-
         Velocity::create([
             'name' => 'Weight',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'weight',
+            'label' => 'weight_label',
         ]);
         Velocity::create([
             'name' => 'Arm Pain',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'arm_pain',
+            'label' => 'arm_pain_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down Velocity',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_velocity',
+            'label' => 'pull_down_velocity_label',
         ]);
         Velocity::create([
             'name' => 'Mound Throws Velocity',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'mound_throws_velocity',
+            'label' => 'mound_throws_velocity_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 3',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_3',
+            'label' => 'pull_down_3_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 4',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_4',
+            'label' => 'pull_down_4_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 5',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_5',
+            'label' => 'pull_down_5_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 6',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_6',
+            'label' => 'pull_down_6_label',
         ]);
         Velocity::create([
             'name' => 'Pull Down 7',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pull_down_7',
+            'label' => 'pull_down_7_label',
         ]);
         Velocity::create([
             'name' => 'Long Toss Distance',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'long_toss_distance',
+            'label' => 'long_toss_distance_label',
         ]);
         Velocity::create([
             'name' => 'Pylo 7',
-            'user_type' =>2 ,
+            'admin_id' => 2,
+            'key' => 'pylo_7',
+            'label' => 'pylo_7_label',
         ]);
         Velocity::create([
             'name' => 'Pylo 5',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pylo_5',
+            'label' => 'pylo_5_label',
         ]);
         Velocity::create([
             'name' => 'Pylo 3',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'pylo_3',
+            'label' => 'pylo_3_label',
         ]);
         Velocity::create([
             'name' => 'Bench',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'bench',
+            'label' => 'bench_label',
         ]);
         Velocity::create([
             'name' => 'Squat',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'squat',
+            'label' => 'squat_label',
         ]);
         Velocity::create([
             'name' => 'Deadlift',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'deadlift',
+            'label' => 'deadlift_label',
         ]);
         Velocity::create([
             'name' => 'Vertical Jump',
-            'user_type' => 2,
+            'admin_id' => 2,
+            'key' => 'vertical_jump',
+            'label' => 'vertical_jump_label',
         ]);
      
     }

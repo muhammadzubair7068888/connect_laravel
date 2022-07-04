@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('velocity_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('velocity_key');
             $table->date('date');
             $table->string('value');
             $table->timestamps();

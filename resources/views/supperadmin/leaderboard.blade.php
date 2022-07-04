@@ -29,10 +29,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="dashboard-graph-setting-form">
+                    <x-greetings />
+                    <form id="dashboard-graph-setting-form" action="{{ route('filter.leaderboard') }}" method="post">
                         @csrf
                         <div class="row">
-
                             <div class="col-sm-4">
                                 <label>Date Range</label>
                                 <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
@@ -49,30 +49,15 @@
                                     <button type="button" class="btn btn-light" id="btnClear">@lang('Clear')</button>
                                 </div>
                             </div>
-
-
                         </div>
                     </form>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th>@lang('Name')</th>
-                                <th>@lang('Weight')</th>
-                                <th>@lang('Arm Pain')</th>
-                                <th>@lang('Pull Downs 3')</th>
-                                <th>@lang('Pull Downs 4')</th>
-                                <th>@lang('Pull Downs 5')</th>
-                                <th>@lang('Pull Downs 6')</th>
-                                <th>@lang('Pull Downs 7')</th>
-                                <th>@lang('Mound Throws')</th>
-                                <th>@lang('Long Toss')</th>
-                                <th>@lang('plyo 7')</th>
-                                <th>@lang('plyo 5')</th>
-                                <th>@lang('plyo 3')</th>
-                                <th>@lang('Mound Shuffle')</th>
-                                <th>@lang('Squat')</th>
-                                <th>@lang('Pull Ups')</th>
-                                <th>@lang('Vertical Jump')</th>
+                                @foreach ($velocity_names as $velocity_name)
+                                    <th>{{ $velocity_name->name }}</th>
+                                @endforeach
                             </tr>
                         </thead>
                         <tbody>
@@ -87,57 +72,61 @@
                                     <td>{{ ucfirst($velocity->name) }}</td>
                                     @if (isset($velocity->uservelocity[0]->id))
                                         @if (isset($velocity->uservelocity[$j]->id))
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 1)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'weight')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 2)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'arm_pain')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 3)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 4)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_3')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 5)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_4')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 6)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_5')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 7)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_6')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 8)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pull_down_7')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 9)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 10)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'long_toss_distance')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 11)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pylo_7')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 12)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pylo_5')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 13)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'pylo_3')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 14)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'bench')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 15)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'squat')->value('value') ?? 0 }}
                                             </td>
-                                            <td>{{ $velocity->uservelocity->where('velocity_id', 16)->value('value') ?? 0 }}
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'deadlift')->value('value') ?? 0 }}
+                                            </td>
+                                            <td>{{ $velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0 }}
                                             </td>
                                         @else
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
+                                            <td>@lang('0')</td>
                                         @endif
                                     @else
+                                        <td>@lang('0')</td>
                                         <td>@lang('0')</td>
                                         <td>@lang('0')</td>
                                         <td>@lang('0')</td>
@@ -208,3 +197,21 @@
         });
     </script>
 @endsection
+{{-- $('#dashboard-graph-setting-form').on('submit', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            $.ajax({
+                url: "{{ route('filter.leaderboard') }}",
+                method: "POST",
+                data: form_data,
+                dataType: "json",
+                success: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Saved", "Velocity Graph Setting Successfully", "success");
+                },
+                error: function(response) {
+                    $("#sahir_exampleModal").modal('hide');
+                    swal("Not Saved", "Somethings is wrong", "error");
+                }
+            })
+        }); --}}

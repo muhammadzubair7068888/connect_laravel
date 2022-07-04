@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('supperadmin.layouts.master')
 
 @section('title')
     @lang('Files')
@@ -35,7 +35,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label class="form-label">@lang('Select User')</label>
-                                    <select class="form-control select2" id="select_user">{{-- onchange="getval(this);" --}}
+                                    <select class="form-control select2" onchange="getval(this);">{{-- onchange="getval(this);" --}}
                                         <option value="{{ auth()->user()->id }}">@lang('Me')</option>
                                         @forelse ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -67,7 +67,7 @@
                                 $j++;
                                 $pdf = explode('pdf', $file->file);
                             @endphp
-                            <tr class="tablerow">
+                            <tr class="first_row">
                                 <td>{{ $j }}</td>
                                 <td>{{ $file->title }}</td>
                                 <td>{{ $file->file }}</td>
@@ -206,20 +206,22 @@
         }
 
         function getval(id) {
+            var user_id = id.value;
             $.ajax({
-                url: "{{ url('files/index') }}" + "/" + id,
+                url: "{{ url('files/index') }}" + "/" + user_id,
                 type: "GET",
                 data: {},
                 dataType: "json",
                 success: function(data) {
+
                     var i = 0;
-                    var res = '';
+                    var html = '';
                     var view = '';
                     $.each(data, function(key, value) {
-
                         i++;
                         var url = "{{ url('/files/download') }}" + "/" + value.id;
                         var viewurl = "{{ asset('/uploads') }}" + "/" + value.file;
+
                         let text = value.file
                         const arr = text.split("pdf");
                         if (typeof arr[1] !== 'undefined') {
@@ -230,30 +232,42 @@
                                 'data-name="name" data-target="#myModal"data-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
-                        res +=
-                            '<tr>' +
-                            '<td>' + i + '</td>' +
-                            '<td>' + value.title + '</td>' +
-                            '<td>' + value.file + '</td>' +
-                            '<td>' +
-                            view +
-                            ' <a style="padding-left:10px;" class="link-warning" href=' +
-                            url + '>' +
-                            '<i class="bx bx-download">' +
-                            '</i>' +
-                            '</a>' +
-                            '<a style="padding-left:10px;" class="link-danger">' +
-                            '<i class="fas fa-trash-alt" onclick = "delete_file_js(' + value.id +
-                            ')" >' +
-                            '</td>' +
-                            '</tr>';
+                        html += '<tr>';
+                        html += '<td>';
+                        html += i;
+                        html += '</td>';
+                        html += '<td>';
+                        html += value.title;
+                        html += '</td>';
+                        html += '<td>';
+                        html += value.file;
+                        html += '</td>';
+                        html += '<td>';
+                        html += view;
+                        html += '</td>';
+                        html += '</tr>';
                     });
-                    $('tbody').html(res);
+                    $('tbody').html(html);
                 },
                 error: function(response) {
                     alert("Failed")
                 }
+
+
             });
+
         }
     </script>
 @endsection
+{{-- html += '<td>';
+                        html += view;
+                        html += '<a style="padding-left:10px;" class="link-warning" href=';
+                        html += url;
+                        html += '>';
+                        html += '<i class="bx bx-download">';
+                        html += '</i>';
+                        html += '</a>';
+                        html += '<a style="padding-left:10px;" class="link-danger">';
+                        html += '<i class="fas fa-trash-alt" onclick = "delete_file_js(';
+                        html += value.id;
+                        html += ')" >'; --}}

@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('velocities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('admin_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
+            $table->string('key');
+            $table->string('label')->nullable();
             $table->enum('status',[0,1])->default(1);
-            $table->string('user_type')->comment('superadmin = 1 , admin = 2');
+          
             $table->timestamps();
         });
     }

@@ -158,11 +158,37 @@ class UserController extends Controller
     public function leaderboard(){
         $user_id = auth()->user()->id;
         if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'){
-            $velocities = User::where('created_by', $user_id)->get();
+          $velocities = User::where('created_by', $user_id)->get();
+            $velocity_names = Velocity::where('admin_id',$user_id)->get();
         }else{
-            $velocities = User::where('id', $user_id)->get();
+             $velocities = User::where('id', $user_id)->get();
+             $velocity_names = Velocity::where('admin_id',auth()->user()->created_by)->get();
         }
-        return view('supperadmin.leaderboard',compact('velocities'));
+        
+        return view('supperadmin.leaderboard',compact('velocities', 'velocity_names'));
+    }
+    public function filter_leaderboard(Request $request){
+        $request->validate([
+            'start' => 'required',
+            'end' => 'required',
+        ]);
+        $user_id = auth()->user()->id;
+        $start = strtotime($request->start);
+        $end = strtotime($request->end);
+        $start_date =  date('Y-m-d', $start);
+        $end_date = date('Y-m-d', $end);
+        if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
+            $velocities= User::where('created_by', $user_id)->with(['uservelocity' => function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('date', [$start_date, $end_date]);
+            }])->get();
+            $velocity_names = Velocity::where('admin_id', $user_id)->get();
+        } else {
+            $velocities = User::where('id', $user_id)->with(['uservelocity' => function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('date', [$start_date, $end_date]);
+            }])->get();
+            $velocity_names = Velocity::where('admin_id', auth()->user()->created_by)->get();
+        }
+        return view('supperadmin.leaderboard', compact('velocities', 'velocity_names'));
     }
     public function grid_view(){
         $user_id = auth()->user()->id;

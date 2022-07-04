@@ -65,7 +65,7 @@
                                         $day = '';
                                         $mounth = '';
                                         $year = '';
-                                        $C = '';
+                                        $C = ',';
                                     }
                                     
                                 @endphp
