@@ -105,9 +105,9 @@
                 <?php endif; ?>
 
                 <li>
-                    <a href="<?php echo e(route('calendar')); ?>" class="waves-effect">
+                    <a href="<?php echo e(route('schedule.exercise')); ?>" class="waves-effect">
                         <i class="bx bxs-calendar-event"></i>
-                        <span key="t-dashboards"><?php echo app('translator')->get('translation.Calendars'); ?></span>
+                        <span key="t-dashboards"><?php echo app('translator')->get('Schedule'); ?></span>
                     </a>
                 </li>
 

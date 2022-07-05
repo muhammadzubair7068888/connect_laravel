@@ -246,8 +246,5 @@ class SettingController extends Controller
          $velocities = Velocity::where('admin_id', $user_id)->get();  
         return view('supperadmin.settings.site_setting',compact('velocities'));
     }
-    public function shadule_calender(){
-        return view('supperadmin.calendar');
-    }
+  
 }
-// supperadmin.settings.site_setting

@@ -86,52 +86,52 @@
                                     <td><?php echo e(ucfirst($velocity->name)); ?></td>
                                     <?php if(isset($velocity->uservelocity[0]->id)): ?>
                                         <?php if(isset($velocity->uservelocity[$j]->id)): ?>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'weight')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'weight')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'arm_pain')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'arm_pain')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_3')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_3')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_4')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_4')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_5')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_5')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_6')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_6')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_7')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pull_down_7')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'long_toss_distance')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'long_toss_distance')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_7')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_7')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_5')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_5')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_3')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'pylo_3')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'bench')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'bench')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'squat')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'squat')->max('value') ?? 0); ?>
 
                                             </td>
-                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'deadlift')->value('value') ?? 0); ?>
+                                            <td><?php echo e($velocity->uservelocity->where('velocity_key', 'deadlift')->max('value') ?? 0); ?>
 
                                             </td>
                                             <td><?php echo e($velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0); ?>

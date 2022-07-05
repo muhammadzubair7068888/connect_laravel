@@ -34,7 +34,7 @@
                                     <div class="col-sm-4">
                                         <label class="form-label">@lang('Select User')</label>
                                         <select class="form-control select2" id="user" name="name">
-                                            <option value="{{ auth()->user()->id }}">@lang('Me')</option>
+                                            <option value="{{ auth()->user()->id }}" selected>@lang('Me')</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                             @endforeach
@@ -59,8 +59,6 @@
                                             id="btnClear">@lang('Clear')</button>
                                     </div>
                                 </div>
-
-
                             </div>
                         </form>
                     </div>
@@ -68,9 +66,6 @@
             </div>
         </div>
     </div> <!-- end col -->
-
-
-
     <div class="row">
         @forelse ($velocities as $velocity)
             <div class="col-xl-6">
@@ -84,10 +79,7 @@
             </div>
         @empty
         @endforelse
-
     </div>
-
-
 @endsection
 @section('script')
     <script>
@@ -103,6 +95,61 @@
 
             });
         });
+        let weight = @json($weight);
+        let arm_pain = @json($arm_pain);
+        let mound_throw_velocit = @json($mount_throw_velocit);
+        let pull_down_3 = @json($pull_down_3);
+        let pull_down_4 = @json($pull_down_4);
+        let pull_down_5 = @json($pull_down_5);
+        let pull_down_6 = @json($pull_down_6);
+        let pull_down_7 = @json($pull_down_7);
+        let bench = @json($bench);
+        let squat = @json($squat);
+        let vertical_jump = @json($vertical_jump);
+        let pull_down_velocity = @json($pull_down_velocity);
+        let long_toss_distance = @json($long_toss_distance);
+        let pylo7 = @json($pylo7);
+        let pylo5 = @json($pylo5);
+        let pylo3 = @json($pylo3);
+        let deadlift = @json($deadlift);
+
+        let max_weight = 0;
+        let max_arm_pain = 0;
+        let max_mound_throw_velocity = 0;
+        let max_pull_down_3 = 0;
+        let max_pull_down_4 = 0;
+        let max_pull_down_5 = 0;
+        let max_pull_down_6 = 0;
+        let max_pull_down_7 = 0;
+        let max_bench = 0;
+        let max_squat = 0;
+        let max_vertical_jump = 0;
+        let max_pull_down_velocity = 0;
+        let max_long_toss_distance = 0;
+        let max_pylo_7 = 0;
+        let max_pylo_5 = 0;
+        let max_pylo_3 = 0;
+        let max_deadlift = 0;
+
+        for (let i = 0; i < 29; i += 1) {
+            max_weight += weight[i];
+            max_arm_pain += arm_pain[i];
+            max_mound_throw_velocity += mound_throw_velocit[i];
+            max_pull_down_3 += pull_down_3[i];
+            max_pull_down_4 += pull_down_4[i];
+            max_pull_down_5 += pull_down_5[i];
+            max_pull_down_6 += pull_down_6[i];
+            max_pull_down_7 += pull_down_7[i];
+            max_bench += bench[i];
+            max_squat += squat[i];
+            max_vertical_jump += vertical_jump[i];
+            max_pull_down_velocity += pull_down_velocity[i];
+            max_long_toss_distance += long_toss_distance[i];
+            max_pylo_7 += pylo7[i];
+            max_pylo_5 += pylo5[i];
+            max_pylo_3 += pylo7[i];
+            max_deadlift += deadlift[i];
+        }
 
         $('#dashboard-graph-setting-form').on('submit', function(event) {
             event.preventDefault();
@@ -120,24 +167,6 @@
                 }
             })
         });
-
-        let weight = @json($weight);
-        let arm_pain = @json($arm_pain);
-        let mount_throw_velocit = @json($mount_throw_velocit);
-        let pull_down_3 = @json($pull_down_3);
-        let pull_down_4 = @json($pull_down_4);
-        let pull_down_5 = @json($pull_down_5);
-        let pull_down_6 = @json($pull_down_6);
-        let pull_down_7 = @json($pull_down_7);
-        let bench = @json($bench);
-        let squat = @json($squat);
-        let vertical_jump = @json($vertical_jump);
-        let pull_down_velocity = @json($pull_down_velocity);
-        let long_toss_distance = @json($long_toss_distance);
-        let pylo7 = @json($pylo7);
-        let pylo5 = @json($pylo5);
-        let pylo3 = @json($pylo3);
-        let deadlift = @json($deadlift);
     </script>
     <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.min.js') }}"></script>

@@ -167,9 +167,9 @@
                 @endif
 
                 <li>
-                    <a href="{{ route('calendar') }}" class="waves-effect">
+                    <a href="{{ route('schedule.exercise') }}" class="waves-effect">
                         <i class="bx bxs-calendar-event"></i>
-                        <span key="t-dashboards">@lang('translation.Calendars')</span>
+                        <span key="t-dashboards">@lang('Schedule')</span>
                     </a>
                 </li>
 

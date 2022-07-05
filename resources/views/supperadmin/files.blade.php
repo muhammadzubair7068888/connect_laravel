@@ -59,35 +59,36 @@
                                 <th class="col-1">@lang('Action')</th>
                             </tr>
                         </thead>
-                        @php
-                            $j = 0;
-                        @endphp
-                        @forelse ($files as $file)
-                            @php
-                                $j++;
-                                $pdf = explode('pdf', $file->file);
-                            @endphp
-                            <tr class="first_row">
-                                <td>{{ $j }}</td>
-                                <td>{{ $file->title }}</td>
-                                <td>{{ $file->file }}</td>
-                                <td>
-                                    @if (isset($pdf[1]))
-                                    @else
-                                        <a class="link-primary view-video"
-                                            data-link="{{ asset('/uploads/' . $file->file) }}" data-name="name"
-                                            data-target="#myModal" data-toggle="modal"> <i class="fa fa-eye"></i></a>
-                                    @endif
-                                    <a style="padding-left:10px;" class="link-warning"
-                                        href='{{ route('download.file', ['id' => $file->id]) }}'><i
-                                            class="bx bx-download"></i></a>
-                                    <a style="padding-left:10px;" class="link-danger"><i class="fas fa-trash-alt"
-                                            onclick="delete_file({{ $file }})"></i></a>
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
                         <tbody>
+                            @php
+                                $j = 0;
+                            @endphp
+                            @forelse ($files as $file)
+                                @php
+                                    $j++;
+                                    $pdf = explode('pdf', $file->file);
+                                @endphp
+                                <tr class="first_row">
+                                    <td>{{ $j }}</td>
+                                    <td>{{ $file->title }}</td>
+                                    <td>{{ $file->file }}</td>
+                                    <td>
+                                        @if (isset($pdf[1]))
+                                        @else
+                                            <a class="link-primary view-video"
+                                                data-link="{{ asset('/uploads/' . $file->file) }}" data-name="name"
+                                                data-target="#myModal" data-toggle="modal"> <i class="fa fa-eye"></i></a>
+                                        @endif
+                                        <a style="padding-left:10px;" class="link-warning"
+                                            href='{{ route('download.file', ['id' => $file->id]) }}'><i
+                                                class="bx bx-download"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger"><i class="fas fa-trash-alt"
+                                                onclick="delete_file({{ $file }})"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -213,23 +214,22 @@
                 data: {},
                 dataType: "json",
                 success: function(data) {
-
                     var i = 0;
                     var html = '';
                     var view = '';
+                    console.log(data);
                     $.each(data, function(key, value) {
                         i++;
-                        var url = "{{ url('/files/download') }}" + "/" + value.id;
+                        var download = "{{ url('/files/download') }}" + "/" + value.id;
                         var viewurl = "{{ asset('/uploads') }}" + "/" + value.file;
-
                         let text = value.file
                         const arr = text.split("pdf");
                         if (typeof arr[1] !== 'undefined') {
-
+                            view += ''
                         } else {
                             view +=
-                                '<a class="link-primary view-video"data-link=' + viewurl +
-                                'data-name="name" data-target="#myModal"data-toggle="modal" >' +
+                                '<a class="link-primary view-video"data-link = ' + viewurl +
+                                ' data-name="name" data-target="#myModal"data-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
                         html += '<tr>';
@@ -244,16 +244,27 @@
                         html += '</td>';
                         html += '<td>';
                         html += view;
+                        html += '<a style="padding-left:10px;" class="link-warning" href=';
+                        html += download;
+                        html += '>';
+                        html += '<i class = "bx bx-download">';
+                        html += '</i>';
+                        html += '</a>';
+                        html += '<a style="padding-left:10px;" class="link-danger" href=';
+                        html += download;
+                        html += '>';
+                        html += '<i class = "fas fa-trash-alt">';
+                        html += '</i>';
+                        html += '</a>';
                         html += '</td>';
                         html += '</tr>';
                     });
                     $('tbody').html(html);
                 },
                 error: function(response) {
+                    alert('4');
                     alert("Failed")
                 }
-
-
             });
 
         }

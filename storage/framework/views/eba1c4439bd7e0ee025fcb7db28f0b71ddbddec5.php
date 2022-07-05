@@ -1,22 +1,22 @@
-@extends('layouts.master')
 
-@section('title')
-    @lang('translation.Calendars')
-@endsection
 
-@section('css')
-    <link href="{{ URL::asset('/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('translation.Calendars'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('/assets/css/main.css')); ?>" rel="stylesheet" type="text/css" />
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Skote
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Calendar
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-12">
@@ -126,9 +126,11 @@
 
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-    <script src="{{ URL::asset('assets/js/main.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/calendars-full.init.js') }}"></script>
-@endsection
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('assets/js/main.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('assets/js/pages/calendars-full.init.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/calendar-full.blade.php ENDPATH**/ ?>

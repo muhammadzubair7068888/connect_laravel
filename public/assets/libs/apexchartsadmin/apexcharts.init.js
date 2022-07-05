@@ -30,11 +30,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Weight",
-    data: weight//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: weight
   }, ],
   title: {
-    text: "Weight",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -65,17 +65,15 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "weight"
+      text: ""
     },
-    min: 5,
-    max: 40000
+    min: -1.0,
+    max: max_weight+1
   },
   legend: {
     position: "top",
     horizontalAlign: "right",
-    floating: !0,
-    offsetY: -10000,
-    offsetX: 0
+    
   },
   responsive: [{
     breakpoint: 600,
@@ -114,11 +112,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Aram Pain",
-    data: arm_pain//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: arm_pain
   }, ],
   title: {
-    text: "Arm Pain",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -150,10 +148,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Arm Pain"
+      text: ""
     },
-    min: 0,
-    max: 1.0
+    min: -1.0,
+    max: max_arm_pain+1
   },
   legend: {
     position: "top",
@@ -180,8 +178,6 @@ var options = {
       chart.render();
 
       // Standing Long Toss 
-
-      // Arm Pain
    options = {
   chart: {
     height: 380,
@@ -202,11 +198,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Standing Long Toss",
-    data: pull_down_velocity//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pull_down_velocity
   }, ],
   title: {
-    text: "Standing Long Toss",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -238,10 +234,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Standing Long Toss"
+      text: " "
     },
-    min: 0,
-    max: 1.0
+    min: -1.0,
+    max: max_pull_down_velocity+1
   },
   legend: {
     position: "top",
@@ -289,11 +285,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Mount Throw Velocit",
-    data: mount_throw_velocit//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: mound_throw_velocit
   }, ],
   title: {
-    text: "Mount Throw Velocit",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -325,10 +321,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Mount Throw Velocit"
+      text: ""
     },
-    min: 0,
-    max: 1.0
+    min: -1.0,
+    max: max_mound_throw_velocity+1
   },
   legend: {
     position: "top",
@@ -353,8 +349,6 @@ var options = {
 },
   chart = new ApexCharts(document.querySelector("#mound_throws_velocity"), options);
     chart.render();
-         //Pull Down 3 
-      
    options = {
   chart: {
     height: 380,
@@ -375,11 +369,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Down 3",
-    data: pull_down_3//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pull_down_3
   }, ],
   title: {
-    text: "Pull Down 3",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -411,10 +405,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Down 3"
+      text: ""
     },
-    min: 0,
-    max: 3000
+    min: -1.0,
+    max: max_pull_down_3+1
   },
   legend: {
     position: "top",
@@ -439,7 +433,7 @@ var options = {
 },
   chart = new ApexCharts(document.querySelector("#pull_down_3"), options);
       chart.render();
-   //Pull Down 4
+
       
    options = {
   chart: {
@@ -461,11 +455,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Down 4",
-    data: pull_down_4//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pull_down_4
   }, ],
   title: {
-    text: "Pull Down 4",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -497,10 +491,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Down 4"
+      text: ""
     },
     min: -1.0,
-    max: 1.0
+    max: max_pull_down_4+1
   },
   legend: {
     position: "top",
@@ -525,7 +519,7 @@ var options = {
 },
   chart = new ApexCharts(document.querySelector("#pull_down_4"), options);
       chart.render();
-      //Pull Down 5 
+     
       
    options = {
   chart: {
@@ -547,11 +541,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Down 5",
-    data: pull_down_5//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pull_down_5
   }, ],
   title: {
-    text: "Pull Down 5",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -583,10 +577,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Down 5"
+      text: ""
     },
    min: -1.0,
-    max: 1.0
+    max: max_pull_down_5+1
   },
   legend: {
     position: "top",
@@ -633,11 +627,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Down 6",
-    data: pull_down_6//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pull_down_6
   }, ],
   title: {
-    text: "Pull Down 6",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -669,10 +663,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Down 6"
+      text: ""
     },
    min: -1.0,
-    max: 1.0
+    max: max_pull_down_6+1
   },
   legend: {
     position: "top",
@@ -697,9 +691,6 @@ var options = {
 },
   chart = new ApexCharts(document.querySelector("#pull_down_6"), options);
       chart.render();
-      
-      // Pull Downs 7 
-    
    options = {
   chart: {
     height: 380,
@@ -720,11 +711,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Down 7",
+    name: "",
     data: pull_down_7//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Pull Down 7",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -756,10 +747,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Down 7"
+      text: ""
     },
     min: -1.0,
-    max: 1.0
+    max: max_pull_down_7+1
   },
   legend: {
     position: "top",
@@ -808,7 +799,7 @@ var options = {
   },
   series: [{
     name: "Double Crow Hop Distance",
-    data: long_toss_distance//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    data: long_toss_distance
   }, ],
   title: {
     text: "Double Crow Hop Distance",
@@ -843,10 +834,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Double Crow Hop Distance"
+      text: ""
     },
      min: -1.0,
-    max: 1.0
+    max: max_long_toss_distance+1
   },
   legend: {
     position: "top",
@@ -872,7 +863,7 @@ var options = {
   chart = new ApexCharts(document.querySelector("#long_toss_distance"), options);
       chart.render();
       // Kneeling Long Toss
-      // Arm Pain
+    
    options = {
   chart: {
     height: 380,
@@ -893,8 +884,8 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Kneeling Long Toss",
-    data: pylo7//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pylo7
   }, ],
   title: {
     text: "Kneeling Long Toss",
@@ -929,10 +920,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Kneeling Long Toss"
+      text: ""
     },
    min: -1.0,
-    max: 1.0
+    max: max_pylo_7+1
   },
   legend: {
     position: "top",
@@ -958,8 +949,6 @@ var options = {
   chart = new ApexCharts(document.querySelector("#pylo_7"), options);
   chart.render();
 
-      //Seated Long Toss
-    
    options = {
   chart: {
     height: 380,
@@ -980,11 +969,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Seated Long Toss",
-    data: pylo5//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: pylo5
   }, ],
   title: {
-    text: "Seated Long Toss",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1016,10 +1005,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Seated Long Toss"
+      text: ""
     },
     min: -1.0,
-    max: 1.0
+    max: max_pylo_5+1
   },
   legend: {
     position: "top",
@@ -1067,11 +1056,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Bench",
+    name: "",
     data: pylo3//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Bench",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1103,10 +1092,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Bench"
+      text: ""
     },
-  min: -1.0,
-    max: 1.0
+    min: -1.0,
+    max: max_pylo_3+1
   },
   legend: {
     position: "top",
@@ -1132,7 +1121,7 @@ var options = {
   chart = new ApexCharts(document.querySelector("#pylo_3"), options);
       chart.render();
 
-      //Mound Shuffle
+    
     
    options = {
   chart: {
@@ -1154,11 +1143,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Mound Shuffle",
+    name: "",
     data: bench//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Mound Shuffle",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1190,10 +1179,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Mound Shuffle"
+      text: ""
     },
   min: -1.0,
-    max: 1.0
+    max: max_bench+1
   },
   legend: {
     position: "top",
@@ -1241,11 +1230,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Squat",
+    name: "",
     data: squat//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Squat",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1277,10 +1266,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Squat"
+      text: ""
     },
    min: -1.0,
-    max: 1.0
+    max: max_squat+1
   },
   legend: {
     position: "top",
@@ -1327,11 +1316,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Pull Ups",
+    name: "",
     data: deadlift//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
   }, ],
   title: {
-    text: "Pull Ups",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1363,10 +1352,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Pull Ups"
+      text: ""
     },
   min: -1.0,
-    max: 1.0
+    max: max_deadlift+1
   },
   legend: {
     position: "top",
@@ -1413,11 +1402,11 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "Vertical Jump",
-    data: vertical_jump//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,23,0,0,0,0,0,0]
+    name: "",
+    data: vertical_jump
   }, ],
   title: {
-    text: "Vertical Jump",
+    text: "",
     align: "left",
     style: {
       fontWeight: "500"
@@ -1449,10 +1438,10 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "Vertical Jump"
+      text: ""
     },
   min: -1.0,
-    max: 1.0
+    max: max_vertical_jump +1
   },
   legend: {
     position: "top",
