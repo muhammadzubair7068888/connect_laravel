@@ -33,7 +33,7 @@ class FileController extends Controller
         $files = new File();
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $fileName = time() . '_' . $request->file->getClientOriginalName();
+            $fileName = time() . '_' .rand(1111,9999).'.'.$request->file->extension();
             $file->move('uploads', $fileName);
             $files->file = $fileName;
             $files->user_id = $user_id;

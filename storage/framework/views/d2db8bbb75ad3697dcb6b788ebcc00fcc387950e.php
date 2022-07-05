@@ -1,26 +1,24 @@
-@extends('supperadmin.layouts.master')
 
-@section('title')
-    @lang('translation.Calendars')
-@endsection
 
-@section('css')
-    <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('/assets/libs/tui-time-picker/tui-time-picker.min.css') }}">
-    <link rel="stylesheet" type="text/css"
-        href="{{ URL::asset('/assets/libs/tui-date-picker/tui-date-picker.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/assets/libs/tui-calendar/tui-calendar.min.css') }}" />
-@endsection
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('Schedule'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            Skote
-        @endslot
-        @slot('title')
-            Calendar
-        @endslot
-    @endcomponent
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('/assets/libs/tui-time-picker/tui-time-picker.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('/assets/libs/tui-date-picker/tui-date-picker.min.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('/assets/libs/tui-calendar/tui-calendar.min.css')); ?>" />
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
+            <?php echo app('translator')->get('Schedule'); ?>
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo app('translator')->get('Schedule'); ?>
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -133,21 +131,23 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
-    <script src="{{ URL::asset('/assets/libs/tui-dom/tui-dom.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/tui-dom/tui-dom.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('/assets/libs/tui-time-picker/tui-time-picker.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/tui-date-picker/tui-date-picker.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/tui-time-picker/tui-time-picker.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/tui-date-picker/tui-date-picker.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('/assets/libs//moment/moment.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/chance/chance.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs//moment/moment.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/chance/chance.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('/assets/libs/tui-calendar/tui-calendar.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/tui-calendar/tui-calendar.min.js')); ?>"></script>
 
-    <script src="{{ URL::asset('/assets/js/pages/calendars.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/schedules.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/calendar.init.js') }}"></script>
-@endsection
+    <script src="<?php echo e(URL::asset('/assets/js/pages/calendars.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/js/pages/schedules.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/js/pages/calendar.init.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\laragon\www\Admin\resources\views/supperadmin/calendar.blade.php ENDPATH**/ ?>

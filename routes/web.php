@@ -44,7 +44,7 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 Route::get('/your/profile',[SettingController::class, 'profiel'])->name('profile');
 Route::post('/your/profile/{id}{',[SettingController::class, 'update_profile'])->name('update.profile');
 Route::get('site/setting',[SettingController::class,'site_setting'])->name('site.setting');
-Route::get('calendar',[SettingController::class, 'shadule_calender'])->name('calendar');
+
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
     Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
@@ -68,6 +68,8 @@ Route::prefix('/exercises')->group(function () {
     Route::post('/del',[ExerciseController::class, 'delete_exercise'])->name('delete.exercise');
     Route::get('/copy/{id}',[ExerciseController::class, 'copy_exercise'])->name('copy.exercise');
     Route::post('/shair', [ExerciseController::class, 'shair_exercise'])->name('shair.exercise');
+    Route::get('/schedule', [ExerciseController::class, 'shadule_calender'])->name('schedule.exercise');
+    Route::post('/schedule',[ExerciseController::class, 'schedule'])->name('schedule');
 });
 Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');

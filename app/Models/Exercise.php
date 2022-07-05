@@ -14,9 +14,12 @@ class Exercise extends Model
     {
         return $this->belongsTo(ExerciseType::class, 'exercises_type_id');
     }
-
     public function excercise_detail()
     {
         return $this->hasMany(ExerciseDetail::class);
+    }
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

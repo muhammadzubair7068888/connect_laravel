@@ -34,7 +34,7 @@
                                     <div class="col-sm-4">
                                         <label class="form-label"><?php echo app('translator')->get('Select User'); ?></label>
                                         <select class="form-control select2" id="user" name="name">
-                                            <option value="<?php echo e(auth()->user()->id); ?>"><?php echo app('translator')->get('Me'); ?></option>
+                                            <option value="<?php echo e(auth()->user()->id); ?>" selected><?php echo app('translator')->get('Me'); ?></option>
                                             <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -59,8 +59,6 @@
                                             id="btnClear"><?php echo app('translator')->get('Clear'); ?></button>
                                     </div>
                                 </div>
-
-
                             </div>
                         </form>
                     </div>
@@ -68,9 +66,6 @@
             </div>
         </div>
     </div> <!-- end col -->
-
-
-
     <div class="row">
         <?php $__empty_1 = true; $__currentLoopData = $velocities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $velocity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="col-xl-6">
@@ -84,10 +79,7 @@
             </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
         <?php endif; ?>
-
     </div>
-
-
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script>
@@ -103,6 +95,61 @@
 
             });
         });
+        let weight = <?php echo json_encode($weight, 15, 512) ?>;
+        let arm_pain = <?php echo json_encode($arm_pain, 15, 512) ?>;
+        let mound_throw_velocit = <?php echo json_encode($mount_throw_velocit, 15, 512) ?>;
+        let pull_down_3 = <?php echo json_encode($pull_down_3, 15, 512) ?>;
+        let pull_down_4 = <?php echo json_encode($pull_down_4, 15, 512) ?>;
+        let pull_down_5 = <?php echo json_encode($pull_down_5, 15, 512) ?>;
+        let pull_down_6 = <?php echo json_encode($pull_down_6, 15, 512) ?>;
+        let pull_down_7 = <?php echo json_encode($pull_down_7, 15, 512) ?>;
+        let bench = <?php echo json_encode($bench, 15, 512) ?>;
+        let squat = <?php echo json_encode($squat, 15, 512) ?>;
+        let vertical_jump = <?php echo json_encode($vertical_jump, 15, 512) ?>;
+        let pull_down_velocity = <?php echo json_encode($pull_down_velocity, 15, 512) ?>;
+        let long_toss_distance = <?php echo json_encode($long_toss_distance, 15, 512) ?>;
+        let pylo7 = <?php echo json_encode($pylo7, 15, 512) ?>;
+        let pylo5 = <?php echo json_encode($pylo5, 15, 512) ?>;
+        let pylo3 = <?php echo json_encode($pylo3, 15, 512) ?>;
+        let deadlift = <?php echo json_encode($deadlift, 15, 512) ?>;
+
+        let max_weight = 0;
+        let max_arm_pain = 0;
+        let max_mound_throw_velocity = 0;
+        let max_pull_down_3 = 0;
+        let max_pull_down_4 = 0;
+        let max_pull_down_5 = 0;
+        let max_pull_down_6 = 0;
+        let max_pull_down_7 = 0;
+        let max_bench = 0;
+        let max_squat = 0;
+        let max_vertical_jump = 0;
+        let max_pull_down_velocity = 0;
+        let max_long_toss_distance = 0;
+        let max_pylo_7 = 0;
+        let max_pylo_5 = 0;
+        let max_pylo_3 = 0;
+        let max_deadlift = 0;
+
+        for (let i = 0; i < 29; i += 1) {
+            max_weight += weight[i];
+            max_arm_pain += arm_pain[i];
+            max_mound_throw_velocity += mound_throw_velocit[i];
+            max_pull_down_3 += pull_down_3[i];
+            max_pull_down_4 += pull_down_4[i];
+            max_pull_down_5 += pull_down_5[i];
+            max_pull_down_6 += pull_down_6[i];
+            max_pull_down_7 += pull_down_7[i];
+            max_bench += bench[i];
+            max_squat += squat[i];
+            max_vertical_jump += vertical_jump[i];
+            max_pull_down_velocity += pull_down_velocity[i];
+            max_long_toss_distance += long_toss_distance[i];
+            max_pylo_7 += pylo7[i];
+            max_pylo_5 += pylo5[i];
+            max_pylo_3 += pylo7[i];
+            max_deadlift += deadlift[i];
+        }
 
         $('#dashboard-graph-setting-form').on('submit', function(event) {
             event.preventDefault();
@@ -120,24 +167,6 @@
                 }
             })
         });
-
-        let weight = <?php echo json_encode($weight, 15, 512) ?>;
-        let arm_pain = <?php echo json_encode($arm_pain, 15, 512) ?>;
-        let mount_throw_velocit = <?php echo json_encode($mount_throw_velocit, 15, 512) ?>;
-        let pull_down_3 = <?php echo json_encode($pull_down_3, 15, 512) ?>;
-        let pull_down_4 = <?php echo json_encode($pull_down_4, 15, 512) ?>;
-        let pull_down_5 = <?php echo json_encode($pull_down_5, 15, 512) ?>;
-        let pull_down_6 = <?php echo json_encode($pull_down_6, 15, 512) ?>;
-        let pull_down_7 = <?php echo json_encode($pull_down_7, 15, 512) ?>;
-        let bench = <?php echo json_encode($bench, 15, 512) ?>;
-        let squat = <?php echo json_encode($squat, 15, 512) ?>;
-        let vertical_jump = <?php echo json_encode($vertical_jump, 15, 512) ?>;
-        let pull_down_velocity = <?php echo json_encode($pull_down_velocity, 15, 512) ?>;
-        let long_toss_distance = <?php echo json_encode($long_toss_distance, 15, 512) ?>;
-        let pylo7 = <?php echo json_encode($pylo7, 15, 512) ?>;
-        let pylo5 = <?php echo json_encode($pylo5, 15, 512) ?>;
-        let pylo3 = <?php echo json_encode($pylo3, 15, 512) ?>;
-        let deadlift = <?php echo json_encode($deadlift, 15, 512) ?>;
     </script>
     <script src="<?php echo e(URL::asset('/assets/libs/select2/select2.min.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('/assets/libs/apexchartsadmin/apexcharts.min.js')); ?>"></script>

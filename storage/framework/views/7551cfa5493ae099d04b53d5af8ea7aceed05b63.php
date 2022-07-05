@@ -73,35 +73,36 @@
                                 <th class="col-1"><?php echo app('translator')->get('Action'); ?></th>
                             </tr>
                         </thead>
-                        <?php
-                            $j = 0;
-                        ?>
-                        <?php $__empty_1 = true; $__currentLoopData = $files; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <?php
-                                $j++;
-                                $pdf = explode('pdf', $file->file);
-                            ?>
-                            <tr class="first_row">
-                                <td><?php echo e($j); ?></td>
-                                <td><?php echo e($file->title); ?></td>
-                                <td><?php echo e($file->file); ?></td>
-                                <td>
-                                    <?php if(isset($pdf[1])): ?>
-                                    <?php else: ?>
-                                        <a class="link-primary view-video"
-                                            data-link="<?php echo e(asset('/uploads/' . $file->file)); ?>" data-name="name"
-                                            data-target="#myModal" data-toggle="modal"> <i class="fa fa-eye"></i></a>
-                                    <?php endif; ?>
-                                    <a style="padding-left:10px;" class="link-warning"
-                                        href='<?php echo e(route('download.file', ['id' => $file->id])); ?>'><i
-                                            class="bx bx-download"></i></a>
-                                    <a style="padding-left:10px;" class="link-danger"><i class="fas fa-trash-alt"
-                                            onclick="delete_file(<?php echo e($file); ?>)"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                        <?php endif; ?>
                         <tbody>
+                            <?php
+                                $j = 0;
+                            ?>
+                            <?php $__empty_1 = true; $__currentLoopData = $files; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php
+                                    $j++;
+                                    $pdf = explode('pdf', $file->file);
+                                ?>
+                                <tr class="first_row">
+                                    <td><?php echo e($j); ?></td>
+                                    <td><?php echo e($file->title); ?></td>
+                                    <td><?php echo e($file->file); ?></td>
+                                    <td>
+                                        <?php if(isset($pdf[1])): ?>
+                                        <?php else: ?>
+                                            <a class="link-primary view-video"
+                                                data-link="<?php echo e(asset('/uploads/' . $file->file)); ?>" data-name="name"
+                                                data-target="#myModal" data-toggle="modal"> <i class="fa fa-eye"></i></a>
+                                        <?php endif; ?>
+                                        <a style="padding-left:10px;" class="link-warning"
+                                            href='<?php echo e(route('download.file', ['id' => $file->id])); ?>'><i
+                                                class="bx bx-download"></i></a>
+                                        <a style="padding-left:10px;" class="link-danger"><i class="fas fa-trash-alt"
+                                                onclick="delete_file(<?php echo e($file); ?>)"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <?php endif; ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -227,25 +228,27 @@
                 data: {},
                 dataType: "json",
                 success: function(data) {
-
                     var i = 0;
                     var html = '';
                     var view = '';
+                    console.log(data);
                     $.each(data, function(key, value) {
                         i++;
-                        var url = "<?php echo e(url('/files/download')); ?>" + "/" + value.id;
+                        var download = "<?php echo e(url('/files/download')); ?>" + "/" + value.id;
                         var viewurl = "<?php echo e(asset('/uploads')); ?>" + "/" + value.file;
 
+                        alert(viewurl);
                         let text = value.file
                         const arr = text.split("pdf");
                         if (typeof arr[1] !== 'undefined') {
-
+                            view += ''
                         } else {
                             view +=
-                                '<a class="link-primary view-video"data-link=' + viewurl +
-                                'data-name="name" data-target="#myModal"data-toggle="modal" >' +
+                                '<a class="link-primary view-video"data-link = ' + viewurl +
+                                ' data-name="name" data-target="#myModal"data-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
+
                         html += '<tr>';
                         html += '<td>';
                         html += i;
@@ -258,18 +261,29 @@
                         html += '</td>';
                         html += '<td>';
                         html += view;
+                        html += '<a style="padding-left:10px;" class="link-warning" href=';
+                        html += download;
+                        html += '>';
+                        html += '<i class = "bx bx-download">';
+                        html += '</i>';
+                        html += '</a>';
+                        html += '<a style="padding-left:10px;" class="link-danger" href=';
+                        html += download;
+                        html += '>';
+                        html += '<i class = "fas fa-trash-alt">';
+                        html += '</i>';
+                        html += '</a>';
                         html += '</td>';
                         html += '</tr>';
                     });
                     $('tbody').html(html);
                 },
                 error: function(response) {
+                    alert('4');
                     alert("Failed")
                 }
-
-
             });
-
+            alert('5');
         }
     </script>
 <?php $__env->stopSection(); ?>
