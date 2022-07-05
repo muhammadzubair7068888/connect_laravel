@@ -22,7 +22,7 @@ class UserController extends Controller
     //         return redirect()->back()->with('error', 'Email or Password is invalid!');
     //     } else {
     //         session()->put('admin', $admin);
-           
+
     //     }
     //     return redirect()->route('root');
     // }
@@ -33,17 +33,20 @@ class UserController extends Controller
     //     return redirect()->route('login');
     // }
 
-    public function index($id = null){
+    public function index($id = null)
+    {
         $get_id = $id;
         $user_id = auth()->user()->id;
-        $users = User::where('created_by',$user_id)->latest()->get();
-        return  view('supperadmin.contacts-list',compact('users', 'get_id'));
+        $users = User::where('created_by', $user_id)->latest()->get();
+        return  view('supperadmin.contacts-list', compact('users', 'get_id'));
     }
-    public function update_user($id){
-         $user = User::find($id);
-        return view('supperadmin.update_user',compact('user'));
+    public function update_user($id)
+    {
+        $user = User::find($id);
+        return view('supperadmin.update_user', compact('user'));
     }
-    public function update_user_save(Request $request, $id){
+    public function update_user_save(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -79,14 +82,15 @@ class UserController extends Controller
     }
     public function delete_user($id)
     {
-        $user = User::where('id',$id)->orWhere('created_by',$id)->delete();
+        $user = User::where('id', $id)->orWhere('created_by', $id)->delete();
         return redirect()->route('users')->with('success', 'User Successfully Delete.');
-
     }
-    public function new_user(){
+    public function new_user()
+    {
         return view('supperadmin.add_new_user');
     }
-    public function add_user(Request $request){
+    public function add_user(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users',
@@ -101,7 +105,7 @@ class UserController extends Controller
             'role' => 'required',
             'user_status' => 'required',
         ]);
-        $user_id = auth()->user()->id; 
+        $user_id = auth()->user()->id;
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -122,10 +126,10 @@ class UserController extends Controller
         $user->level = $request->level;
         $user->role = $request->role;
         $user->status = $request->user_status;
-        $user->created_by = $user_id; 
+        $user->created_by = $user_id;
         $user->save();
-        $phy_assessment = PhysicalAssessment::where('user_id',$user_id)->get();
-        if($phy_assessment){
+        $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
+        if ($phy_assessment) {
             foreach ($phy_assessment as $phy) {
                 $user_phy_assessment = new PhysicalAssessment();
                 $user_phy_assessment->user_id = $user->id;
@@ -134,8 +138,8 @@ class UserController extends Controller
                 $user_phy_assessment->save();
             }
         }
-        $mach_assessment = MechanicalAssessment::where('user_id',$user_id)->get();
-        if($mach_assessment){
+        $mach_assessment = MechanicalAssessment::where('user_id', $user_id)->get();
+        if ($mach_assessment) {
             foreach ($mach_assessment as $mach) {
                 $user_mach_assessment = new MechanicalAssessment();
                 $user_mach_assessment->user_id = $user->id;
@@ -144,9 +148,9 @@ class UserController extends Controller
                 $user_mach_assessment->save();
             }
         }
-        $questions = Questionnaire::where('user_id',$user_id)->get();
-        if($questions){
-            foreach($questions as $question){
+        $questions = Questionnaire::where('user_id', $user_id)->get();
+        if ($questions) {
+            foreach ($questions as $question) {
                 $user_question = new Questionnaire();
                 $user_question->name = $question->name;
                 $user_question->user_id = $user->id;
@@ -155,19 +159,21 @@ class UserController extends Controller
         }
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }
-    public function leaderboard(){
+    public function leaderboard()
+    {
         $user_id = auth()->user()->id;
-        if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'){
-          $velocities = User::where('created_by', $user_id)->get();
-            $velocity_names = Velocity::where('admin_id',$user_id)->get();
-        }else{
-             $velocities = User::where('id', $user_id)->get();
-             $velocity_names = Velocity::where('admin_id',auth()->user()->created_by)->get();
+        if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
+            $velocities = User::where('created_by', $user_id)->get();
+            $velocity_names = Velocity::where('admin_id', $user_id)->get();
+        } else {
+            $velocities = User::where('id', $user_id)->get();
+            $velocity_names = Velocity::where('admin_id', auth()->user()->created_by)->get();
         }
-        
-        return view('supperadmin.leaderboard',compact('velocities', 'velocity_names'));
+
+        return view('supperadmin.leaderboard', compact('velocities', 'velocity_names'));
     }
-    public function filter_leaderboard(Request $request){
+    public function filter_leaderboard(Request $request)
+    {
         $request->validate([
             'start' => 'required',
             'end' => 'required',
@@ -178,7 +184,7 @@ class UserController extends Controller
         $start_date =  date('Y-m-d', $start);
         $end_date = date('Y-m-d', $end);
         if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
-            $velocities= User::where('created_by', $user_id)->with(['uservelocity' => function ($query) use ($start_date, $end_date) {
+            $velocities = User::where('created_by', $user_id)->with(['uservelocity' => function ($query) use ($start_date, $end_date) {
                 $query->whereBetween('date', [$start_date, $end_date]);
             }])->get();
             $velocity_names = Velocity::where('admin_id', $user_id)->get();
@@ -190,13 +196,15 @@ class UserController extends Controller
         }
         return view('supperadmin.leaderboard', compact('velocities', 'velocity_names'));
     }
-    public function grid_view(){
+    public function grid_view()
+    {
         $user_id = auth()->user()->id;
-        $users=User::where('created_by',$user_id)->latest()->get();
-        return view('supperadmin.contacts-grid',compact('users'));
+        $users = User::where('created_by', $user_id)->latest()->get();
+        return view('supperadmin.contacts-grid', compact('users'));
     }
-    public function user_view($id){
-        $user = User::where('id',$id)->first();
-        return view('supperadmin.user_view',compact('user'));
+    public function user_view($id)
+    {
+        $user = User::where('id', $id)->first();
+        return view('supperadmin.user_view', compact('user'));
     }
 }

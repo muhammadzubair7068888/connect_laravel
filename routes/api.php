@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/user_velocities', [ApiController::class, 'user_velocities']);
         Route::post('/index', [ApiController::class, 'save_velocity']);
         Route::post('/del', [ApiController::class, 'delete_velocity']);
+        Route::post('/graph/settings', [ApiController::class, 'update_setting']);
     });
     Route::prefix('/users')->group(function () {
         Route::post('/add', [ApiController::class, 'add_user']);
@@ -48,6 +49,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [ApiController::class, 'user_all']);
         Route::post('/update/{id}', [ApiController::class, 'update_user_save']);
         Route::post('/delete/{id}', [ApiController::class, 'user_delete']);
+        Route::get('/leaderboard', [ApiController::class, 'leaderboard']);
     });
     Route::prefix('/questionnaire')->group(function () {
         Route::get('/index', [ApiController::class, 'question']);
@@ -79,4 +81,5 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/delete', [ApiController::class, 'delete_file']);
         // Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
+    Route::get('site/setting', [ApiController::class, 'site_setting']);
 });

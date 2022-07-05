@@ -186,7 +186,12 @@ class ApiController extends Controller
     public function velocities()
     {
         try {
-            $velocities = Velocity::where('user_type', 2)->latest()->get();
+            if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
+                $user_id = auth()->user()->id;
+            } else {
+                $user_id = auth()->user()->created_by;
+            }
+            $velocities = Velocity::where('admin_id', $user_id)->latest()->get();
             $response = [
                 'status' => 'success',
                 'data' => $velocities,
@@ -228,10 +233,12 @@ class ApiController extends Controller
                 'value' => 'required',
                 'velocity_type' => 'required',
             ]);
+            $velocity_type = Velocity::where('name', $request->velocity_type)->value('id');
+            $key = Velocity::where('id', $velocity_type)->first('key')->key;
             $user_id = auth()->user()->id;
             $user_velocity = new UserVelocity();
             $user_velocity->user_id = $user_id;
-            $velocity_type = Velocity::where('name', $request->velocity_type)->value('id');
+            $user_velocity->velocity_key = $key;
             $user_velocity->velocity_id = $velocity_type;
             $user_velocity->date = $request->date;
             $user_velocity->value = $request->value;
@@ -1009,6 +1016,86 @@ class ApiController extends Controller
             File::where('id', $request->file_id)->delete();
             $response = [
                 'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function site_setting()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $velocities = Velocity::where('admin_id', $user_id)->get();
+            $response = [
+                'status' => 'success',
+                'data' => $velocities,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function update_setting(Request $request)
+    {
+        try {
+            $admin_id = auth()->user()->id;
+            $weight = Velocity::where('admin_id', $admin_id)->where('key', 'weight')->update(array('name' => $request->weight_label, 'status' => $request->weight));
+            $arm_pain = Velocity::where('admin_id', $admin_id)->where('key', 'arm_pain')->update(array('name' => $request->arm_pain_label, 'status' => $request->arm_pain));
+            $pull_down_velocity = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_velocity')->update(array('name' => $request->pull_down_velocity_label, 'status' => $request->pull_down_velocity));
+            $mound_throws_velocity = Velocity::where('admin_id', $admin_id)->where('key', 'mound_throws_velocity')->update(array('name' => $request->mound_throws_velocity_label, 'status' => $request->mound_throws_velocity));
+            $pull_down_3 = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_3')->update(array('name' => $request->pull_down_3_label, 'status' => $request->pull_down_3));
+            $pull_down_4 = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_4')->update(array('name' => $request->pull_down_4_label, 'status' => $request->pull_down_4));
+            $pull_down_5 = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_5')->update(array('name' => $request->pull_down_5_label, 'status' => $request->pull_down_5));
+            $pull_down_6 = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_6')->update(array('name' => $request->pull_down_6_label, 'status' => $request->pull_down_6));
+            $pull_down_7 = Velocity::where('admin_id', $admin_id)->where('key', 'pull_down_7')->update(array('name' => $request->pull_down_7_label, 'status' => $request->pull_down_7));
+            $long_toss_distance_label = Velocity::where('admin_id', $admin_id)->where('key', 'long_toss_distance')->update(array('name' => $request->long_toss_distance_label, 'status' => $request->long_toss_distance));
+            $pylo_7 = Velocity::where('admin_id', $admin_id)->where('key', 'pylo_7')->update(array('name' => $request->pylo_7_label, 'status' => $request->pylo_7));
+            $pylo_5 = Velocity::where('admin_id', $admin_id)->where('key', 'pylo_5')->update(array('name' => $request->pylo_5_label, 'status' => $request->pylo_5));
+            $pylo_3 = Velocity::where('admin_id', $admin_id)->where('key', 'pylo_3')->update(array('name' => $request->pylo_3_label, 'status' => $request->pylo_3));
+            $bench = Velocity::where('admin_id', $admin_id)->where('key', 'bench')->update(array('name' => $request->bench_label, 'status' => $request->bench));
+            $squat = Velocity::where('admin_id', $admin_id)->where('key', 'squat')->update(array('name' => $request->squat_label, 'status' => $request->squat));
+            $deadlift = Velocity::where('admin_id', $admin_id)->where('key', 'deadlift')->update(array('name' => $request->deadlift_label, 'status' => $request->deadlift));
+            $vertical_jump = Velocity::where('admin_id', $admin_id)->where('key', 'vertical_jump')->update(array('name' => $request->vertical_jump_label, 'status' => $request->vertical_jump));
+            $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
+    public function leaderboard()
+    {
+
+        try {
+            $user_id = auth()->user()->id;
+            if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
+                $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
+                $velocity_names = Velocity::where('admin_id', $user_id)->get();
+            } else {
+                $velocities = User::where('id', $user_id)->with('uservelocity')->get();
+                $velocity_names = Velocity::where('admin_id', auth()->user()->created_by)->get();
+            }
+            $response = [
+                'status' => 'success',
+                'uservelocity' => $velocities,
+                'velocitynames' => $velocity_names,
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
