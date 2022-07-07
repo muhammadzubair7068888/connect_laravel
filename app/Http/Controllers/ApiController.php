@@ -1086,15 +1086,21 @@ class ApiController extends Controller
         try {
             $user_id = auth()->user()->id;
             if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
+                // $velocities = User::where('created_by', $user_id)->with(['uservelocity' => function ($query) {
+                //     $query->orderBy('value', 'desc')->value('value');
+                // }])->get();
                 $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
                 $velocity_names = Velocity::where('admin_id', $user_id)->get();
             } else {
+                // $velocities = User::where('id', $user_id)->with(['uservelocity' => function ($query) {
+                //     $query->orderBy('value', 'desc')->value('value');
+                // }])->get();
                 $velocities = User::where('id', $user_id)->with('uservelocity')->get();
                 $velocity_names = Velocity::where('admin_id', auth()->user()->created_by)->get();
             }
             $response = [
                 'status' => 'success',
-                'uservelocity' => $velocities,
+                'uservel' => $velocities,
                 'velocitynames' => $velocity_names,
             ];
             return response()->json($response, 200);
