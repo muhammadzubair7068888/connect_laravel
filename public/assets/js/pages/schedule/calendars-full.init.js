@@ -125,20 +125,18 @@ File: Calendar init js
    }
 });
     const currentYear = new Date().getFullYear();
-     const currentMonth = new Date().getMonth() + 1;
-      const date = '' + currentYear + '-' + currentMonth + '-' + '1';
-      var inputs = $('#form-event :input');
-      var exercise_id = $("#exercise").val();
-      var color = $('#color').val(); // validation
-      var start = date;
-      var end = date;
+    const currentMonth = new Date().getMonth() + 1;
+    const date = '' + currentYear + '-' + currentMonth + '-' + '1';
+    var inputs = $('#form-event :input');
+    var exercise_id = $("#exercise").val();
+    var color = $('#color').val(); // validation
       $.ajax({
           url: "/exercises/schedule",
           data: {
              color:color,
              exercise_id: exercise_id,
-             start: start,
-             end: end,
+             start: date,
+             end: date,
              type: 'add'
            },
             type: "POST",

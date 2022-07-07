@@ -236,8 +236,6 @@
                         i++;
                         var download = "<?php echo e(url('/files/download')); ?>" + "/" + value.id;
                         var viewurl = "<?php echo e(asset('/uploads')); ?>" + "/" + value.file;
-
-                        alert(viewurl);
                         let text = value.file
                         const arr = text.split("pdf");
                         if (typeof arr[1] !== 'undefined') {
@@ -248,7 +246,6 @@
                                 ' data-name="name" data-target="#myModal"data-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
-
                         html += '<tr>';
                         html += '<td>';
                         html += i;
@@ -283,7 +280,7 @@
                     alert("Failed")
                 }
             });
-            alert('5');
+
         }
     </script>
 <?php $__env->stopSection(); ?>

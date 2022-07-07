@@ -71,7 +71,6 @@ class VelocityController extends Controller
                 $squat[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'squat')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
                 $deadlift[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'deadlift')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
                 $vertical_jump[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'vertical_jump')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-           
             }
             return view('supperadmin.index', [
                 'velocities' => $velocities,
