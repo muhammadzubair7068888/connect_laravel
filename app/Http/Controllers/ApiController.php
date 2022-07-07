@@ -1082,25 +1082,153 @@ class ApiController extends Controller
 
     public function leaderboard()
     {
-
         try {
             $user_id = auth()->user()->id;
             if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
-                // $velocities = User::where('created_by', $user_id)->with(['uservelocity' => function ($query) {
-                //     $query->orderBy('value', 'desc')->value('value');
-                // }])->get();
-                $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
+                 $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
+                $velocity_value = [];
+                $velocity_value_all = [];
+                $j = -1 ;
+                foreach($velocities as $velocity){
+                    $j++;
+                    $velocity_value['name'] = $velocity->name;
+                    if(isset($velocity->uservelocity[0]->id)){
+                        if($velocity->uservelocity[$j]->id){
+                            $velocity_value['weight'] = $velocity->uservelocity->where('velocity_key', 'weight')->max('value') ?? 0;
+                            $velocity_value['arm_pain'] = $velocity->uservelocity->where('velocity_key', 'arm_pain')->max('value') ?? 0;
+                            $velocity_value['pull_down_velocity'] = $velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->max('value') ?? 0 ;
+                            $velocity_value['pull_down_3'] = $velocity->uservelocity->where('velocity_key', 'pull_down_3')->max('value') ?? 0;
+                            $velocity_value['pull_down_4'] = $velocity->uservelocity->where('velocity_key', 'pull_down_4')->max('value') ?? 0;
+                            $velocity_value['pull_down_5'] = $velocity->uservelocity->where('velocity_key', 'pull_down_5')->max('value') ?? 0;
+                            $velocity_value['pull_down_6'] = $velocity->uservelocity->where('velocity_key', 'pull_down_6')->max('value') ?? 0;
+                            $velocity_value['pull_down_7'] = $velocity->uservelocity->where('velocity_key', 'pull_down_7')->max('value') ?? 0;
+                            $velocity_value['mound_throws_velocity'] = $velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->max('value') ?? 0;
+                            $velocity_value['long_toss_distance'] = $velocity->uservelocity->where('velocity_key', 'long_toss_distance')->max('value') ?? 0;
+                            $velocity_value['pylo_7'] = $velocity->uservelocity->where('velocity_key', 'pylo_7')->max('value') ?? 0;
+                            $velocity_value['pylo_5'] = $velocity->uservelocity->where('velocity_key', 'pylo_5')->max('value') ?? 0;
+                            $velocity_value['pylo_3'] = $velocity->uservelocity->where('velocity_key', 'pylo_3')->max('value') ?? 0;
+                            $velocity_value['bench'] = $velocity->uservelocity->where('velocity_key', 'bench')->max('value') ?? 0;
+                            $velocity_value['squat'] = $velocity->uservelocity->where('velocity_key', 'squat')->max('value') ?? 0;
+                            $velocity_value['deadlift'] = $velocity->uservelocity->where('velocity_key', 'deadlift')->max('value') ?? 0;
+                            $velocity_value['vertical_jump'] = $velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0 ;
+
+                        } else {
+                            $velocity_value['weight'] = 0;
+                            $velocity_value['arm_pain'] = 0;
+                            $velocity_value['pull_down_velocity'] =0;
+                            $velocity_value['pull_down_3'] = 0;
+                            $velocity_value['pull_down_4'] = 0;
+                            $velocity_value['pull_down_5'] = 0;
+                            $velocity_value['pull_down_6'] = 0;
+                            $velocity_value['pull_down_7'] = 0;
+                            $velocity_value['mound_throws_velocity'] = 0;
+                            $velocity_value['long_toss_distance'] = 0;
+                            $velocity_value['pylo_5'] = 0;
+                            $velocity_value['pylo_7'] = 0;
+                            $velocity_value['pylo_3'] = 0;
+                            $velocity_value['bench'] = 0;
+                            $velocity_value['squat'] = 0;
+                            $velocity_value['deadlift'] = 0;
+                            $velocity_value['vertical_jump'] = 0;
+                        }
+
+                    }else{
+                        $velocity_value['weight'] =0;
+                        $velocity_value['arm_pain'] = 0;
+                        $velocity_value['pull_down_velocity'] = 0;
+                        $velocity_value['pull_down_3'] = 0;
+                        $velocity_value['pull_down_4'] = 0;
+                        $velocity_value['pull_down_5'] = 0;
+                        $velocity_value['pull_down_6'] = 0;
+                        $velocity_value['pull_down_7'] = 0;
+                        $velocity_value['mound_throws_velocity'] = 0;
+                        $velocity_value['long_toss_distance'] = 0;
+                        $velocity_value['pylo_5'] = 0;
+                        $velocity_value['pylo_7'] = 0;
+                        $velocity_value['pylo_3'] = 0;
+                        $velocity_value['bench'] = 0;
+                        $velocity_value['squat'] = 0;
+                        $velocity_value['deadlift'] = 0;
+                        $velocity_value['vertical_jump'] = 0;
+                    }
+                    $velocity_value_all[] = $velocity_value;
+                }
                 $velocity_names = Velocity::where('admin_id', $user_id)->get();
             } else {
                 // $velocities = User::where('id', $user_id)->with(['uservelocity' => function ($query) {
                 //     $query->orderBy('value', 'desc')->value('value');
                 // }])->get();
                 $velocities = User::where('id', $user_id)->with('uservelocity')->get();
+                $velocity_value = [];
+                $velocity_value_all = [];
+                $j = -1;
+                foreach ($velocities as $velocity) {
+                    $j++;
+                    $velocity_value['name'] = $velocity->name;
+                    if (isset($velocity->uservelocity[0]->id)) {
+                        if ($velocity->uservelocity[$j]->id) {
+                            $velocity_value['weight'] = $velocity->uservelocity->where('velocity_key', 'weight')->max('value') ?? 0;
+                            $velocity_value['arm_pain'] = $velocity->uservelocity->where('velocity_key', 'arm_pain')->max('value') ?? 0;
+                            $velocity_value['pull_down_velocity'] = $velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->max('value') ?? 0;
+                            $velocity_value['pull_down_3'] = $velocity->uservelocity->where('velocity_key', 'pull_down_3')->max('value') ?? 0;
+                            $velocity_value['pull_down_4'] = $velocity->uservelocity->where('velocity_key', 'pull_down_4')->max('value') ?? 0;
+                            $velocity_value['pull_down_5'] = $velocity->uservelocity->where('velocity_key', 'pull_down_5')->max('value') ?? 0;
+                            $velocity_value['pull_down_6'] = $velocity->uservelocity->where('velocity_key', 'pull_down_6')->max('value') ?? 0;
+                            $velocity_value['pull_down_7'] = $velocity->uservelocity->where('velocity_key', 'pull_down_7')->max('value') ?? 0;
+                            $velocity_value['mound_throws_velocity'] = $velocity->uservelocity->where('velocity_key', 'mound_throws_velocity')->max('value') ?? 0;
+                            $velocity_value['long_toss_distance'] = $velocity->uservelocity->where('velocity_key', 'long_toss_distance')->max('value') ?? 0;
+                            $velocity_value['pylo_7'] = $velocity->uservelocity->where('velocity_key', 'pylo_7')->max('value') ?? 0;
+                            $velocity_value['pylo_5'] = $velocity->uservelocity->where('velocity_key', 'pylo_5')->max('value') ?? 0;
+                            $velocity_value['pylo_3'] = $velocity->uservelocity->where('velocity_key', 'pylo_3')->max('value') ?? 0;
+                            $velocity_value['bench'] = $velocity->uservelocity->where('velocity_key', 'bench')->max('value') ?? 0;
+                            $velocity_value['squat'] = $velocity->uservelocity->where('velocity_key', 'squat')->max('value') ?? 0;
+                            $velocity_value['deadlift'] = $velocity->uservelocity->where('velocity_key', 'deadlift')->max('value') ?? 0;
+                            $velocity_value['vertical_jump'] = $velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0;
+                        } else {
+                            $velocity_value['weight'] = 0;
+                            $velocity_value['arm_pain'] = 0;
+                            $velocity_value['pull_down_velocity'] = 0;
+                            $velocity_value['pull_down_3'] = 0;
+                            $velocity_value['pull_down_4'] = 0;
+                            $velocity_value['pull_down_5'] = 0;
+                            $velocity_value['pull_down_6'] = 0;
+                            $velocity_value['pull_down_7'] = 0;
+                            $velocity_value['mound_throws_velocity'] = 0;
+                            $velocity_value['long_toss_distance'] = 0;
+                            $velocity_value['pylo_5'] = 0;
+                            $velocity_value['pylo_7'] = 0;
+                            $velocity_value['pylo_3'] = 0;
+                            $velocity_value['bench'] = 0;
+                            $velocity_value['squat'] = 0;
+                            $velocity_value['deadlift'] = 0;
+                            $velocity_value['vertical_jump'] = 0;
+                        }
+                    } else {
+                        $velocity_value['weight'] = 0;
+                        $velocity_value['arm_pain'] = 0;
+                        $velocity_value['pull_down_velocity'] = 0;
+                        $velocity_value['pull_down_3'] = 0;
+                        $velocity_value['pull_down_4'] = 0;
+                        $velocity_value['pull_down_5'] = 0;
+                        $velocity_value['pull_down_6'] = 0;
+                        $velocity_value['pull_down_7'] = 0;
+                        $velocity_value['mound_throws_velocity'] = 0;
+                        $velocity_value['long_toss_distance'] = 0;
+                        $velocity_value['pylo_5'] = 0;
+                        $velocity_value['pylo_7'] = 0;
+                        $velocity_value['pylo_3'] = 0;
+                        $velocity_value['bench'] = 0;
+                        $velocity_value['squat'] = 0;
+                        $velocity_value['deadlift'] = 0;
+                        $velocity_value['vertical_jump'] = 0;
+                    }
+                    $velocity_value_all[] = $velocity_value;
+                }
                 $velocity_names = Velocity::where('admin_id', auth()->user()->created_by)->get();
             }
             $response = [
                 'status' => 'success',
-                'uservel' => $velocities,
+                'uservelocity' =>  $velocity_value_all,
                 'velocitynames' => $velocity_names,
             ];
             return response()->json($response, 200);
