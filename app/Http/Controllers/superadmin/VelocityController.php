@@ -45,11 +45,11 @@ class VelocityController extends Controller
     }
     public function chart_velocity(){
         if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'){
-             $user_id = auth()->user()->id;
+              $user_id = auth()->user()->id;
         }else{
-             $user_id = auth()->user()->created_by;
+              $user_id = auth()->user()->created_by;
         }
-         $velocities =Velocity::where('admin_id',$user_id)->where('status','1')->get();
+        $velocities =Velocity::where('admin_id',$user_id)->where('status','1')->get();
         $users = User::where('created_by',$user_id)->latest()->get();
         $day = date('d');
         $mounth = date('m');
