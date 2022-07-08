@@ -1085,18 +1085,18 @@ class ApiController extends Controller
         try {
             $user_id = auth()->user()->id;
             if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
-                 $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
+                $velocities = User::where('created_by', $user_id)->with('uservelocity')->get();
                 $velocity_value = [];
                 $velocity_value_all = [];
-                $j = -1 ;
-                foreach($velocities as $velocity){
+                $j = -1;
+                foreach ($velocities as $velocity) {
                     $j++;
                     $velocity_value['name'] = $velocity->name;
-                    if(isset($velocity->uservelocity[0]->id)){
-                        if($velocity->uservelocity[$j]->id){
+                    if (isset($velocity->uservelocity[0]->id)) {
+                        if ($velocity->uservelocity[$j]->id) {
                             $velocity_value['weight'] = $velocity->uservelocity->where('velocity_key', 'weight')->max('value') ?? 0;
                             $velocity_value['arm_pain'] = $velocity->uservelocity->where('velocity_key', 'arm_pain')->max('value') ?? 0;
-                            $velocity_value['pull_down_velocity'] = $velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->max('value') ?? 0 ;
+                            $velocity_value['pull_down_velocity'] = $velocity->uservelocity->where('velocity_key', 'pull_down_velocity')->max('value') ?? 0;
                             $velocity_value['pull_down_3'] = $velocity->uservelocity->where('velocity_key', 'pull_down_3')->max('value') ?? 0;
                             $velocity_value['pull_down_4'] = $velocity->uservelocity->where('velocity_key', 'pull_down_4')->max('value') ?? 0;
                             $velocity_value['pull_down_5'] = $velocity->uservelocity->where('velocity_key', 'pull_down_5')->max('value') ?? 0;
@@ -1110,12 +1110,11 @@ class ApiController extends Controller
                             $velocity_value['bench'] = $velocity->uservelocity->where('velocity_key', 'bench')->max('value') ?? 0;
                             $velocity_value['squat'] = $velocity->uservelocity->where('velocity_key', 'squat')->max('value') ?? 0;
                             $velocity_value['deadlift'] = $velocity->uservelocity->where('velocity_key', 'deadlift')->max('value') ?? 0;
-                            $velocity_value['vertical_jump'] = $velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0 ;
-
+                            $velocity_value['vertical_jump'] = $velocity->uservelocity->where('velocity_key', 'vertical_jump')->value('value') ?? 0;
                         } else {
                             $velocity_value['weight'] = 0;
                             $velocity_value['arm_pain'] = 0;
-                            $velocity_value['pull_down_velocity'] =0;
+                            $velocity_value['pull_down_velocity'] = 0;
                             $velocity_value['pull_down_3'] = 0;
                             $velocity_value['pull_down_4'] = 0;
                             $velocity_value['pull_down_5'] = 0;
@@ -1131,9 +1130,8 @@ class ApiController extends Controller
                             $velocity_value['deadlift'] = 0;
                             $velocity_value['vertical_jump'] = 0;
                         }
-
-                    }else{
-                        $velocity_value['weight'] =0;
+                    } else {
+                        $velocity_value['weight'] = 0;
                         $velocity_value['arm_pain'] = 0;
                         $velocity_value['pull_down_velocity'] = 0;
                         $velocity_value['pull_down_3'] = 0;
@@ -1237,7 +1235,8 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function graph(Request $request){
+    public function graph(Request $request)
+    {
         if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
             $user_id = auth()->user()->id;
         } else {
@@ -1245,44 +1244,73 @@ class ApiController extends Controller
         }
         $velocities = Velocity::where('admin_id', $user_id)->where('status', '1')->get();
         $users = User::where('created_by', $user_id)->latest()->get();
-        $day = date('d');
-        $mounth = date('m');
+
+        if ($request->start_date != null && $request->end_date != null && $request->name != null) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+            $timestamp_start = strtotime($start_date);
+            $timestamp_end = strtotime($end_date);
+            $start_date = date('d-m-Y', $timestamp_start);
+            $end_date = date('d-m-Y', $timestamp_end);
+            $mounth = date('m', $timestamp_start);
+            $year = date('Y', $timestamp_start);
+            $day = date('d', $timestamp_start);
+            $diff = strtotime($start_date) - strtotime($end_date);
+            $dif = abs(round($diff / 86400));
+            $user_id = User::where('name', $request->name)->value('id');
+        } else {
+            $year = date('Y');
+            $mounth = date('m');
+            $dif = 30;
+            $user_id = auth()->user()->id;
+            $day = 1;
+        }
+
         $graph = [];
         $graph_all = [];
-        for ($i = 1; $i <= 30; $i++) {
-            $weight['date'] = $day.'/'.$mounth.'/'.$i;
-            $arm_pain['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_velocity['date'] = $day . '/' . $mounth . '/' . $i;
-            $mount_throw_velocit['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_3['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_4['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_5['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_6['date'] = $day . '/' . $mounth . '/' . $i;
-            $pull_down_7['date'] = $day . '/' . $mounth . '/' . $i;
-            $long_toss_distance['date'] = $day . '/' . $mounth . '/' . $i;
-            $pylo7['date'] = $day . '/' . $mounth . '/' . $i;
-            $pylo5['date'] = $day . '/' . $mounth . '/' . $i;
-            $bench['date'] = $day . '/' . $mounth . '/' . $i;
-            $squat['date'] = $day . '/' . $mounth . '/' . $i;
-            $deadlift['date'] = $day . '/' . $mounth . '/' . $i;
-            $vertical_jump['date'] = $day . '/' . $mounth . '/' . $i;     
-            $weight['weight'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'weight')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $arm_pain['arm_pain'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'arm_pain')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_velocity['pull_down_velocity'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_velocity')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $mount_throw_velocit['mount_throw_velocit'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'mound_throws_velocity')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_3['pull_down_3'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_3')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_4['pull_down_4'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_4')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_5['pull_down_5'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_5')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_6['pull_down_6'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_6')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pull_down_7['pull_down_7'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pull_down_7')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $long_toss_distance['long_toss_distance'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'long_toss_distance')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pylo7['pylo7'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pylo_7')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pylo5['pylo5'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pylo_5')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $bench['bench'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'pylo_4')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $pylo3['pylo3'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'bench')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $squat['squat'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'squat')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $deadlift['deadlift'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'deadlift')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-            $vertical_jump['vertical_jump'] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'vertical_jump')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+        for ($i = 1; $i <= $dif; $i++) {
+            if ($day > 30) {
+                $day = 1;
+                $mounth++;
+            }
+            if ($mounth > 12) {
+                $mounth = 1;
+                $year++;
+            }
+            $weight['date'] = $year . '/' . $mounth . '/' . $day;
+            $arm_pain['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_velocity['date'] = $year . '/' . $mounth . '/' . $day;
+            $mount_throw_velocit['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_3['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_4['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_5['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_6['date'] = $year . '/' . $mounth . '/' . $day;
+            $pull_down_7['date'] = $year . '/' . $mounth . '/' . $day;
+            $long_toss_distance['date'] = $year . '/' . $mounth . '/' . $day;
+            $pylo7['date'] = $year . '/' . $mounth . '/' . $day;
+            $pylo5['date'] = $year . '/' . $mounth . '/' . $day;
+            $pylo3['date'] = $year . '/' . $mounth . '/' . $day;
+            $bench['date'] = $year . '/' . $mounth . '/' . $day;
+            $squat['date'] = $year . '/' . $mounth . '/' . $day;
+            $deadlift['date'] = $year . '/' . $mounth . '/' . $day;
+            $vertical_jump['date'] = $year . '/' . $mounth . '/' . $day;
+            $weight['weight'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'weight')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $arm_pain['arm_pain'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'arm_pain')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_velocity['pull_down_velocity'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_velocity')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $mount_throw_velocit['mount_throw_velocit'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'mound_throws_velocity')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_3['pull_down_3'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_3')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_4['pull_down_4'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_4')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_5['pull_down_5'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_5')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_6['pull_down_6'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_6')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_7['pull_down_7'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pull_down_7')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $long_toss_distance['long_toss_distance'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'long_toss_distance')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pylo7['pylo7'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pylo_7')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pylo5['pylo5'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pylo_5')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $bench['bench'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'bench')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $pylo3['pylo3'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'pylo_3')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $squat['squat'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'squat')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $deadlift['deadlift'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'deadlift')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
+            $vertical_jump['vertical_jump'] = UserVelocity::where('user_id', $user_id)->where('velocity_key', 'vertical_jump')->whereDay('date', $day)->whereMonth('date', $mounth)->sum('value');
             $weight_all[] = $weight;
             $arm_pain_all[] = $arm_pain;
             $pull_down_velocity_all[] = $pull_down_velocity;
@@ -1296,29 +1324,32 @@ class ApiController extends Controller
             $pylo7_all[] = $pylo7;
             $pylo5_all[] = $pylo5;
             $bench_all[] = $bench;
-            $pylo3_all[] = $pylo7;
+            $pylo3_all[] = $pylo3;
             $squat_all[] = $squat;
             $deadlift_all[] = $deadlift;
+            $vertical_jump_all[] = $vertical_jump;
+            $day++;
         }
         $response = [
             'status' => 'success',
             'weight' =>  $weight_all,
-            'arm_pain;' => $arm_pain_all,
-            'pull_down_velocity'=> $pull_down_velocity_all,
-            'mount_throw_velocit'=> $mount_throw_velocit_all,
+            'arm_pain' => $arm_pain_all,
+            'pull_down_velocity' => $pull_down_velocity_all,
+            'mount_throw_velocit' => $mount_throw_velocit_all,
             'pull_down_3' => $pull_down_3_all,
             'pull_down_4' => $pull_down_4_all,
-            'pull_down_4' => $pull_down_5_all,
-            'pull_down_6'=> $pull_down_6_all,
+            'pull_down_5' => $pull_down_5_all,
+            'pull_down_6' => $pull_down_6_all,
             'pull_down_7' => $pull_down_7_all,
-            'long_toss_distance'=>$long_toss_distance_all,
-            'pylo7'=>$pylo7_all,
-            'pylo5'=>$pylo5_all,
+            'long_toss_distance' => $long_toss_distance_all,
+            'pylo7' => $pylo7_all,
+            'pylo5' => $pylo5_all,
             'bench_all' => $bench_all,
-            'pylo7'=>$pylo3_all,
-            'squat'=>$squat_all,
-            'deadlift'=> $deadlift_all,
+            'pylo3' => $pylo3_all,
+            'squat' => $squat_all,
+            'deadlift' => $deadlift_all,
+            'vertical_jump' => $vertical_jump_all
         ];
         return response()->json($response, 200);
-    } 
+    }
 }
