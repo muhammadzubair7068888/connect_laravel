@@ -50,14 +50,118 @@
             var draggableEl = document.getElementById('external-events');
             var calendarEl = document.getElementById('calendar');
 
-            function addNewEvent(info) {
-                addEvent.modal('show');
-                formEvent.removeClass("was-validated");
-                formEvent[0].reset();
-                $("#event-title").val();
-                $('#event-category').val();
-                modalTitle.text('Add Event');
-                newEventData = info;
+    function addNewEvent(info) {
+      addEvent.modal('show');
+      formEvent.removeClass("was-validated");
+      formEvent[0].reset();
+      $("#event-title").val();
+      $('#event-category').val();
+      modalTitle.text('Add Event');
+      newEventData = info;
+    }
+
+    function getInitialView() {
+      if (window.innerWidth >= 768 && window.innerWidth < 1200) {
+        return 'timeGridWeek';
+      } else if (window.innerWidth <= 768) {
+        return 'listMonth';
+      } else {
+        return 'dayGridMonth';
+      }
+    }
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      editable: true,
+      droppable: true,
+      selectable: true,
+      initialView: getInitialView(),
+      themeSystem: 'bootstrap',
+      // responsive
+      windowResize: function windowResize(view) {
+        var newView = getInitialView();
+        calendar.changeView(newView);
+      },
+      eventDidMount: function eventDidMount(info) {
+        if (info.event.extendedProps.status === 'done') {
+          // Change background color of row
+          info.el.style.backgroundColor = 'red'; // Change color of dot marker
+
+          var dotEl = info.el.getElementsByClassName('fc-event-dot')[0];
+
+          if (dotEl) {
+            dotEl.style.backgroundColor = 'white';
+          }
+        }
+      },
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      eventClick: function eventClick(info) {
+        addEvent.modal('show');
+        formEvent[0].reset();
+        selectedEvent = info.event;
+        $("#event-title").val(selectedEvent.title);
+        $('#event-category').val(selectedEvent.classNames[0]);
+        newEventData = null;
+        modalTitle.text('Edit Event');
+        newEventData = null;
+      },
+      dateClick: function dateClick(info) {
+        addNewEvent(info);
+      },
+      events: defaultEvents
+    });
+    calendar.render();
+    /*Add new event*/
+    // Form to add new event
+
+    $(formEvent).on('submit', function (ev) {
+      ev.preventDefault();
+      $.ajaxSetup({
+   headers: {
+     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   }
+});
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const date = '' + currentYear + '-' + currentMonth + '-' + '1';
+    var inputs = $('#form-event :input');
+    var exercise_id = $("#exercise").val();
+    var color = $('#color').val(); // validation
+      $.ajax({
+          url: "/exercises/schedule",
+          data: {
+             color:color,
+             exercise_id: exercise_id,
+             start: date,
+             end: date,
+             type: 'add'
+           },
+            type: "POST",
+        success: function (data) {
+          alert(data.exercise.name);
+          if (forms[0].checkValidity() === false) {
+        // event.preventDefault();
+        // event.stopPropagation();
+        forms[0].classList.add('was-validated');
+      } else {
+        if (selectedEvent) {
+          selectedEvent.setProp("title", exercise_id);
+          selectedEvent.setProp("classNames", [color]);
+        } else {
+          var newEvent = {
+            title: exercise_id,
+            start: newEventData.date,
+            allDay: newEventData.allDay,
+            className: color
+          };
+          calendar.addEvent(newEvent);
+        }
+
+        addEvent.modal('hide');
+      }
             }
 
             function getInitialView() {

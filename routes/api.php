@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/index', [ApiController::class, 'save_velocity']);
         Route::post('/del', [ApiController::class, 'delete_velocity']);
         Route::post('/graph/settings', [ApiController::class, 'update_setting']);
+        Route::get('/graph',[ApiController::class, 'graph']);
     });
     Route::prefix('/users')->group(function () {
         Route::post('/add', [ApiController::class, 'add_user']);
