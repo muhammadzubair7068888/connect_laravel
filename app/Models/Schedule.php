@@ -9,12 +9,6 @@ class Schedule extends Model
 {
     use HasFactory;
     protected $table = "schedules";
-    protected $fillable = [
-        'exercise_id', 'start', 'end' , 'color'
-    ];
-    public function exercise()
-    {
-        return $this->belongsTo(Exercise::class, 'exercises_id');
-    }
+    protected $guarded = [];
 
 }

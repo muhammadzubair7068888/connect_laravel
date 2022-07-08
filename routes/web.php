@@ -48,7 +48,7 @@ Route::get('site/setting',[SettingController::class,'site_setting'])->name('site
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
     Route::post('/edit', [SettingController::class, 'company_settings'])->name('company_setting');
-  
+
 });
 Route::prefix('/chat')->group(function () {
     Route::get('/open', [ChatController::class, 'chat'])->name('chat');
@@ -70,6 +70,10 @@ Route::prefix('/exercises')->group(function () {
     Route::post('/shair', [ExerciseController::class, 'shair_exercise'])->name('shair.exercise');
     Route::get('/schedule', [ExerciseController::class, 'shadule_calender'])->name('schedule.exercise');
     Route::post('/schedule',[ExerciseController::class, 'schedule'])->name('schedule');
+    Route::post('/schedule/update',[ExerciseController::class, 'schedule_update'])->name('schedule.update');
+    Route::post('/schedule/print',[ExerciseController::class, 'schedule_print'])->name('schedule.print');
+    Route::get('/schedule/exercise/{exercise?}',[ExerciseController::class, 'schedule_view'])->name('schedule.view');
+    Route::put('/schedule/exercise/{exercise_detail}/strength',[ExerciseController::class, 'update_exercise_strength']);
 });
 Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');
@@ -110,7 +114,7 @@ Route::prefix('/assessment')->group(function () {
     Route::post('/mechanical', [AssessmentController::class, 'add_mechanical'])->name('add.mechanical');
     Route::post('mechanical/del',[AssessmentController::class, 'delete_mechanical'])->name('delete.mechanical');
     Route::get('/update/phy/{id}/{status}', [AssessmentController::class, 'physical_update_status'])->name('physical.update.status');
-    Route::get('/update/mach/{id}/{status}', [AssessmentController::class, 'mechanical_update_status'])->name('mechanical.update.status');    
+    Route::get('/update/mach/{id}/{status}', [AssessmentController::class, 'mechanical_update_status'])->name('mechanical.update.status');
     Route::post('/shair/physical',[AssessmentController::class, 'shair_physical_assessment'])->name('shair.pysical');
     Route::post('/shair/mechanical', [AssessmentController::class, 'shair_mechanical_assessment'])->name('shair.mechanical');
 });
