@@ -1237,7 +1237,7 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function graph(Request $request){
+    public function graph(){
         if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin') {
             $user_id = auth()->user()->id;
         } else {

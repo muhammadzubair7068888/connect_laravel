@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <br>
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th class="col-1">@lang('#')</th>
@@ -38,7 +38,7 @@
                                 <th class="col-1">@lang('Acceptable')</th>
                                 <th class="col-1">@lang('Caution')</th>
                                 <th class="col-1">@lang('Opportunity')</th>
-                                <th class="col-1">@lang('Action')</th>
+                                <th class="col-2">@lang('Action')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,10 +63,12 @@
                                             onclick="status_change({{ $phy->id }},{{ 3 }})" /></td>
                                     @if ($phy->parent_id)
                                         <td>
-
                                         </td>
                                     @else
                                         <td style="text-align:center;">
+                                            <a style="padding-left:10px;" class="link-warning" href='#'><i
+                                                    class="fas fa-hand-spock"
+                                                    onclick="left_right({{ $phy }})"></i></a>
                                             <a style="padding-left:10px;" class="link-danger" href='#'><i
                                                     class="fas fa-trash-alt"
                                                     onclick="delete_ph_assessment({{ $phy }})"></i></a>
@@ -75,11 +77,9 @@
                                                     onclick="shair_phy_assessment({{ $phy }})"></i></a>
                                         </td>
                                     @endif
-
                                 </tr>
                             @empty
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
@@ -152,6 +152,46 @@
         </div>
     </div>
 
+    <div class="modal fade" id="left_right" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">@lang('')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>@lang('Label')</th>
+                                <th class="col-1">@lang('Left')</th>
+                                <th class="col-1">@lang('Right')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form action="{{ route('update.left.right.physical') }}" method="post">
+                                @csrf
+                                <tr>
+                                    <td id="phy_name"></td>
+                                    <td><input type="radio" name="left_right" id="phy_left" value="0" />
+                                        <input type="hidden" name="phy_id" id="phy_id" />
+                                    </td>
+                                    <td><input type="radio" name="left_right" id="phy_right" value="1" />
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('Cancel')</button>
+                    <button type="submit" class="btn btn-success">@lang('Save')</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -188,6 +228,7 @@
             </div>
         </div>
     </div> <!-- end preview-->
+    </div>
 @endsection
 @section('script')
     <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
@@ -208,6 +249,17 @@
         function delete_ph_assessment(phy) {
             $('#delete_id').val(phy.id);
             $('#staticBackdrop').modal('show');
+        }
+
+        function left_right(phy) {
+            if (phy.left_right == 0) {
+                $("#phy_left").prop("checked", true);
+            } else {
+                $("#phy_right").prop("checked", true);
+            }
+            document.getElementById('phy_name').innerHTML = phy.name;
+            $('#phy_id').val(phy.id);
+            $('#left_right').modal('show');
         }
 
         function shair_phy_assessment(phy) {

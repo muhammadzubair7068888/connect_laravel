@@ -113,6 +113,8 @@ Route::prefix('/assessment')->group(function () {
     Route::get('/update/mach/{id}/{status}', [AssessmentController::class, 'mechanical_update_status'])->name('mechanical.update.status');    
     Route::post('/shair/physical',[AssessmentController::class, 'shair_physical_assessment'])->name('shair.pysical');
     Route::post('/shair/mechanical', [AssessmentController::class, 'shair_mechanical_assessment'])->name('shair.mechanical');
+    Route::post('/physical/left-right',[AssessmentController::class,'physical_left_right'])->name('update.left.right.physical');
+    Route::post('/mechanical/left-right',[AssessmentController::class,'mechnical_left_right'])->name('update.left_right.mechanical');       
 });
     Route::prefix('/files')->group(function () {
         Route::get('/index/{id?}', [FileController::class, 'index'])->name('file');
