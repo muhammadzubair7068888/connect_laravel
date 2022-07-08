@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -219,5 +220,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         return view('supperadmin.user_view', compact('user'));
+    }
+    public function passport_api(){
+
+       
+        return redirect()->route('chart.velocity');
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\superadmin\UserController;
 use App\Http\Controllers\superadmin\TrackController;
 use App\Http\Controllers\superadmin\VelocityController;
 use App\Models\Velocity;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::prefix('')->middleware('isAuthUser')->group(function () {
     // Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
     Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
     //Language Translation
+   
 
 Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->name('email');
 Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
@@ -86,6 +88,7 @@ Route::prefix('/users')->group(function () {
     Route::get('delete/{id}',[UserController::class,'delete_user'])->name('delete.user');
     Route::get('/view/{id}', [UserController::class, 'user_view'])->name('user.view');
     Route::post('/leaderboard/filter', [UserController::class, 'filter_leaderboard'])->name('filter.leaderboard');
+    Route::get('/passport', [UserController::class, 'passport_api'])->name('passport');
 
 });
 Route::prefix('/tracks')->group(function () {
@@ -127,4 +130,5 @@ Route::prefix('/assessment')->group(function () {
         Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
+    
 });
