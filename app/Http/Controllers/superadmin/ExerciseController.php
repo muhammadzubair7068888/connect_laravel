@@ -173,14 +173,18 @@ class ExerciseController extends Controller
         }
         return response()->json('success');
     }
-    public function shadule_calender()
+    public function shadule_calender(Request $request)
     {
-        $user_id = auth()->user()->id;
-        $exercises = Exercise::where('user_id',$user_id)->latest()->get();
-        return view('supperadmin.schedule',compact('exercises'));
+        if($request->ajax()){
+            return @Schedule::where('user_id',$request->id)->first('events')->events ?? '[]';
+        }
+        $users = User::where('created_by',auth()->id())->get(['id','name'])
+        ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+        $exercises = Exercise::where('user_id',auth()->id())->latest()->get();
+        return view('supperadmin.schedule',compact('exercises','users'));
     }
     public function schedule(Request $request){
-  
+
         switch ($request->type) {
             case 'add':
                 $event = Schedule::create([
@@ -208,6 +212,40 @@ class ExerciseController extends Controller
             default:
                 break;
         }
-       
+
+    }
+
+    public function schedule_update(Request $request)
+    {
+        Schedule::updateOrCreate(
+            ['user_id' => $request->id],
+            [
+                'events' => $request->events,
+            ]
+        );
+        return response()->json(['success' => true, 'msg'=> 'Schedule Successfully Updated.']);
+    }
+
+    public function schedule_print(Request $request)
+    {
+        $schedule = Schedule::where('user_id', $request->user)->first();
+        $events = json_decode($schedule->events, true);
+        $date = date('Y-m-d', strtotime($request->date));
+        $tasks = array_filter($events, function($arr) use($date) {
+            return in_array($date, $arr);
+        });
+        return view('supperadmin.schedule-print',compact('tasks'));
+    }
+
+    public function schedule_view(Exercise $exercise)
+    {
+        return view('supperadmin.schedule-exercise-detail',compact('exercise'));
+    }
+
+    public function update_exercise_strength(ExerciseDetail $exercise_detail, Request $request)
+    {
+        $exercise_detail->strength = $request->strength;
+        $exercise_detail->save();
+        return response()->json(['success' => true, 'msg'=> 'Strength Successfully Updated.']);
     }
 }

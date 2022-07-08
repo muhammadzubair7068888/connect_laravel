@@ -1,25 +1,24 @@
-@extends('supperadmin.layouts.master')
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-@section('title')
-    @lang('Schedule')
-@endsection
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('Schedule'); ?>
+<?php $__env->stopSection(); ?>
 
-@section('css')
-    <link href="{{ URL::asset('/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('/assets/css/main.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')); ?>" rel="stylesheet"
         type="text/css">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/libs/datepicker/datepicker.min.css') }}">
-@endsection
+    <link rel="stylesheet" href="<?php echo e(URL::asset('/assets/libs/datepicker/datepicker.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            @lang('Schedule')
-        @endslot
-        @slot('title')
-            @lang('Schedule')
-        @endslot
-    @endcomponent
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
+            <?php echo app('translator')->get('Schedule'); ?>
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo app('translator')->get('Schedule'); ?>
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
     <style>
         /* The whole thing */
         .custom-menu {
@@ -67,17 +66,17 @@
             height: 46px
         }
     </style>
-        <form autocomplete="off" action="{{route('schedule.print')}}" method="post" target="_blank" style="width: 100%;">
-            @csrf
+        <form autocomplete="off" action="<?php echo e(route('schedule.print')); ?>" method="post" target="_blank" style="width: 100%;">
+            <?php echo csrf_field(); ?>
             <div class="row d-flex justify-content-between">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>User: </label>
                         <select class="form-control" id="calendar-user" name="user">
-                            @forelse ($users as $user)
-                                <option value="{{$user['id']}}">{{$user['name']}}</option>
-                            @empty
-                            @endforelse
+                            <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <option value="<?php echo e($user['id']); ?>"><?php echo e($user['name']); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>
@@ -85,8 +84,7 @@
                     <div class="form-group">
                         <label>Schedule Date</label>
                         <input type="text" class="form-control" placeholder="Date" data-date-format="dd M, yyyy" data-provide="datepicker" data-date-autoclose="true" name="date" required>
-                        {{-- <input type="date" class="form-control date-field" name="schedule_date" required=""
-                            placeholder="Date"> --}}
+                        
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -135,10 +133,10 @@
                                     <label>Exercise</label>
                                     <select class="form-control exercise-select">
                                         <option value="">Select Exercise</option>
-                                        @forelse($exercises as $exercise)
-                                            <option value="{{ $exercise->id }}">{{ $exercise->name }}</option>
-                                        @empty
-                                        @endforelse
+                                        <?php $__empty_1 = true; $__currentLoopData = $exercises; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $exercise): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                            <option value="<?php echo e($exercise->id); ?>"><?php echo e($exercise->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
@@ -177,15 +175,17 @@
         <li data-action="delete-schedule">Delete Schedule</li>
     </ul>
     <!-- end event-manu -->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('assets/js/main.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/calendar/moment.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/calendar/calendar.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('assets/js/main.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('assets/js/pages/calendar/moment.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/datepicker/datepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('assets/js/pages/calendar/calendar.js')); ?>"></script>
     <script>
-        var schedule_view_url = "{{route('schedule.view')}}";
-        var get_schedule_url = "{{route('schedule.exercise')}}";
+        var schedule_view_url = "<?php echo e(route('schedule.view')); ?>";
+        var get_schedule_url = "<?php echo e(route('schedule.exercise')); ?>";
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/connect.pk/resources/views/supperadmin/schedule.blade.php ENDPATH**/ ?>

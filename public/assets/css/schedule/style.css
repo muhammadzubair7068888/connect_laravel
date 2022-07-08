@@ -1,0 +1,233 @@
+.add-user .image-row{
+    margin-bottom: 50px;
+}
+.add-user .image-section{
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    background: rgb(150,150,150);
+    margin: 0 auto;
+    text-align: center;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+.add-user .image-section img{
+    max-width: 150px;
+    min-height: 150px;
+}
+.add-user .user-icon{
+    font-size: 100px;
+    color: white;
+    line-height: 150px;
+}
+.add-user .add-icon{
+    font-size: 25px;
+    font-weight: bold;
+    color: #3AA4E0;
+    margin-top: 120px;
+    cursor: pointer;
+}
+.add-user input[type=file]{
+    display: none;
+}
+.card .avatar {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.card .avatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+.card .info {
+    padding: 4px 8px 10px;
+    text-align: justify;
+}
+.desc{
+    margin-left: 15%;
+}
+.bottom .desc{margin-left: 0px !important;}
+
+.bottom .desc:hover{color: #00e4d0;}
+.card .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #f1f1f1;
+    vertical-align: middle;
+}
+
+.card .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+label{
+    font-weight: bold !important;
+}
+.assessment-tables table th,
+.assessment-tables table td{
+    font-size: 12px;
+}
+.assessment-tables table thead th:nth-of-type(1){
+    width: 50%;
+}
+.dataTables_wrapper .row{
+    width: 100% !important;
+    margin-bottom: 15px !important;
+}
+
+/* CSS3 */
+
+/* The whole thing */
+.custom-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    font-family: sans-serif;
+    background: #FFF;
+    color: #333;
+    border-radius: 5px;
+    padding: 0;
+}
+
+/* Each of the items in the list */
+.custom-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style-type: none;
+    transition: all .3s ease;
+    user-select: none;
+}
+
+.custom-menu li:hover {
+    background-color: #DEF;
+}
+
+.fc-day:hover{background:lightblue;cursor: pointer;}
+
+.fade.in{
+    opacity: 1 !important;
+}
+
+.adiv {
+    background: #04CB28;
+    border-radius: 15px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 12px;
+    height: 46px
+}
+
+.chat {
+    border: none;
+    background: #E2FFE8;
+    font-size: 10px;
+    border-radius: 20px
+}
+
+.bg-white {
+    border: 1px solid #E7E7E9;
+    font-size: 10px;
+    border-radius: 20px
+}
+
+.myvideo img {
+    border-radius: 20px
+}
+
+.dot {
+    font-weight: bold
+}
+.chat-box-container{
+    width: 250px;
+    height: 100px;
+    position: fixed;
+    bottom: -60px;
+    right: 50px;
+    z-index: 10;
+}
+.chat-box-container textarea{
+    height: 80px;
+    resize: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.hidden, .chat-hidden{
+    display: none !important;
+}
+.user-list-container{
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.chat-msgs{
+    height: 280px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 50px;
+}
+.user-list-container img{
+    width: 85%;
+    margin-left: 10px;
+}
+.user-list-container p{
+    width: 100%;
+}
+.user-list-container p:nth-of-type(1){
+    font-size: 12px;
+    font-weight: bold;
+}
+.user-list-container p:nth-of-type(2){
+    font-size: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
+.user-list-container .row{
+    border-bottom: 1px solid rgba(242,242,242,1);
+    cursor: default;
+}
+.user-list-container .row:hover{
+    background: rgba(242,242,242,0.8);
+}
+.user-status{
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    margin-right: 5px;
+    margin-top: 8px;
+}
+.user-msg-status{
+    width: 18px;
+    height: 18px;
+    border-radius: 15px;
+    margin-right: 5px;
+    margin-top: 3px;
+    color: white;
+    text-align: center;
+    line-height: 18px;
+    background: red;
+    font-size: 10px;
+}
+.user-status.online{
+    background: green;
+}
+.user-status.offline{
+    background: red;
+}
+.user-chat-container .chat-row span{
+    font-size: 13px;
+}

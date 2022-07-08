@@ -18,6 +18,10 @@ class Exercise extends Model
     {
         return $this->hasMany(ExerciseDetail::class);
     }
+    public function excercise_details()
+    {
+        return $this->hasMany(ExerciseDetail::class);
+    }
     public function schedule()
     {
         return $this->hasMany(Schedule::class);

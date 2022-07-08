@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('sets');
             $table->string('reps');
             $table->string('notes');
+            $table->bigInteger('strength')->nullable();
             $table->foreignId('exercise_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
