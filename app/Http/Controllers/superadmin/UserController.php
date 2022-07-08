@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chart;
 use App\Models\MechanicalAssessment;
 use App\Models\PhysicalAssessment;
 use App\Models\Questionnaire;
@@ -156,6 +157,18 @@ class UserController extends Controller
                 $user_question->user_id = $user->id;
                 $user_question->save();
             }
+        }
+        if($user->role == 'admin'){
+            $charts = Chart::get();
+            foreach($charts as $chart){
+            $velocity = new Velocity();
+            $velocity->admin_id = $user->id;
+            $velocity->name = $chart->name;
+            $velocity->key = $chart->key;
+            $velocity->label = $chart->label;
+            $velocity->placeholder = $chart->placeholder;
+            $velocity->save();
+            }   
         }
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }

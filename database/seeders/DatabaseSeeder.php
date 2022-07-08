@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         UserSeeder::class,
         ExerciseTypeSeeder::class,
         VelocitySeeder::class,
+        ChartSeeder::class,
         ]);
     }
 }
