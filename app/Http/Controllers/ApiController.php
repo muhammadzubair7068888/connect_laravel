@@ -1357,20 +1357,20 @@ class ApiController extends Controller
     //scdedule
     public function shadule_calender(Request $request)
     {
-        try{
-        if ($request->ajax()) {
-            $schedule =  Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
-        }else{
-            $schedule = [];
-        }
-        $users = User::where('created_by', auth()->id())->get(['id', 'name'])
-            ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
-        $exercises = Exercise::where('user_id', auth()->id())->latest()->get();
-                 $response = [
+        try {
+            if ($request->ajax()) {
+                $schedule =  Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
+            } else {
+                $schedule = [];
+            }
+            $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+                ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+            $exercises = Exercise::where('user_id', auth()->id())->latest()->get();
+            $response = [
                 'status' => 'success',
                 'schedule' => $schedule,
                 'exercises' => $exercises,
-                'users' => $users  
+                'users' => $users
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -1381,17 +1381,17 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-   
+
     public function schedule_update(Request $request)
     {
-         $event[] = json_encode($request->events);
-        try{
-        $events = Schedule::updateOrCreate(
-            ['user_id' => $request->id],
-            [
-                'events' => $event,
-            ]
-        ); 
+        $event[] = $request->events;
+        try {
+            $events = Schedule::updateOrCreate(
+                ['user_id' => $request->id],
+                [
+                    'events' => $event,
+                ]
+            );
             $response = [
                 'status' => 'success',
                 'schedule' => $events,

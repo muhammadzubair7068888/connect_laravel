@@ -175,79 +175,79 @@ class ExerciseController extends Controller
     }
     public function shadule_calender(Request $request)
     {
-        if($request->ajax()){
-            return @Schedule::where('user_id',$request->id)->first('events')->events ?? '[]';
+        if ($request->ajax()) {
+            return @Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
         }
-        $users = User::where('created_by',auth()->id())->get(['id','name'])
-        ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
-        $exercises = Exercise::where('user_id',auth()->id())->latest()->get();
-        return view('supperadmin.schedule',compact('exercises','users'));
+        $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+            ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+        $exercises = Exercise::where('user_id', auth()->id())->latest()->get();
+        return view('supperadmin.schedule', compact('exercises', 'users'));
     }
-//     public function schedule(Request $request){
-// return $request->all();
-//         switch ($request->type) {
-//             case 'add':
-//                 $event = Schedule::create([
-//                     'exercise_id' => $request->exercise_id,
-//                     'start' => $request->start,
-//                     'end' => $request->end,
-//                     'color' => $request->color,
-//                 ]);
-//                 return $event = Exercise::where('id',1)->with('schedule')->first();
-//                 return $event->exercise->id;
-//                 return response()->json($event->exercise);
-//                 break;
-//             case 'update':
-//                 $event = Schedule::find($request->id)->update([
-//                     'exercise_id' => $request->exercise_id,
-//                     'start' => $request->start,
-//                     'end' => $request->end,
-//                 ]);
-//                 return response()->json($event);
-//                 break;
-//             case 'delete':
-//                 $event = Schedule::find($request->id)->delete();
-//                 return response()->json($event);
-//                 break;
-//             default:
-//                 break;
-//         }
+    //     public function schedule(Request $request){
+    // return $request->all();
+    //         switch ($request->type) {
+    //             case 'add':
+    //                 $event = Schedule::create([
+    //                     'exercise_id' => $request->exercise_id,
+    //                     'start' => $request->start,
+    //                     'end' => $request->end,
+    //                     'color' => $request->color,
+    //                 ]);
+    //                 return $event = Exercise::where('id',1)->with('schedule')->first();
+    //                 return $event->exercise->id;
+    //                 return response()->json($event->exercise);
+    //                 break;
+    //             case 'update':
+    //                 $event = Schedule::find($request->id)->update([
+    //                     'exercise_id' => $request->exercise_id,
+    //                     'start' => $request->start,
+    //                     'end' => $request->end,
+    //                 ]);
+    //                 return response()->json($event);
+    //                 break;
+    //             case 'delete':
+    //                 $event = Schedule::find($request->id)->delete();
+    //                 return response()->json($event);
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
 
-//     }
+    //     }
 
     public function schedule_update(Request $request)
     {
-         return $request->all();
+
         Schedule::updateOrCreate(
             ['user_id' => $request->id],
             [
                 'events' => $request->events,
             ]
         );
-        return response()->json(['success' => true, 'msg'=> 'Schedule Successfully Updated.']);
+        return response()->json(['success' => true, 'msg' => 'Schedule Successfully Updated.']);
     }
 
     public function schedule_print(Request $request)
     {
-        
+
         $schedule = Schedule::where('user_id', $request->user)->first();
         $events = json_decode($schedule->events, true);
         $date = date('Y-m-d', strtotime($request->date));
-        $tasks = array_filter($events, function($arr) use($date) {
+        $tasks = array_filter($events, function ($arr) use ($date) {
             return in_array($date, $arr);
         });
-        return view('supperadmin.schedule-print',compact('tasks'));
+        return view('supperadmin.schedule-print', compact('tasks'));
     }
 
     public function schedule_view(Exercise $exercise)
     {
-        return view('supperadmin.schedule-exercise-detail',compact('exercise'));
+        return view('supperadmin.schedule-exercise-detail', compact('exercise'));
     }
 
     public function update_exercise_strength(ExerciseDetail $exercise_detail, Request $request)
     {
         $exercise_detail->strength = $request->strength;
         $exercise_detail->save();
-        return response()->json(['success' => true, 'msg'=> 'Strength Successfully Updated.']);
+        return response()->json(['success' => true, 'msg' => 'Strength Successfully Updated.']);
     }
 }
