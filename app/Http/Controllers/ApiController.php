@@ -616,7 +616,6 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
     public function delete_phyiscal(Request $request)
     {
         try {
@@ -634,7 +633,6 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
     public function physical_update_status(Request $request)
     {
         try {
@@ -1356,21 +1354,20 @@ class ApiController extends Controller
     }
     //scdedule
     public function shadule_calender(Request $request)
-    {
+    { 
         try{
-        if ($request->ajax()) {
-            $schedule =  Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
+        if ($request->id) {
+            $schedule =  Schedule::where('user_id', $request->id)->first('events')->events;
         }else{
-            $schedule = [];
+            $schedule = Schedule::where('user_id', auth()->id())->first('events')->events;
         }
+        $js_schedule = json_decode($schedule);
         $users = User::where('created_by', auth()->id())->get(['id', 'name'])
             ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
-        $exercises = Exercise::where('user_id', auth()->id())->latest()->get();
                  $response = [
                 'status' => 'success',
-                'schedule' => $schedule,
-                'exercises' => $exercises,
-                'users' => $users  
+                'schedule' => $js_schedule,
+                'users' => $users,  
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -1384,17 +1381,38 @@ class ApiController extends Controller
    
     public function schedule_update(Request $request)
     {
-         $event[] = json_encode($request->events);
-        try{
-        $events = Schedule::updateOrCreate(
+
+          $event[] = $request->events;
+          $event[0]['extendedProps']['exerciseID'] = 2;
+         try{
+         Schedule::updateOrCreate(
             ['user_id' => $request->id],
-            [
-                'events' => $event,
-            ]
-        ); 
+            [ 'events' => $event,]
+        );
+          $response = [
+                'status' => 'success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }  
+    }
+    public function schedule_print(Request $request)
+    {
+        try {
+            $schedule = Schedule::where('user_id', $request->user)->first();
+            $events = json_decode($schedule->events, true);
+            $date = date('Y-m-d', strtotime($request->date));
+            $tasks = array_filter($events, function ($arr) use ($date) {
+                return in_array($date, $arr);
+            });
             $response = [
                 'status' => 'success',
-                'schedule' => $events,
+                'date' =>  $tasks,
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -1404,29 +1422,43 @@ class ApiController extends Controller
             ];
             return response()->json($response, 500);
         }
-        // return response()->json(['success' => true, 'msg' => 'Schedule Successfully Updated.']);
-    }
-
-    public function schedule_print(Request $request)
-    {
-        $schedule = Schedule::where('user_id', $request->user)->first();
-        $events = json_decode($schedule->events, true);
-        $date = date('Y-m-d', strtotime($request->date));
-        $tasks = array_filter($events, function ($arr) use ($date) {
-            return in_array($date, $arr);
-        });
-        return view('supperadmin.schedule-print', compact('tasks'));
+       
     }
 
     public function schedule_view(Exercise $exercise)
     {
-        return view('supperadmin.schedule-exercise-detail', compact('exercise'));
+        try {
+            $response = [
+                'status' => 'success',
+                'exercise' => $exercise,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     public function update_exercise_strength(ExerciseDetail $exercise_detail, Request $request)
     {
-        $exercise_detail->strength = $request->strength;
-        $exercise_detail->save();
-        return response()->json(['success' => true, 'msg' => 'Strength Successfully Updated.']);
+        try {
+            $exercise_detail->strength = $request->strength;
+            $exercise_detail->save();
+            $response = [
+                'status' => 'success',
+                'exercise' => $exercise_detail,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+      
     }
 }
