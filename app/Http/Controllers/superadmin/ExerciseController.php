@@ -183,40 +183,41 @@ class ExerciseController extends Controller
         $exercises = Exercise::where('user_id',auth()->id())->latest()->get();
         return view('supperadmin.schedule',compact('exercises','users'));
     }
-    public function schedule(Request $request){
+//     public function schedule(Request $request){
+// return $request->all();
+//         switch ($request->type) {
+//             case 'add':
+//                 $event = Schedule::create([
+//                     'exercise_id' => $request->exercise_id,
+//                     'start' => $request->start,
+//                     'end' => $request->end,
+//                     'color' => $request->color,
+//                 ]);
+//                 return $event = Exercise::where('id',1)->with('schedule')->first();
+//                 return $event->exercise->id;
+//                 return response()->json($event->exercise);
+//                 break;
+//             case 'update':
+//                 $event = Schedule::find($request->id)->update([
+//                     'exercise_id' => $request->exercise_id,
+//                     'start' => $request->start,
+//                     'end' => $request->end,
+//                 ]);
+//                 return response()->json($event);
+//                 break;
+//             case 'delete':
+//                 $event = Schedule::find($request->id)->delete();
+//                 return response()->json($event);
+//                 break;
+//             default:
+//                 break;
+//         }
 
-        switch ($request->type) {
-            case 'add':
-                $event = Schedule::create([
-                    'exercise_id' => $request->exercise_id,
-                    'start' => $request->start,
-                    'end' => $request->end,
-                    'color' => $request->color,
-                ]);
-                return $event = Exercise::where('id',1)->with('schedule')->first();
-                return $event->exercise->id;
-                return response()->json($event->exercise);
-                break;
-            case 'update':
-                $event = Schedule::find($request->id)->update([
-                    'exercise_id' => $request->exercise_id,
-                    'start' => $request->start,
-                    'end' => $request->end,
-                ]);
-                return response()->json($event);
-                break;
-            case 'delete':
-                $event = Schedule::find($request->id)->delete();
-                return response()->json($event);
-                break;
-            default:
-                break;
-        }
-
-    }
+//     }
 
     public function schedule_update(Request $request)
     {
+         return $request->all();
         Schedule::updateOrCreate(
             ['user_id' => $request->id],
             [
@@ -228,6 +229,7 @@ class ExerciseController extends Controller
 
     public function schedule_print(Request $request)
     {
+        
         $schedule = Schedule::where('user_id', $request->user)->first();
         $events = json_decode($schedule->events, true);
         $date = date('Y-m-d', strtotime($request->date));

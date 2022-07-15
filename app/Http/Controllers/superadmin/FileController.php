@@ -20,8 +20,9 @@ class FileController extends Controller
             $files = File::where('user_id', $user_id)->get();
             return response()->json($files);
         }
-        $users = User::where('created_by', auth()->user()->id)->latest()->get();
-      $files = File::where('user_id', $user_id)->get();
+        $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+        ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+        $files = File::where('user_id', $user_id)->get();
         return view('supperadmin.files', compact('files', 'users'));
     }
     public function save_file(Request $request)
