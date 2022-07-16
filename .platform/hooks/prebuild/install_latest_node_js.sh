@@ -3,7 +3,7 @@
 # Install Latest Node
 
 # Some Laravel apps need Node & NPM for the frontend assets.
-# This script installs the latest Node 12.x alongside
+# This script installs the latest Node 16.x alongside
 # with the paired NPM release.
 
 # sudo yum remove -y nodejs npm
