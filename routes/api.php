@@ -107,7 +107,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('change-password', [UserAPIController::class,'changePassword']);
 
     // Route::get('profile', [UserAPIController::class,'getProfile'])->name('myprofile');
-    // Route::post('profile', [UserAPIController::class,'updateProfile']);
+    Route::post('profile', [UserAPIController::class,'updateProfile']);
     Route::post('update-last-seen', [UserAPIController::class,'updateLastSeen']);
 
     Route::post('send-message', [ChatAPIController::class, 'sendMessage'])->name('conversations.store');

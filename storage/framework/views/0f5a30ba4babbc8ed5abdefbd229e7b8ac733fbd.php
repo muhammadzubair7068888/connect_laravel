@@ -337,7 +337,7 @@
                             </div>
                             <div class="mb-3 position-relative">
                                 <label for="validationTooltip01" class="form-label"><?php echo app('translator')->get('Profile Image'); ?></label>
-                                <input type="file" name="file" class="form-control" id="validationTooltip01"
+                                <input type="file" name="photo" class="form-control" id="validationTooltip01"
                                     placeholder="Name" required>
                             </div>
                             <div class="row">
