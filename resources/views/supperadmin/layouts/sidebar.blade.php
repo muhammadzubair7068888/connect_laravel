@@ -137,7 +137,7 @@
                         </a>
                         <ul class="supperadmin.sub-menu" aria-expanded="false">
                             <li><a href="supperadmin.email-inbox" key="t-inbox">@lang('translation.Inbox')</a></li>
-                            {{-- <li><a href="email-read" key="t-read-email">@lang('translation.Read_Email')</a></li> 
+                            {{-- <li><a href="email-read" key="t-read-email">@lang('translation.Read_Email')</a></li>
                     <li>
                         <a href="javascript: void(0);">
                             <span class="badge rounded-pill badge-soft-success float-end"
@@ -159,7 +159,7 @@
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
                     <li>
-                        <a href="{{ route('chat') }}" class="waves-effect">
+                        <a href="{{ route('chat.conversations') }}" class="waves-effect">
                             <i class="bx bx-chat"></i>
                             <span key="t-chat">@lang('translation.Chat')</span>
                         </a>
@@ -191,7 +191,7 @@
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="{{ route('email', ['template' => 'test-email']) }}"
                                     key="t-profile">@lang('Email')</a></li>
-                            {{-- <li><a href="#" key="t-profile">@lang('SMS')</a></li> 
+                            {{-- <li><a href="#" key="t-profile">@lang('SMS')</a></li>
                         </ul>
                     </li> --}}
                 @endif

@@ -42,6 +42,8 @@
                     <div class="d-flex flex-wrap gap-3">
                         <a href="<?php echo e(route('add.exercises')); ?>"><button type="button"
                                 class="btn btn-success"><?php echo app('translator')->get('New Exercise'); ?></button></a>
+                        <a><button type="button" class="btn btn-info" onclick="impot_cvs()"><?php echo app('translator')->get('Import CSV'); ?></button></a>
+
                     </div>
                     <br>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
@@ -119,8 +121,35 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="import_cvs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><?php echo app('translator')->get('Impost CVS File'); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?php echo e(route('import.exercise')); ?>" method="POST" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><?php echo app('translator')->get('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-success"><?php echo app('translator')->get('Import'); ?></button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -234,6 +263,10 @@
         function shair_exercise(exercise) {
             $('#shair_id').val(exercise.id);
             $('#sahir_exampleModal').modal('show');
+        }
+
+        function impot_cvs() {
+            $('#import_cvs').modal('show');
         }
         $('#shair_form').on('submit', function(event) {
             event.preventDefault();

@@ -76,7 +76,7 @@
                                         @else
                                             <a class="link-primary view-video"
                                                 data-link="{{ asset('/uploads/' . $file->file) }}" data-name="name"
-                                                data-target="#myModal" data-toggle="modal"> <i class="fa fa-eye"></i></a>
+                                                data-bs-target="#myModal" data-bs-toggle="modal"> <i class="fa fa-eye"></i></a>
                                         @endif
                                         <a style="padding-left:10px;" class="link-warning"
                                             href='{{ route('download.file', ['id' => $file->id]) }}'><i
@@ -228,7 +228,7 @@
                         } else {
                             view +=
                                 '<a class="link-primary view-video"data-link = ' + viewurl +
-                                ' data-name="name" data-target="#myModal"data-toggle="modal" >' +
+                                ' data-name="name" data-target="#myModal"data-bs-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
                         html += '<tr>';

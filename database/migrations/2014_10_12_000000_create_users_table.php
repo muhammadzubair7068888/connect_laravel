@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->date('dob')->nullable();
-            $table->text('avatar')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('height')->nullable();
             $table->string('starting_weight')->nullable();
             $table->string('handedness')->nullable();
@@ -30,6 +30,12 @@ class CreateUsersTable extends Migration
             $table->string('school')->nullable();
             $table->string('level')->nullable();
             $table->string('role')->nullable();
+            $table->timestamp("last_seen")->nullable();
+            $table->tinyInteger("is_online")->default(0)->nullable();
+            $table->tinyInteger("is_active")->default(0)->nullable();
+            $table->string("activation_code")->nullable();
+            $table->text("about")->nullable();
+            $table->tinyInteger("is_system")->default(0)->nullable();
             $table->string('created_by')->nullable();
             $table->string('last_login')->nullable();
             $table->enum('status', [0, 1])->default(1);

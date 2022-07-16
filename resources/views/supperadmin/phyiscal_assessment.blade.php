@@ -165,19 +165,19 @@
                         <thead>
                             <tr>
                                 <th>@lang('Label')</th>
-                                <th class="col-1">@lang('Left')</th>
-                                <th class="col-1">@lang('Right')</th>
+                                <th class="col-3">@lang('Left')</th>
+                                <th class="col-3">@lang('Right')</th>
                             </tr>
                         </thead>
                         <tbody>
                             <form action="{{ route('update.left.right.physical') }}" method="post">
                                 @csrf
+                                    <input type="hidden" name="phy_id" id="phy_id" />
                                 <tr>
                                     <td id="phy_name"></td>
-                                    <td><input type="radio" name="left_right" id="phy_left" value="0" />
-                                        <input type="hidden" name="phy_id" id="phy_id" />
+                                    <td><input type="number" class="form-control" name="left" id="phy_left"  />
                                     </td>
-                                    <td><input type="radio" name="left_right" id="phy_right" value="1" />
+                                    <td><input type="number" class="form-control" name="right" id="phy_right"/>
                                     </td>
                                 </tr>
                         </tbody>
@@ -252,11 +252,8 @@
         }
 
         function left_right(phy) {
-            if (phy.left_right == 0) {
-                $("#phy_left").prop("checked", true);
-            } else {
-                $("#phy_right").prop("checked", true);
-            }
+            $("#phy_left").val(phy.left)
+            $("#phy_right").val(phy.right);
             document.getElementById('phy_name').innerHTML = phy.name;
             $('#phy_id').val(phy.id);
             $('#left_right').modal('show');

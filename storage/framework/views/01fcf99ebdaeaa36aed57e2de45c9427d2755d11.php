@@ -44,10 +44,10 @@
                                 <a href=""><i class="bx bx-message-square-dots"></i></a>
                             </div>
                             <div class="flex-fill">
-                                <a href=""><i class="bx bx-pie-chart-alt"></i></a>
+                                
                             </div>
                             <div class="flex-fill">
-                                <a href=""><i class="bx bx-user-circle"></i></a>
+                                <a href="<?php echo e(route('user.view', ['id' => $user->id])); ?>"><i class="bx bx-user-circle"></i></a>
                             </div>
                         </div>
                     </div>

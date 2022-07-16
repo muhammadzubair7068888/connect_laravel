@@ -31,7 +31,7 @@ class ApiController extends Controller
         ])) {
             $date = date('Y-m-d');
             $user_id = auth()->user()->id;
-            User::where('id', $user_id)->update(['last_login' => $date]);
+            User::where('id', $user_id)->update(['last_login' => $date,'is_online' => 1, 'last_seen' => null]);
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
             $response = [
@@ -1402,7 +1402,23 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
+    public function exercise_user(){
+        try {
+            $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+                ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+            $response = [
+                'status' => 'success',
+                'users' => $users,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
     public function schedule_update(Request $request)
     {
         // $event[] = $request->events;

@@ -40,12 +40,12 @@ Route::prefix('')->middleware('isAuthUser')->group(function () {
     //Language Translation
    
 
-Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->name('email');
-Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
-Route::get('/your/profile',[SettingController::class, 'profiel'])->name('profile');
-Route::post('/your/profile/{id}{',[SettingController::class, 'update_profile'])->name('update.profile');
-Route::get('site/setting',[SettingController::class,'site_setting'])->name('site.setting');
+    Route::get('email/{template?}', [SettingController::class, 'get_tempalte'])->name('email');
+    Route::post('/save-email-template/{name}', [SettingController::class, 'saveTemplate'])->name('save-template');
+    Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+    Route::get('/your/profile', [SettingController::class, 'profiel'])->name('profile');
+    Route::post('/your/profile/{id}{', [SettingController::class, 'update_profile'])->name('update.profile');
+    Route::get('site/setting', [SettingController::class, 'site_setting'])->name('site.setting');
 
 Route::prefix('/company/settings')->group(function () {
     Route::get('/', [SettingController::class, 'shows_ettings'])->name('show_setting');
@@ -76,6 +76,7 @@ Route::prefix('/exercises')->group(function () {
     Route::post('/schedule/print',[ExerciseController::class, 'schedule_print'])->name('schedule.print');
     Route::get('/schedule/exercise/{exercise?}',[ExerciseController::class, 'schedule_view'])->name('schedule.view');
     Route::put('/schedule/exercise/{exercise_detail}/strength',[ExerciseController::class, 'update_exercise_strength']);
+    Route::post('import', [ExerciseController::class, 'import_exercise'])->name('import.exercise');
 });
 Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');
@@ -132,3 +133,4 @@ Route::prefix('/assessment')->group(function () {
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
     
 });
+require __DIR__ . '/chat.php';

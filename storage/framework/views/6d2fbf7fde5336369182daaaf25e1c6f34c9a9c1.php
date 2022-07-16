@@ -178,23 +178,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th><?php echo app('translator')->get('Label'); ?></th>
-                                <th class="col-1"><?php echo app('translator')->get('Left'); ?></th>
-                                <th class="col-1"><?php echo app('translator')->get('Right'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Left'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Right'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <form action="<?php echo e(route('update.left.right.physical')); ?>" method="post">
                                 <?php echo csrf_field(); ?>
+                                    <input type="hidden" name="phy_id" id="phy_id" />
                                 <tr>
                                     <td id="phy_name"></td>
-                                    <td><input type="radio" name="left_right" id="phy_left" value="0" />
-                                        <input type="hidden" name="phy_id" id="phy_id" />
+                                    <td><input type="number" class="form-control" name="left" id="phy_left"  />
                                     </td>
-                                    <td><input type="radio" name="left_right" id="phy_right" value="1" />
+                                    <td><input type="number" class="form-control" name="right" id="phy_right"/>
                                     </td>
                                 </tr>
                         </tbody>
@@ -267,11 +267,8 @@
         }
 
         function left_right(phy) {
-            if (phy.left_right == 0) {
-                $("#phy_left").prop("checked", true);
-            } else {
-                $("#phy_right").prop("checked", true);
-            }
+            $("#phy_left").val(phy.left)
+            $("#phy_right").val(phy.right);
             document.getElementById('phy_name').innerHTML = phy.name;
             $('#phy_id').val(phy.id);
             $('#left_right').modal('show');
