@@ -97,7 +97,7 @@
 
                 <?php if(auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin'): ?>
                     <li>
-                        <a href="<?php echo e(route('chat')); ?>" class="waves-effect">
+                        <a href="<?php echo e(route('chat.conversations')); ?>" class="waves-effect">
                             <i class="bx bx-chat"></i>
                             <span key="t-chat"><?php echo app('translator')->get('translation.Chat'); ?></span>
                         </a>

@@ -6,7 +6,7 @@ var __webpack_exports__ = {};
 $(function () {
   $(".table-responsive").responsiveTable({
     addDisplayAllBtn: "btn btn-secondary"
-  }), $(".btn-toolbar [data-toggle=dropdown]").attr("data-bs-toggle", "dropdown");
+  }), $(".btn-toolbar [data-bs-toggle=dropdown]").attr("data-bs-toggle", "dropdown");
 });
 /******/ })()
 ;

@@ -29,7 +29,7 @@ class ApiController extends Controller
         ])) {
             $date = date('Y-m-d');
             $user_id = auth()->user()->id;
-            User::where('id', $user_id)->update(['last_login' => $date]);
+            User::where('id', $user_id)->update(['last_login' => $date,'is_online' => 1, 'last_seen' => null]);
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
             $response = [

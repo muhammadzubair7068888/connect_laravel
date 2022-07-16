@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Chat\API\AuthAPIController;
+use App\Http\Controllers\Chat\API\ChatAPIController;
+use App\Http\Controllers\Chat\API\GroupAPIController;
+use App\Http\Controllers\Chat\API\UserAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
     // API'S to be authenticated ...
     Route::get('signout', function (Request $request) {
         $request->user()->token()->revoke();
+        $request->user()->update(['is_online' => 0, 'last_seen' => now()]);
         return response()->json(['success' => true, 'message' => 'You have signed out.']);
     });
     Route::prefix('/profile')->group(function () {
@@ -82,4 +87,31 @@ Route::middleware('auth:api')->group(function () {
         // Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
     Route::get('site/setting', [ApiController::class, 'site_setting']);
+
+    /***********************************************************************************************************************
+     * Chat API's
+     **********************************************************************************************************************/
+    Route::post('broadcasting/auth', '\Illuminate\Broadcasting\BroadcastController@authenticate');
+    // Route::get('logout', [AuthAPIController::class, 'logout']);
+
+    //get all user list for chat
+    Route::get('users-list', [UserAPIController::class,'getUsersList']);
+    Route::post('change-password', [UserAPIController::class,'changePassword']);
+
+    // Route::get('profile', [UserAPIController::class,'getProfile'])->name('myprofile');
+    // Route::post('profile', [UserAPIController::class,'updateProfile']);
+    Route::post('update-last-seen', [UserAPIController::class,'updateLastSeen']);
+
+    Route::post('send-message', [ChatAPIController::class, 'sendMessage'])->name('conversations.store');
+    Route::get('users/{id}/conversation', [UserAPIController::class,'getConversation']);
+    Route::get('conversations', [ChatAPIController::class, 'getLatestConversations']);
+    Route::post('read-message', [ChatAPIController::class, 'updateConversationStatus']);
+    Route::post('file-upload', [ChatAPIController::class, 'addAttachment'])->name('file-upload');
+    Route::get('conversations/{userId}/delete', [ChatAPIController::class, 'deleteConversation']);
+
+    /** Update Web-push */
+    Route::put('update-web-notifications', [UserAPIController::class,'updateNotification']);
+
+    /** create group **/
+    Route::post('groups', [GroupAPIController::class,'create'])->name('create-group');
 });

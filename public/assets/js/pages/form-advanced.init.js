@@ -89,7 +89,7 @@ var __webpack_exports__ = {};
       appendWidgetTo: "#timepicker-input-group3"
     });
     var i = {};
-    s('[data-toggle="touchspin"]').each(function (e, t) {
+    s('[data-bs-toggle="touchspin"]').each(function (e, t) {
       var a = s.extend({}, i, s(t).data());
       s(t).TouchSpin(a);
     }), s("input[name='demo3_21']").TouchSpin({
