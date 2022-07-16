@@ -1,70 +1,70 @@
-@extends('supperadmin.layouts.master')
 
-@section('title')
-    @lang('Dashboard')
-@endsection
-@section('css')
-    <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('Dashboard'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('/assets/libs/select2/select2.min.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css')); ?>" rel="stylesheet"
         type="text/css">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/libs/datepicker/datepicker.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('/assets/libs/datepicker/datepicker.min.css')); ?>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
-            @lang('Dashboard')
-        @endslot
-        @slot('title')
-            @lang('Dashboard')
-        @endslot
-    @endcomponent
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
+            <?php echo app('translator')->get('Dashboard'); ?>
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
+            <?php echo app('translator')->get('Dashboard'); ?>
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="center" style="">
                         <form id="dashboard-graph-setting-form">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="row">
-                                @if (auth()->user()->role == 'user')
-                                @else
+                                <?php if(auth()->user()->role == 'user'): ?>
+                                <?php else: ?>
                                     <div class="col-sm-4">
-                                        <label class="form-label">@lang('Select User')</label>
+                                        <label class="form-label"><?php echo app('translator')->get('Select User'); ?></label>
                                         <select class="form-control select2" id="user" name="name">
-                                            <option value="{{ auth()->user()->id }}" selected>@lang('Me')</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                            @endforeach
+                                            <option value="<?php echo e(auth()->user()->id); ?>" selected><?php echo app('translator')->get('Me'); ?></option>
+                                            <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
-                                @endif
-                                @php
+                                <?php endif; ?>
+                                <?php
                                     $start_date = date('d-m-Y');
                                     $end_date = date('t-m-Y');
                                     $timestamp_start = strtotime($start_date);
                                     $timestamp_end = strtotime($end_date);
                                     $start_date = date('d M,Y', $timestamp_start);
                                     $end_date = date('d M,Y', $timestamp_end);
-                                @endphp
+                                ?>
                                 <div class="col-sm-4">
                                     <label>Date Range</label>
                                     <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
                                         data-date-autoclose="true" data-provide="datepicker"
                                         data-date-container='#datepicker6'>
                                         <input type="text" class="form-control" name="start" placeholder="Start Date"
-                                            autocomplete="off" value="{{ $start_date }}" />
+                                            autocomplete="off" value="<?php echo e($start_date); ?>" />
                                         <input type="text" class="form-control" name="end" placeholder="End Date"
-                                            autocomplete="off" value="{{ $end_date }}" />
+                                            autocomplete="off" value="<?php echo e($end_date); ?>" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="mb-3" style="margin-top: 27px;">
-                                        <button type="submit" class="btn btn-success">@lang('Search')</button>
+                                        <button type="submit" class="btn btn-success"><?php echo app('translator')->get('Search'); ?></button>
                                         <button type="button" class="btn btn-light"
-                                            id="btnClear">@lang('Clear')</button>
+                                            id="btnClear"><?php echo app('translator')->get('Clear'); ?></button>
                                     </div>
                                 </div>
                             </div>
@@ -75,21 +75,21 @@
         </div>
     </div> <!-- end col -->
     <div class="row">
-        @forelse ($velocities as $velocity)
+        <?php $__empty_1 = true; $__currentLoopData = $velocities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $velocity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-4">{{ $velocity->name }}</h4>
-                        <div id="{{ $velocity->key }}" class="apex-charts" dir="ltr"></div>
+                        <h4 class="card-title mb-4"><?php echo e($velocity->name); ?></h4>
+                        <div id="<?php echo e($velocity->key); ?>" class="apex-charts" dir="ltr"></div>
                     </div>
                 </div>
                 <!--end card-->
             </div>
-        @empty
-        @endforelse
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+        <?php endif; ?>
     </div>
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <script>
         const currentYear = new Date().getFullYear();
         const currentMonth = new Date().getMonth() + 1;
@@ -106,23 +106,23 @@
 
             });
         });
-        let weight = @json($weight);
-        let arm_pain = @json($arm_pain);
-        let mound_throw_velocit = @json($mount_throw_velocit);
-        let pull_down_3 = @json($pull_down_3);
-        let pull_down_4 = @json($pull_down_4);
-        let pull_down_5 = @json($pull_down_5);
-        let pull_down_6 = @json($pull_down_6);
-        let pull_down_7 = @json($pull_down_7);
-        let bench = @json($bench);
-        let squat = @json($squat);
-        let vertical_jump = @json($vertical_jump);
-        let pull_down_velocity = @json($pull_down_velocity);
-        let long_toss_distance = @json($long_toss_distance);
-        let pylo7 = @json($pylo7);
-        let pylo5 = @json($pylo5);
-        let pylo3 = @json($pylo3);
-        let deadlift = @json($deadlift);
+        let weight = <?php echo json_encode($weight, 15, 512) ?>;
+        let arm_pain = <?php echo json_encode($arm_pain, 15, 512) ?>;
+        let mound_throw_velocit = <?php echo json_encode($mount_throw_velocit, 15, 512) ?>;
+        let pull_down_3 = <?php echo json_encode($pull_down_3, 15, 512) ?>;
+        let pull_down_4 = <?php echo json_encode($pull_down_4, 15, 512) ?>;
+        let pull_down_5 = <?php echo json_encode($pull_down_5, 15, 512) ?>;
+        let pull_down_6 = <?php echo json_encode($pull_down_6, 15, 512) ?>;
+        let pull_down_7 = <?php echo json_encode($pull_down_7, 15, 512) ?>;
+        let bench = <?php echo json_encode($bench, 15, 512) ?>;
+        let squat = <?php echo json_encode($squat, 15, 512) ?>;
+        let vertical_jump = <?php echo json_encode($vertical_jump, 15, 512) ?>;
+        let pull_down_velocity = <?php echo json_encode($pull_down_velocity, 15, 512) ?>;
+        let long_toss_distance = <?php echo json_encode($long_toss_distance, 15, 512) ?>;
+        let pylo7 = <?php echo json_encode($pylo7, 15, 512) ?>;
+        let pylo5 = <?php echo json_encode($pylo5, 15, 512) ?>;
+        let pylo3 = <?php echo json_encode($pylo3, 15, 512) ?>;
+        let deadlift = <?php echo json_encode($deadlift, 15, 512) ?>;
 
         let max_weight = 0;
         let max_arm_pain = 0;
@@ -165,7 +165,7 @@
             event.preventDefault();
             var form_data = $(this).serialize();
             $.ajax({
-                url: "{{ route('search.velocity') }}",
+                url: "<?php echo e(route('search.velocity')); ?>",
                 method: "POST",
                 data: form_data,
                 dataType: "json",
@@ -2035,10 +2035,12 @@
             })
         });
     </script>
-    <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/select2/select2.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/apexchartsadmin/apexcharts.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/apexchartsadmin/apexcharts.init.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('/assets/libs/datepicker/datepicker.min.js')); ?>"></script>
     <script></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('supperadmin.layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\laragon\www\connect_laravel\resources\views/supperadmin/index.blade.php ENDPATH**/ ?>

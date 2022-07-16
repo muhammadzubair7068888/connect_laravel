@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chart;
 use App\Models\MechanicalAssessment;
 use App\Models\PhysicalAssessment;
 use App\Models\Questionnaire;
@@ -10,6 +11,7 @@ use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -157,6 +159,18 @@ class UserController extends Controller
                 $user_question->save();
             }
         }
+        if($user->role == 'admin'){
+            $charts = Chart::get();
+            foreach($charts as $chart){
+            $velocity = new Velocity();
+            $velocity->admin_id = $user->id;
+            $velocity->name = $chart->name;
+            $velocity->key = $chart->key;
+            $velocity->label = $chart->label;
+            $velocity->placeholder = $chart->placeholder;
+            $velocity->save();
+            }   
+        }
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }
     public function leaderboard()
@@ -206,5 +220,10 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         return view('supperadmin.user_view', compact('user'));
+    }
+    public function passport_api(){
+
+       
+        return redirect()->route('chart.velocity');
     }
 }

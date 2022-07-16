@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <br>
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th class="col-1"><?php echo app('translator')->get('#'); ?></th>
@@ -84,6 +84,9 @@
                                         </td>
                                     <?php else: ?>
                                         <td style="text-align:center;">
+                                            <a style="padding-left:10px;" class="link-warning" href='#'><i
+                                                    class="fas fa-hand-spock"
+                                                    onclick="left_right(<?php echo e($mach); ?>)"></i></a>
                                             <a style="padding-left:10px;" class="link-danger" href='#'><i
                                                     class="fas fa-trash-alt"
                                                     onclick="delete_mh_assessment(<?php echo e($mach); ?>)"></i></a>
@@ -168,6 +171,46 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="left_right" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><?php echo app('translator')->get(''); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th><?php echo app('translator')->get('Label'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Left'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Right'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form action="<?php echo e(route('update.left_right.mechanical')); ?>" method="post">
+                                <?php echo csrf_field(); ?>
+                                        <input type="hidden" name="mech_id" id="mech_id" />
+                                <tr>
+                                    <td id="mech_name"></td>
+                                    <td><input type="number" class="form-control" name="left" id="mech_left"/>
+                                    </td>
+                                    <td><input type="number" class="form-control" name="right" id="mech_right"/>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><?php echo app('translator')->get('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-success"><?php echo app('translator')->get('Save'); ?></button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="sahir_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -221,10 +264,21 @@
             $('#staticBackdrop').modal('show');
         }
 
+        function left_right(mech) {
+            $("#mech_left").val(mech.left);
+            $("#mech_right").val(mech.right);
+            document.getElementById('mech_name').innerHTML = mech.name;
+            $('#mech_id').val(mech.id);
+            $('#left_right').modal('show');
+        }
+
         function shair_mach_assessment(mach) {
             $('#shair_id').val(mach.id);
             $('#sahir_exampleModal').modal('show');
         }
+
+
+
 
         $('#shair_form').on('submit', function(event) {
             event.preventDefault();

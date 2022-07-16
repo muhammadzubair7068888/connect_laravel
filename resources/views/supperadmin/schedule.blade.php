@@ -67,41 +67,42 @@
             height: 46px
         }
     </style>
-        <form autocomplete="off" action="{{route('schedule.print')}}" method="post" target="_blank" style="width: 100%;">
-            @csrf
-            <div class="row d-flex justify-content-between">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>User: </label>
-                        <select class="form-control" id="calendar-user" name="user">
-                            @forelse ($users as $user)
-                                <option value="{{$user['id']}}">{{$user['name']}}</option>
-                            @empty
-                            @endforelse
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Schedule Date</label>
-                        <input type="text" class="form-control" placeholder="Date" data-date-format="dd M, yyyy" data-provide="datepicker" data-date-autoclose="true" name="date" required>
-                        {{-- <input type="date" class="form-control date-field" name="schedule_date" required=""
-                            placeholder="Date"> --}}
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary mt-4 btn-print-schedule">Print Schedule</button>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Empty Days</label>
-                        <select class="form-control" id="schedule-empty-days">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
+    <form autocomplete="off" action="{{ route('schedule.print') }}" method="post" target="_blank" style="width: 100%;">
+        @csrf
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>User: </label>
+                    <select class="form-control" id="calendar-user" name="user">
+                        @forelse ($users as $user)
+                            <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
+                        @empty
+                        @endforelse
+                    </select>
                 </div>
             </div>
-        </form>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Schedule Date</label>
+                    <input type="text" class="form-control" placeholder="Date" data-date-format="dd M, yyyy"
+                        data-provide="datepicker" data-date-autoclose="true" name="date" required>
+                    {{-- <input type="date" class="form-control date-field" name="schedule_date" required=""
+                            placeholder="Date"> --}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary mt-4 btn-print-schedule">Print Schedule</button>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Empty Days</label>
+                    <select class="form-control" id="schedule-empty-days">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -185,7 +186,7 @@
     <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/calendar/calendar.js') }}"></script>
     <script>
-        var schedule_view_url = "{{route('schedule.view')}}";
-        var get_schedule_url = "{{route('schedule.exercise')}}";
+        var schedule_view_url = "{{ route('schedule.view') }}";
+        var get_schedule_url = "{{ route('schedule.exercise') }}";
     </script>
 @endsection

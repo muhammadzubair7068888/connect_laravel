@@ -50,6 +50,11 @@ class AssessmentController extends Controller
         PhysicalAssessment::where('name',$physical->name)->delete();
         return redirect()->route('physical')->with('success', 'Physical Accessment Successfully Delete.');
     }
+    public function physical_left_right(Request $request){
+     
+        $phy_assessment = PhysicalAssessment::where('id',$request->phy_id)->update(array('left'=>$request->left,'right'=>$request->right));
+        return redirect()->route('physical')->with('success', 'Update Successufully.');
+    }
     public function mechanical(){
         $user_id = auth()->user()->id;
         $users = User::where('created_by', $user_id)->where('role', 'admin')->latest()->get();
@@ -83,6 +88,10 @@ class AssessmentController extends Controller
         $mechaniacl = MechanicalAssessment::where('id',$request->mechanical_id)->first();
         MechanicalAssessment::where('name',$mechaniacl->name)->delete();
         return redirect()->route('mechanical')->with('success', 'Mechanical Accessment Successfully Delete.');
+    }
+      public function mechnical_left_right(Request $request){
+        $mech_assessment = MechanicalAssessment::where('id',$request->mech_id)->update(array('left'=>$request->left,'right'=>$request->right));
+        return redirect()->route('mechanical')->with('success', 'Update Successufully.');
     }
     public function physical_update_status($id,$status){
         PhysicalAssessment::where('id',$id)->update(array('status'=>$status));
@@ -123,4 +132,5 @@ class AssessmentController extends Controller
         $user_mach_assessment->save();
         return response()->json("success");
     }
+
 }

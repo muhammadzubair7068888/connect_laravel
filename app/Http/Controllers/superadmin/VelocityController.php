@@ -71,7 +71,6 @@ class VelocityController extends Controller
                 $squat[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'squat')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
                 $deadlift[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'deadlift')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
                 $vertical_jump[] = UserVelocity::where('user_id', auth()->user()->id)->where('velocity_key', 'vertical_jump')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
-           
             }
             return view('supperadmin.index', [
                 'velocities' => $velocities,
@@ -93,12 +92,58 @@ class VelocityController extends Controller
                 'squat' => $squat,
                 'deadlift' => $deadlift,
                 'vertical_jump' => $vertical_jump,       
-            ]);
-
-       
+            ]); 
     }
     public function search_velocity(Request $request){
-        return response()->json("success");
+        $start_date = $request->start;
+        $end_date = $request->end;
+        $timestamp_start = strtotime($start_date);
+        $timestamp_end = strtotime($end_date);
+        $start_date = date('d-m-Y', $timestamp_start);
+        $end_date = date('d-m-Y', $timestamp_end);
+        $mounth =date('m', $timestamp_start);
+        $diff = strtotime($start_date) - strtotime($end_date);
+        $dif = abs(round($diff / 86400));
+        $weight = [];
+       for($i=1;$i<=$dif; $i++){
+            $weight[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'weight')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $arm_pain[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'arm_pain')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_velocity[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_velocity')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $mount_throw_velocit[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'mound_throws_velocity')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_3[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_3')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_4[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_4')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_5[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_5')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_6[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_6')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pull_down_7[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pull_down_7')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $long_toss_distance[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'long_toss_distance')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pylo7[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pylo_7')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pylo5[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pylo_5')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $bench[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'pylo_4')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $pylo3[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'bench')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $squat[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'squat')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $deadlift[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'deadlift')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+            $vertical_jump[] = UserVelocity::where('user_id', $request->user_id)->where('velocity_key', 'vertical_jump')->whereDay('date', $i)->whereMonth('date', $mounth)->sum('value');
+       }
+        $response = [
+            'status' => 'success',
+            'weight' =>  $weight,
+            'arm_pain;' => $arm_pain,
+            'pull_down_velocity' => $pull_down_velocity,
+            'mount_throw_velocit' => $mount_throw_velocit,
+            'pull_down_3' => $pull_down_3,
+            'pull_down_4' => $pull_down_4,
+            'pull_down_4' => $pull_down_5,
+            'pull_down_6' => $pull_down_6,
+            'pull_down_7' => $pull_down_7,
+            'long_toss_distance' => $long_toss_distance,
+            'pylo7' => $pylo7,
+            'pylo5' => $pylo5,
+            'bench_all' => $bench,
+            'pylo7' => $pylo3,
+            'squat' => $squat,
+            'deadlift' => $deadlift,
+        ];
+        return response()->json($response);
     }
     public function update_setting(Request $request){
         $admin_id = auth()->user()->id;
@@ -121,5 +166,14 @@ class VelocityController extends Controller
         $vertical_jump = Velocity::where('admin_id', $admin_id)->where('key', 'vertical_jump')->update(array('name' => $request->vertical_jump_label, 'status' => $request->vertical_jump));
         return response()->json('success');
 
+    }
+    function dateDiffInDays($date1, $date2)
+    {
+        // Calculating the difference in timestamps
+        $diff = strtotime($date2) - strtotime($date1);
+
+        // 1 day = 24 hours
+        // 24 * 60 * 60 = 86400 seconds
+        return abs(round($diff / 86400));
     }
 }
