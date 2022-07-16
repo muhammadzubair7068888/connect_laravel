@@ -154,6 +154,12 @@
                                     key="t-profile"><?php echo app('translator')->get('Email'); ?></a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="<?php echo e(route('passport')); ?>" class="waves-effect">
+                            <i class="bx bx-building"></i>
+                            <span key="t-dashboards"><?php echo app('translator')->get('PassPort'); ?></span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
             </ul>

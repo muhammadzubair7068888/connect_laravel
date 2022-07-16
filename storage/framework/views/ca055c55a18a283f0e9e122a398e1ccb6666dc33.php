@@ -66,40 +66,41 @@
             height: 46px
         }
     </style>
-        <form autocomplete="off" action="<?php echo e(route('schedule.print')); ?>" method="post" target="_blank" style="width: 100%;">
-            <?php echo csrf_field(); ?>
-            <div class="row d-flex justify-content-between">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>User: </label>
-                        <select class="form-control" id="calendar-user" name="user">
-                            <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <option value="<?php echo e($user['id']); ?>"><?php echo e($user['name']); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Schedule Date</label>
-                        <input type="text" class="form-control" placeholder="Date" data-date-format="dd M, yyyy" data-provide="datepicker" data-date-autoclose="true" name="date" required>
-                        
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary mt-4 btn-print-schedule">Print Schedule</button>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Empty Days</label>
-                        <select class="form-control" id="schedule-empty-days">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
+    <form autocomplete="off" action="<?php echo e(route('schedule.print')); ?>" method="post" target="_blank" style="width: 100%;">
+        <?php echo csrf_field(); ?>
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>User: </label>
+                    <select class="form-control" id="calendar-user" name="user">
+                        <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                            <option value="<?php echo e($user['id']); ?>"><?php echo e($user['name']); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                        <?php endif; ?>
+                    </select>
                 </div>
             </div>
-        </form>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Schedule Date</label>
+                    <input type="text" class="form-control" placeholder="Date" data-date-format="dd M, yyyy"
+                        data-provide="datepicker" data-date-autoclose="true" name="date" required>
+                    
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary mt-4 btn-print-schedule">Print Schedule</button>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Empty Days</label>
+                    <select class="form-control" id="schedule-empty-days">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="row">
         <div class="col-12">
             <div class="row">
