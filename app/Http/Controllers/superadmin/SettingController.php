@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\superadmin;
 
+use App\Events\UpdatesEvent;
+use App\Exceptions\ApiOperationFailedException;
 use App\Http\Controllers\Controller;
 use App\Models\CompanySetting;
 use App\Models\EmailTemplate;
@@ -10,9 +12,10 @@ use App\Models\PluginAttributes;
 use App\Models\User;
 use App\Models\Velocity;
 use CodeZero\DotEnvUpdater\DotEnvUpdater;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Traits\ImageTrait;
 class SettingController extends Controller
 {
     //
@@ -54,7 +57,7 @@ class SettingController extends Controller
             $file = $request->file('company_logo_dark');
             $foldername = 'uploads/company-settings/logos/dark/';
             $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('company_logo_dark')->extension();
-           
+
             $file->move(public_path() . '/' . $foldername, $filename);
             $data->logo_dark = $foldername . $filename;
         }
@@ -219,13 +222,7 @@ class SettingController extends Controller
             ]);
         }
         $user = User::find($id);
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $foldername = 'user/profiles/';
-            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-            $file->move(public_path() . '/' . $foldername, $filename);
-            $user->avatar = $foldername . $filename;
-        }
+        $this->updateProfilePhoto($user, $request->all());
         if($request->password){
             $user->password = Hash::make($request->password);
         }
@@ -240,11 +237,34 @@ class SettingController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Successfully Update.');
     }
+
+    public function updateProfilePhoto(User $user, $input)
+    {
+        try {
+            $options = ['height' => User::HEIGHT, 'width' => User::WIDTH];
+            if (! empty($input['photo'])) {
+                $input['avatar'] = ImageTrait::makeImage($input['photo'], User::$PATH, $options);
+
+                $oldImageName = $user->avatar;
+                if (! empty($oldImageName)) {
+                    $user->deleteImage();
+                }
+            }
+
+            $user->update($input);
+
+            $broadcastData['type'] = User::PROFILE_UPDATES;
+            $broadcastData['user'] = $user->fresh()->toArray();
+            broadcast(new UpdatesEvent($broadcastData))->toOthers();
+        } catch (Exception $e) {
+            throw new ApiOperationFailedException($e->getMessage());
+        }
+    }
     public function site_setting(){
-        
+
         $user_id = auth()->user()->id;
-         $velocities = Velocity::where('admin_id', $user_id)->get();  
+         $velocities = Velocity::where('admin_id', $user_id)->get();
         return view('supperadmin.settings.site_setting',compact('velocities'));
     }
-  
+
 }
