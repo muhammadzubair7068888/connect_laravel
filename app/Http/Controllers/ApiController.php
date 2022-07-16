@@ -1353,15 +1353,39 @@ class ApiController extends Controller
         return response()->json($response, 200);
     }
     //scdedule
+    public function users()
+    {
+        try {
+
+            $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+                ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+            $response = [
+                'status' => 'success',
+                'data' => $users,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+
     public function shadule_calender(Request $request)
     {
         try {
-            if ($request->id) {
-                $schedule =  Schedule::where('user_id', $request->id)->first('events')->events;
+            if ($request->id == null || "" || empty($request->id)) {
+                $schedule = Schedule::where('user_id', auth()->id())->first('events')->events ?? '[]';
             } else {
-                $schedule = Schedule::where('user_id', auth()->id())->first('events')->events;
+                $schedule =  Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
             }
-            $js_schedule = json_decode($schedule);
+            if ($schedule) {
+                $js_schedule = json_decode($schedule);
+            } else {
+                $js_schedule = [];
+            }
             $users = User::where('created_by', auth()->id())->get(['id', 'name'])
                 ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
             $response = [
@@ -1381,12 +1405,12 @@ class ApiController extends Controller
 
     public function schedule_update(Request $request)
     {
-        $event[] = $request->events;
+        // $event[] = $request->events;
         try {
             $events = Schedule::updateOrCreate(
                 ['user_id' => $request->id],
                 [
-                    'events' => $event,
+                    'events' => $request->events,
                 ]
             );
             $response = [
@@ -1403,9 +1427,10 @@ class ApiController extends Controller
         }
     }
 
-    public function schedule_view(Exercise $exercise)
+    public function schedule_view($id)
     {
         try {
+            $exercise = Exercise::where('id', $id)->with('excercise_detail')->get();
             $response = [
                 'status' => 'success',
                 'exercise' => $exercise,

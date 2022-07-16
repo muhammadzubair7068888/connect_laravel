@@ -75,10 +75,11 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/edit/{id}', [ApiController::class, 'save_edit_exercises']);
         Route::post('/del', [ApiController::class, 'delete_exercise']);
         // Route::get('/edit/{id}', [ExerciseController::class, 'edit_exercises'])->name('edit.exercise');
-        Route::get('/schedule', [ApiController::class, 'shadule_calender']);
+        Route::post('/schedule', [ApiController::class, 'shadule_calender']);
+        Route::get('/users', [ApiController::class, 'users']);
         Route::post('/schedule/update', [ApiController::class, 'schedule_update']);
         Route::post('/schedule/print', [ApiController::class, 'schedule_print']);
-        Route::get('/schedule/exercise/{exercise?}', [ApiController::class, 'schedule_view']);
+        Route::get('/schedule/exercise/{id}', [ApiController::class, 'schedule_view']);
         Route::put('/schedule/exercise/{exercise_detail}/strength', [ApiController::class, 'update_exercise_strength']);
     });
     Route::prefix('/files')->group(function () {
