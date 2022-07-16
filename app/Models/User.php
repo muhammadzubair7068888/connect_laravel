@@ -216,14 +216,16 @@ class User extends Authenticatable
         // }
         if (! empty($value)) {
             return $this->imageUrl(self::$PATH.DIRECTORY_SEPARATOR.$value);
+        }else{
+            return asset('assets/chat/icons/male.png');
         }
 
-        if ($this->gender == self::MALE) {
-            return asset('assets/icons/male.png');
-        }
-        if ($this->gender == self::FEMALE) {
-            return asset('assets/icons/female.png');
-        }
+        // if ($this->gender == self::MALE) {
+        //     return asset('assets/icons/male.png');
+        // }
+        // if ($this->gender == self::FEMALE) {
+        //     return asset('assets/icons/female.png');
+        // }
 
         return getUserImageInitial($this->id, $this->name);
     }
