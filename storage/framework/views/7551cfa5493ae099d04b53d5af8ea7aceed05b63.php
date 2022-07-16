@@ -50,9 +50,9 @@
                                 <div class="mb-3">
                                     <label class="form-label"><?php echo app('translator')->get('Select User'); ?></label>
                                     <select class="form-control select2" onchange="getval(this);">
-                                        <option value="<?php echo e(auth()->user()->id); ?>"><?php echo app('translator')->get('Me'); ?></option>
+
                                         <?php $__empty_1 = true; $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                            <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                            <option value="<?php echo e($user['id']); ?>"><?php echo e($user['name']); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <option value="AK"></option>
                                             <option value="HI">Hawaii</option>
@@ -236,8 +236,6 @@
                         i++;
                         var download = "<?php echo e(url('/files/download')); ?>" + "/" + value.id;
                         var viewurl = "<?php echo e(asset('/uploads')); ?>" + "/" + value.file;
-
-                        alert(viewurl);
                         let text = value.file
                         const arr = text.split("pdf");
                         if (typeof arr[1] !== 'undefined') {
@@ -248,7 +246,6 @@
                                 ' data-name="name" data-target="#myModal"data-toggle="modal" >' +
                                 '<i class = "fa fa-eye" >' + '</i>' + '</a>';
                         }
-
                         html += '<tr>';
                         html += '<td>';
                         html += i;
@@ -283,7 +280,7 @@
                     alert("Failed")
                 }
             });
-            alert('5');
+
         }
     </script>
 <?php $__env->stopSection(); ?>

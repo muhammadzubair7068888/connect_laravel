@@ -226,6 +226,12 @@
                                     key="t-profile">@lang('Email')</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ route('passport') }}" class="waves-effect">
+                            <i class="bx bx-building"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
+                            <span key="t-dashboards">@lang('PassPort')</span>
+                        </a>
+                    </li>
                 @endif
 
             </ul>

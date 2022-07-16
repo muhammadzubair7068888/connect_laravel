@@ -36,9 +36,8 @@
                                 <div class="mb-3">
                                     <label class="form-label">@lang('Select User')</label>
                                     <select class="form-control select2" onchange="getval(this);">{{-- onchange="getval(this);" --}}
-                                        <option value="{{ auth()->user()->id }}">@lang('Me')</option>
                                         @forelse ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
                                         @empty
                                             <option value="AK"></option>
                                             <option value="HI">Hawaii</option>

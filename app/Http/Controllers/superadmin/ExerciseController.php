@@ -9,6 +9,7 @@ use App\Models\ExerciseType;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Null_;
 
 class ExerciseController extends Controller
@@ -175,44 +176,14 @@ class ExerciseController extends Controller
     }
     public function shadule_calender(Request $request)
     {
-        if($request->ajax()){
-            return @Schedule::where('user_id',$request->id)->first('events')->events ?? '[]';
-        }
-        $users = User::where('created_by',auth()->id())->get(['id','name'])
-        ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
-        $exercises = Exercise::where('user_id',auth()->id())->latest()->get();
-        return view('supperadmin.schedule',compact('exercises','users'));
-    }
-    public function schedule(Request $request){
 
-        switch ($request->type) {
-            case 'add':
-                $event = Schedule::create([
-                    'exercise_id' => $request->exercise_id,
-                    'start' => $request->start,
-                    'end' => $request->end,
-                    'color' => $request->color,
-                ]);
-                return $event = Exercise::where('id',1)->with('schedule')->first();
-                return $event->exercise->id;
-                return response()->json($event->exercise);
-                break;
-            case 'update':
-                $event = Schedule::find($request->id)->update([
-                    'exercise_id' => $request->exercise_id,
-                    'start' => $request->start,
-                    'end' => $request->end,
-                ]);
-                return response()->json($event);
-                break;
-            case 'delete':
-                $event = Schedule::find($request->id)->delete();
-                return response()->json($event);
-                break;
-            default:
-                break;
+        if ($request->ajax()) {
+            return @Schedule::where('user_id', $request->id)->first('events')->events ?? '[]';
         }
-
+        $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+            ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+        $exercises = Exercise::where('user_id', auth()->id())->latest()->get();
+        return view('supperadmin.schedule', compact('exercises', 'users'));
     }
 
     public function schedule_update(Request $request)
@@ -223,29 +194,94 @@ class ExerciseController extends Controller
                 'events' => $request->events,
             ]
         );
-        return response()->json(['success' => true, 'msg'=> 'Schedule Successfully Updated.']);
+        return response()->json(['success' => true, 'msg' => 'Schedule Successfully Updated.']);
     }
-
     public function schedule_print(Request $request)
     {
         $schedule = Schedule::where('user_id', $request->user)->first();
         $events = json_decode($schedule->events, true);
         $date = date('Y-m-d', strtotime($request->date));
-        $tasks = array_filter($events, function($arr) use($date) {
+        $tasks = array_filter($events, function ($arr) use ($date) {
             return in_array($date, $arr);
         });
-        return view('supperadmin.schedule-print',compact('tasks'));
+        return view('supperadmin.schedule-print', compact('tasks'));
     }
 
     public function schedule_view(Exercise $exercise)
     {
-        return view('supperadmin.schedule-exercise-detail',compact('exercise'));
+        return view('supperadmin.schedule-exercise-detail', compact('exercise'));
     }
 
     public function update_exercise_strength(ExerciseDetail $exercise_detail, Request $request)
     {
         $exercise_detail->strength = $request->strength;
         $exercise_detail->save();
-        return response()->json(['success' => true, 'msg'=> 'Strength Successfully Updated.']);
+        return response()->json(['success' => true, 'msg' => 'Strength Successfully Updated.']);
     }
+    public function import_exercise(Request $request)
+    {
+         try{
+        $path = $request->file('file')->getRealPath();
+        $records = array_map('str_getcsv', file($path));
+        if (!count($records) > 0) {
+            return back()->with('error', 'Something Is Wrong!');
+        }
+        $fields = array_map('strtolower', $records[0]);
+       
+        array_shift($records);
+        foreach ($records as $record) {
+            if (count($fields) != count($record)) {
+               return back()->with('error', 'Invailed Dat!');;
+            }
+            $record =  array_map("html_entity_decode", $record);
+            $record = array_combine($fields, $record);
+            $this->rows[] = $this->clear_encoding_str($record);
+                
+        }
+           // dd($this->request); 
+        $user_id = auth()->user()->id;
+        foreach ($this->rows as $data) {
+        
+              $ex_type = ExerciseType::where('name',$data['exercise_type'])->first();
+            if($ex_type){
+                $type_id = $ex_type->id;
+            }else{
+                $type_id = 1;
+            }
+            $exercise = new Exercise();
+            $exercise->name = $data['name'];
+            $exercise->user_id = $user_id;
+            $exercise->exercises_type_id = $type_id; //$request->ex_type;
+            $exercise->description = $data['description'];
+            $exercise->save();
+            $shair_detail = new ExerciseDetail();
+            $shair_detail->title = $data['title'];
+            $shair_detail->link = $data['link'];
+            $shair_detail->sets = $data['sets'];
+            $shair_detail->reps = $data['reps'];
+            $shair_detail->notes = $data['notes'];
+            $shair_detail->exercise_id = $exercise->id;
+            $shair_detail->save();
+        }
+        } catch (\Throwable $th) {
+            $response = [
+                'error' => false,
+                'message' => $th->getMessage(),
+            ];
+            return back()->with('error', $th->getMessage());
+        }
+        return back()->with('success', 'CVS file success full Imoprt');
+    }
+    private function clear_encoding_str($value)
+    {
+        if (is_array($value)) {
+            $clean = [];
+            foreach ($value as $key => $val) {
+                $clean[$key] = mb_convert_encoding($val, 'UTF-8', 'UTF-8');
+            }
+            return $clean;
+        }
+        return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+    }
+  
 }
