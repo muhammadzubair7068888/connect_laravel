@@ -180,23 +180,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th><?php echo app('translator')->get('Label'); ?></th>
-                                <th class="col-1"><?php echo app('translator')->get('Left'); ?></th>
-                                <th class="col-1"><?php echo app('translator')->get('Right'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Left'); ?></th>
+                                <th class="col-3"><?php echo app('translator')->get('Right'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <form action="<?php echo e(route('update.left_right.mechanical')); ?>" method="post">
                                 <?php echo csrf_field(); ?>
+                                        <input type="hidden" name="mech_id" id="mech_id" />
                                 <tr>
                                     <td id="mech_name"></td>
-                                    <td><input type="radio" name="left_right" id="mech_left" value="0" />
-                                        <input type="hidden" name="mech_id" id="mech_id" />
+                                    <td><input type="number" class="form-control" name="left" id="mech_left"/>
                                     </td>
-                                    <td><input type="radio" name="left_right" id="mech_right" value="1" />
+                                    <td><input type="number" class="form-control" name="right" id="mech_right"/>
                                     </td>
                                 </tr>
                         </tbody>
@@ -265,12 +265,8 @@
         }
 
         function left_right(mech) {
-
-            if (mech.left_right == 0) {
-                $("#mech_left").prop("checked", true);
-            } else {
-                $("#mech_right").prop("checked", true);
-            }
+            $("#mech_left").val(mech.left);
+            $("#mech_right").val(mech.right);
             document.getElementById('mech_name').innerHTML = mech.name;
             $('#mech_id').val(mech.id);
             $('#left_right').modal('show');

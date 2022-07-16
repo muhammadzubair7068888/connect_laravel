@@ -1378,7 +1378,23 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-
+    public function exercise_user(){
+        try {
+            $users = User::where('created_by', auth()->id())->get(['id', 'name'])
+                ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();
+            $response = [
+                'status' => 'success',
+                'users' => $users,
+            ];
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
     public function schedule_update(Request $request)
     {
         $event[] = $request->events;

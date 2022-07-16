@@ -80,6 +80,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/schedule/print', [ApiController::class, 'schedule_print']);
         Route::get('/schedule/exercise/{exercise?}', [ApiController::class, 'schedule_view']);
         Route::put('/schedule/exercise/{exercise_detail}/strength', [ApiController::class, 'update_exercise_strength']);
+        Route::get('/users',[ApiController::class,'exercise_user']);
     });
     Route::prefix('/files')->group(function () {
         Route::get('/index/{id?}', [ApiController::class, 'files']);

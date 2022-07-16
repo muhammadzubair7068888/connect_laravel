@@ -167,19 +167,19 @@
                         <thead>
                             <tr>
                                 <th>@lang('Label')</th>
-                                <th class="col-1">@lang('Left')</th>
-                                <th class="col-1">@lang('Right')</th>
+                                <th class="col-3">@lang('Left')</th>
+                                <th class="col-3">@lang('Right')</th>
                             </tr>
                         </thead>
                         <tbody>
                             <form action="{{ route('update.left_right.mechanical') }}" method="post">
                                 @csrf
+                                        <input type="hidden" name="mech_id" id="mech_id" />
                                 <tr>
                                     <td id="mech_name"></td>
-                                    <td><input type="radio" name="left_right" id="mech_left" value="0" />
-                                        <input type="hidden" name="mech_id" id="mech_id" />
+                                    <td><input type="number" class="form-control" name="left" id="mech_left"/>
                                     </td>
-                                    <td><input type="radio" name="left_right" id="mech_right" value="1" />
+                                    <td><input type="number" class="form-control" name="right" id="mech_right"/>
                                     </td>
                                 </tr>
                         </tbody>
@@ -248,12 +248,8 @@
         }
 
         function left_right(mech) {
-
-            if (mech.left_right == 0) {
-                $("#mech_left").prop("checked", true);
-            } else {
-                $("#mech_right").prop("checked", true);
-            }
+            $("#mech_left").val(mech.left);
+            $("#mech_right").val(mech.right);
             document.getElementById('mech_name').innerHTML = mech.name;
             $('#mech_id').val(mech.id);
             $('#left_right').modal('show');
