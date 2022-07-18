@@ -214,11 +214,9 @@ class User extends Authenticatable
         // if ($value) {
         //     return Storage::url($value);
         // }
-        if (! empty($value)) {
+        if (! empty($value))
             return $this->imageUrl(self::$PATH.DIRECTORY_SEPARATOR.$value);
-        }else{
-            return asset('assets/chat/icons/male.png');
-        }
+        return asset('assets/chat/icons/male.png');
 
         // if ($this->gender == self::MALE) {
         //     return asset('assets/icons/male.png');

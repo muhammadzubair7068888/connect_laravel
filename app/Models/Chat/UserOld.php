@@ -87,7 +87,7 @@ use Laravel\Passport\Token;
  * @method static Builder|User whereGender($value)
  * @method static Builder|User wherePrivacy($value)
  */
-class User extends Authenticatable
+class UserOld extends Authenticatable
 {
     use Notifiable, ImageTrait, HasApiTokens, SoftDeletes;
     use ImageTrait {
@@ -211,6 +211,7 @@ class User extends Authenticatable
         if (! empty($value)) {
             return $this->imageUrl(self::$PATH.DIRECTORY_SEPARATOR.$value);
         }
+        return asset('assets/chat/icons/male.png');
 
         if ($this->gender == self::MALE) {
             return asset('assets/icons/male.png');

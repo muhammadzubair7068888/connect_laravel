@@ -2,6 +2,7 @@
 
 namespace App\Models\Chat;
 
+use App\Models\User;
 use App\Traits\ImageTrait;
 // use Eloquent as Model;
 use Illuminate\Database\Eloquent\Model;
@@ -148,7 +149,7 @@ class Conversation extends Model
             return $this->imageUrl(User::$PATH.DIRECTORY_SEPARATOR.$value);
         }
 
-        return asset('assets/images/avatar.png');
+        return asset('assets/chat/icons/male.png');
     }
 
     public function getIsGroupAttribute()
