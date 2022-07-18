@@ -3,6 +3,7 @@
 namespace App\Models\Chat;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 /**
  * App\Models\GroupUsers
