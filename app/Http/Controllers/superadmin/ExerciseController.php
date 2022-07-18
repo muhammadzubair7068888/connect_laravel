@@ -156,7 +156,7 @@ class ExerciseController extends Controller
         }
         $exercise = Exercise::find($id);
         $shair_exercise = new Exercise();
-        $shair_exercise->name = $exercise->name;
+        $shair_exercise->name = "6-4-5 " . $exercise->name;
         $shair_exercise->user_id = $user_id;
         $shair_exercise->exercises_type_id = $exercise->exercises_type_id;
         $shair_exercise->description = $exercise->description;
@@ -247,7 +247,7 @@ class ExerciseController extends Controller
                 $type_id = 1;
             }
             $exercise = new Exercise();
-            $exercise->name = $data['name'];
+            $exercise->name ="6-4-5 ".$data['name'];
             $exercise->user_id = $user_id;
             $exercise->exercises_type_id = $type_id; //$request->ex_type;
             $exercise->description = $data['description'];
