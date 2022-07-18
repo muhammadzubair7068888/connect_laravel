@@ -237,7 +237,7 @@ class ExerciseController extends Controller
             $this->rows[] = $this->clear_encoding_str($record);
                 
         }
-          dd($this->rows);
+         
         $user_id = auth()->user()->id;
         foreach ($this->rows as $data) {
               $ex_type = ExerciseType::where('name',$data['exercise_type'])->first();
