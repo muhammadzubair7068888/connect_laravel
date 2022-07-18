@@ -2,7 +2,9 @@
 
 namespace App\Models\Chat;
 
-use Eloquent as Model;
+// use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 /**
  * App\Models\MessageAction

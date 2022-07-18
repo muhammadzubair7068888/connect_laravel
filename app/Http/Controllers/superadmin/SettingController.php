@@ -257,6 +257,7 @@ class SettingController extends Controller
             $broadcastData['user'] = $user->fresh()->toArray();
             broadcast(new UpdatesEvent($broadcastData))->toOthers();
         } catch (Exception $e) {
+            dd($e->getMessage());
             throw new ApiOperationFailedException($e->getMessage());
         }
     }
