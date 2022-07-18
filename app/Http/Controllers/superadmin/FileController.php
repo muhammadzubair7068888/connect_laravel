@@ -5,12 +5,26 @@ namespace App\Http\Controllers\superadmin;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\User;
+use App\Repositories\FileUploadRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class FileController extends Controller
 {
-    //
+
+    /** @var FileUploadRepository $fileUploadRepository */
+    private $fileUploadRepository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  FileUploadRepository  $fileUploadRepository
+     */
+    public function __construct(FileUploadRepository $fileUploadRepository)
+    {
+        $this->fileUploadRepository = $fileUploadRepository;
+    }
+
     public function index($id = null)
     {
         if ($id == null) {
@@ -33,9 +47,7 @@ class FileController extends Controller
         $user_id = auth()->user()->id;
         $files = new File();
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = time() . '_' .rand(1111,9999).'.'.$request->file->extension();
-            $file->move('uploads', $fileName);
+            $fileName = $this->fileUploadRepository->addAttachment($request->file('file'), $files::$PATH);
             $files->file = $fileName;
             $files->user_id = $user_id;
             $files->title = $request->title;

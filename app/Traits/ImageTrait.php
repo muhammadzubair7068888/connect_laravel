@@ -162,7 +162,7 @@ trait ImageTrait
             $fileName = '';
             if (! empty($file)) {
                 $extension = $file->getClientOriginalExtension(); // getting image extension
-                if (! in_array(strtolower($extension), ['mp4', 'mov', 'ogg', 'qt'])) {
+                if (! in_array(strtolower($extension), ['mp4', 'mov', 'ogg', 'qt','mp4', 'webm', '3gp', 'mov', 'flv', 'avi', 'wmv', 'ts', 'qt', 'pdf'])) {
                     throw  new ApiOperationFailedException('invalid Video', Response::HTTP_BAD_REQUEST);
                 }
                 $originalName = $file->getClientOriginalName();

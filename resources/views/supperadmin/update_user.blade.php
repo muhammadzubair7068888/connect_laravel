@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label">@lang('Picture')</label>
-                            <input type="file" name="file" class="form-control">
+                            <input type="file" name="photo" class="form-control">
                             <div class="valid-feedback">
                                 @lang('Looks good!')
                             </div>

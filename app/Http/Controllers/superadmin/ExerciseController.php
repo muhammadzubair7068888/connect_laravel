@@ -227,7 +227,6 @@ class ExerciseController extends Controller
             return back()->with('error', 'Something Is Wrong!');
         }
         $fields = array_map('strtolower', $records[0]);
-       
         array_shift($records);
         foreach ($records as $record) {
             if (count($fields) != count($record)) {
@@ -238,10 +237,9 @@ class ExerciseController extends Controller
             $this->rows[] = $this->clear_encoding_str($record);
                 
         }
-           // dd($this->request); 
+          dd($this->rows);
         $user_id = auth()->user()->id;
         foreach ($this->rows as $data) {
-        
               $ex_type = ExerciseType::where('name',$data['exercise_type'])->first();
             if($ex_type){
                 $type_id = $ex_type->id;

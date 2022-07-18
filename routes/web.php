@@ -109,6 +109,7 @@ Route::prefix('/questionnaire')->group(function () {
     Route::get('/index', [QuestionnaireController::class, 'index'])->name('questionnaire');
     Route::post('/index', [QuestionnaireController::class, 'save_question'])->name('save.questionnaire');
     Route::post('/del', [QuestionnaireController::class, 'delete_question'])->name('delete.questionnaire');
+    Route::post('/filter',[QuestionnaireController::class,'filter_question'])->name('filter.question');
 });
 Route::prefix('/assessment')->group(function () {
     Route::get('/physical', [AssessmentController::class, 'phyiscal'])->name('physical');

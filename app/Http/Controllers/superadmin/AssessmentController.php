@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MechanicalAssessment;
 use App\Models\PhysicalAssessment;
 use App\Models\User;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use PDO;
 
@@ -51,7 +52,14 @@ class AssessmentController extends Controller
         return redirect()->route('physical')->with('success', 'Physical Accessment Successfully Delete.');
     }
     public function physical_left_right(Request $request){
-     
+        if ($request->ajax()) {
+            if($request->left){
+             $phy_assessment = PhysicalAssessment::where('id', $request->id)->update(array('left' => $request->left));
+            }else{
+                $phy_assessment = PhysicalAssessment::where('id', $request->id)->update(array('right' => $request->right));
+            }
+            return response()->json('success');
+        }
         $phy_assessment = PhysicalAssessment::where('id',$request->phy_id)->update(array('left'=>$request->left,'right'=>$request->right));
         return redirect()->route('physical')->with('success', 'Update Successufully.');
     }
@@ -90,6 +98,14 @@ class AssessmentController extends Controller
         return redirect()->route('mechanical')->with('success', 'Mechanical Accessment Successfully Delete.');
     }
       public function mechnical_left_right(Request $request){
+        if ($request->ajax()) {
+            if ($request->left) {
+                $mech_assessment = MechanicalAssessment::where('id', $request->id)->update(array('left' => $request->left));
+            } else {
+                $mech_assessment = MechanicalAssessment::where('id', $request->id)->update(array('right' => $request->right));
+            }
+            return response()->json('success');
+        }
         $mech_assessment = MechanicalAssessment::where('id',$request->mech_id)->update(array('left'=>$request->left,'right'=>$request->right));
         return redirect()->route('mechanical')->with('success', 'Update Successufully.');
     }

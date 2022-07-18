@@ -93,6 +93,8 @@
                                 <th>@lang('Acceptable')</th>
                                 <th>@lang('Caution')</th>
                                 <th>@lang('Opportunity')</th>
+                                <th>@lang('L')</th>
+                                <th>@lang('R')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,6 +110,13 @@
                                     <td><input type="radio" class="form-radio" name="{{ $physical->id }}"
                                             id="" {{ $physical->status == 3 ? 'checked' : '' }}
                                             onclick="phy_status_change({{ $physical->id }},{{ 3 }})" /></td>
+                                    <td><input type="number" class="form-control phy_left" name="left"
+                                            onclick="get_id({{ $physical->id }});" value="{{ $physical->left }}"
+                                            id="left_right" />
+                                    </td>
+                                    <td><input type="number" class="form-control phy_right" name="right" id="left_right"
+                                            onclick="get_id({{ $physical->id }});" value="{{ $physical->right }}" />
+                                    </td>
                                 </tr>
                             @empty
                             @endforelse
@@ -124,6 +133,8 @@
                                 <th>@lang('Acceptable')</th>
                                 <th>@lang('Caution')</th>
                                 <th>@lang('Opportunity')</th>
+                                <th>@lang('L')</th>
+                                <th>@lang('R')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,6 +152,14 @@
                                     <td><input type="radio" class="form-radio" name="{{ $mechanical->id }}"
                                             id="" {{ $mechanical->status == 3 ? 'checked' : '' }}
                                             onclick="mach_status_change({{ $mechanical->id }},{{ 3 }})" />
+                                    </td>
+                                    <td><input type="number" class="form-control mech_left" name="left"
+                                            onclick="get_id({{ $mechanical->id }});" value="{{ $mechanical->left }}"
+                                            id="left_right" />
+                                    </td>
+                                    <td><input type="number" class="form-control mech_right" name="right"
+                                            id="left_right" onclick="get_id({{ $mechanical->id }});"
+                                            value="{{ $mechanical->right }}" />
                                     </td>
                                 </tr>
                             @empty
@@ -229,6 +248,87 @@
                 error: function(response) {
                     alert("Failed")
                 }
+            });
+        }
+
+        function get_id(id) {
+            let val_id = id;
+            $(".phy_left").change(function() {
+
+                var value = this.value;
+                $.ajax({
+                    url: "{{ url('/assessment/physical/left-right') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        left: value
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        swal("Saved", "Left SuccessFully Change", "success")
+                    },
+                    error: function(response) {
+                        alert("Failed")
+                    }
+                });
+            });
+            $(".phy_right").change(function() {
+
+                var value = this.value;
+                $.ajax({
+                    url: "{{ url('/assessment/physical/left-right') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        right: value
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        swal("Saved", "Right SuccessFully Change", "success")
+                    },
+                    error: function(response) {
+                        alert("Failed")
+                    }
+                });
+            });
+
+            $(".mech_left").change(function() {
+
+                var value = this.value;
+                $.ajax({
+                    url: "{{ url('/assessment/mechanical/left-right') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        left: value
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        swal("Saved", "Left SuccessFully Change", "success")
+                    },
+                    error: function(response) {
+                        alert("Failed")
+                    }
+                });
+            });
+            $(".mech_right").change(function() {
+
+                var value = this.value;
+                $.ajax({
+                    url: "{{ url('/assessment/mechanical/left-right') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        right: value
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        swal("Saved", "Right SuccessFully Change", "success")
+                    },
+                    error: function(response) {
+                        alert("Failed")
+                    }
+                });
             });
         }
     </script>

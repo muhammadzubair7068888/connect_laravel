@@ -3,7 +3,13 @@
 @section('title')
     @lang('Question')
 @endsection
+@section('css')
+    <!-- DataTables -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+@endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
@@ -18,20 +24,30 @@
             <div class="card">
                 <div class="card-body">
                     <x-greetings />
-                    <div class="d-flex flex-wrap gap-3">
-                        <div>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                data-bs-whatever="@mdo">@lang('New Question')</button>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">@lang('New Question')</button>
+                        </div>
+                        <div class="col-md-2" style="position: absolute; right:10px;">
+                            <select name="hand_type" id="filter" class="form-select" required>
+                                <option value="">@lang('Select')</option>
+                                <option value="day">@lang('To Day')</option>
+                                <option value="weak">@lang('To Week')</option>
+                                <option value="mounth">@lang('To Mounth')</option>
+                                <option value="year">@lang('To Year')</option>
+
+                            </select>
                         </div>
                     </div>
                     <br>
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+
+                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
                                 <th>@lang('#')</th>
                                 <th>@lang('Question')</th>
                                 <th class="col-1">@lang('Action')</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -52,22 +68,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td>Systems Administrator</td>
-                                    <td>
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Software Engineer</td>
-
-                                </tr>
-                                <tr>
-                                    <td>Personnel Lead</td>
-                                </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
@@ -103,8 +104,6 @@
         </div>
     </div>
     </div> <!-- end preview-->
-
-
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -143,5 +142,56 @@
             $('#delete_id').val(question.id);
             $('#staticBackdrop').modal('show');
         }
+        $("#filter").change(function() {
+            var value = this.value;
+
+            $.ajax({
+                url: "{{ url('/questionnaire/filter') }}",
+                type: "POST",
+                data: {
+                    value: value
+                },
+                dataType: "json",
+                success: function(response) {
+                    var i = 0;
+                    var html = '';
+                    var view = '';
+
+                    if (response) {
+                        $.each(response, function(key, value) {
+                            i++;
+                            var delete_url = "{{ url('/questionnaire/del') }}" + "/" + value
+                                .id;
+                            html += '<tr>';
+                            html += '<td>';
+                            html += i;
+                            html += '</td>';
+                            html += '<td>';
+                            html += value.name;
+                            html += '</td>';
+                            html += '<td>';
+                            html += '</a>';
+                            html += '<a style="padding-left:10px;" class="link-danger" href=';
+                            html += '#'
+                            html += '>';
+                            html +=
+                                '<i class = "fas fa-trash-alt">';
+
+                            html += '</i>';
+                            html += '</a>';
+                            html += '</td>';
+                            html += '</tr>';
+                        });
+                    } else {
+                        alert("Sorry No data found");
+                    }
+
+                    $('tbody').html(html);
+                },
+                error: function(response) {
+                    alert("Failed")
+                }
+            });
+        });
     </script>
 @endsection

@@ -160,24 +160,27 @@
             </div>
         </div>
     </div>
-    <!-- end schedule model -->
-    <!-- context-menu -->
-    <ul class="custom-menu add-menu" style="display: none;">
-        <li data-action="add-schedule">Add Schedule</li>
-        <li data-action="copy-week">Copy Week</li>
-        <li data-action="copy-day">Copy Day</li>
-        <li data-action="copy-month">Copy Month</li>
-        <li data-action="paste" style="display: none;">Paste</li>
-        <li data-action="delete-week">Delete Week</li>
-    </ul>
-    <!-- end context-menu -->
-    <!-- event-manu -->
-    <ul class="custom-menu edit-menu">
-        <li data-action="copy-schedule">Copy Schedule</li>
-        <li data-action="edit-schedule">Edit Schedule</li>
-        <li data-action="delete-schedule">Delete Schedule</li>
-    </ul>
-    <!-- end event-manu -->
+    @if (auth()->user()->role == 'user')
+    @else
+        <!-- end schedule model -->
+        <!-- context-menu -->
+        <ul class="custom-menu add-menu" style="display: none;">
+            <li data-action="add-schedule">Add Schedule</li>
+            <li data-action="copy-week">Copy Week</li>
+            <li data-action="copy-day">Copy Day</li>
+            <li data-action="copy-month">Copy Month</li>
+            <li data-action="paste" style="display: none;">Paste</li>
+            <li data-action="delete-week">Delete Week</li>
+        </ul>
+        <!-- end context-menu -->
+        <!-- event-manu -->
+        <ul class="custom-menu edit-menu">
+            <li data-action="copy-schedule">Copy Schedule</li>
+            <li data-action="edit-schedule">Edit Schedule</li>
+            <li data-action="delete-schedule">Delete Schedule</li>
+        </ul>
+        <!-- end event-manu -->
+    @endif
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/main.js') }}"></script>

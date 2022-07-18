@@ -244,15 +244,12 @@ class SettingController extends Controller
             $options = ['height' => User::HEIGHT, 'width' => User::WIDTH];
             if (! empty($input['photo'])) {
                 $input['avatar'] = ImageTrait::makeImage($input['photo'], User::$PATH, $options);
-
                 $oldImageName = $user->avatar;
                 if (! empty($oldImageName)) {
                     $user->deleteImage();
                 }
             }
-
             $user->update($input);
-
             $broadcastData['type'] = User::PROFILE_UPDATES;
             $broadcastData['user'] = $user->fresh()->toArray();
             broadcast(new UpdatesEvent($broadcastData))->toOthers();
@@ -261,7 +258,6 @@ class SettingController extends Controller
         }
     }
     public function site_setting(){
-
         $user_id = auth()->user()->id;
          $velocities = Velocity::where('admin_id', $user_id)->get();
         return view('supperadmin.settings.site_setting',compact('velocities'));

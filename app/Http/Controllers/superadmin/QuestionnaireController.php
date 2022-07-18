@@ -4,6 +4,7 @@ namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Questionnaire;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -26,9 +27,27 @@ class QuestionnaireController extends Controller
         $question->save();
         return redirect()->back()->with('success', 'Question Successfully Add.');
     }
-    public function delete_question(Request $request){
+    public function delete_question(Request $request)
+    {
         Questionnaire::where('id',$request->question_id)->delete();
-        return redirect()->route('questionnaire')->with('success', 'Question Successfully Delete.');
-        
+        return redirect()->route('questionnaire')->with('success', 'Question Successfully Delete.');    
+    }
+    public function filter_question(Request $request){
+        if($request->value == 'day'){
+           $data =  Questionnaire::whereDate('created_at', Carbon::today())->get();
+           return response()->json($data);
+        }elseif($request->value == 'weak'){
+            $data =  Questionnaire::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+            return response()->json($data);
+        }elseif($request->value == 'mounth'){
+            $data =  Questionnaire::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))
+            ->get(['name', 'created_at']);
+            return response()->json($data);
+        }else{
+            $date = date('Y');
+            $data =  Questionnaire::whereYear('created_at', '=',$date)->get();
+            return response()->json($data);
+        }
     }
 }

@@ -62,13 +62,6 @@ class UserController extends Controller
             'user_status' => 'required',
         ]);
         $user = User::find($id);
-        if ($request->file('file')) {
-            $file = $request->file('file');
-            $foldername = 'user/profiles/';
-            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-            $file->move(public_path() . '/' . $foldername, $filename);
-            $user->avatar = $foldername . $filename;
-        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->height = $request->height;
@@ -80,6 +73,8 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->status = $request->user_status;
         $user->save();
+        $settingsController = new SettingController();
+        $settingsController->updateProfilePhoto($user, $request->all());
         return redirect()->route('users')->with('success', 'User Successfully Update.');
     }
     public function delete_user($id)
@@ -93,9 +88,10 @@ class UserController extends Controller
     }
     public function add_user(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
-            'email' => 'required|unique:users',
+            //'email' => 'required|unique:users',
             'height' => 'required',
             'starting_weight' => 'required',
             'hand_type' => 'required',
@@ -112,14 +108,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        // $user->dob = $request->dob;
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $foldername = 'user/profiles/';
-            $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-            $file->move(public_path() . '/' . $foldername, $filename);
-            $user->avatar = $foldername . $filename;
-        }
+        $user->dob = $request->dob;
         $user->height = $request->height;
         $user->starting_weight = $request->starting_weight;
         $user->handedness = $request->hand_type;
@@ -130,7 +119,7 @@ class UserController extends Controller
         $user->status = $request->user_status;
         $user->created_by = $user_id;
         $user->save();
-        $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
+         $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
         if ($phy_assessment) {
             foreach ($phy_assessment as $phy) {
                 $user_phy_assessment = new PhysicalAssessment();
@@ -171,6 +160,8 @@ class UserController extends Controller
             $velocity->save();
             }   
         }
+        $settingsController = new SettingController();
+        $settingsController->updateProfilePhoto($user, $request->all());
         return redirect()->back()->with('success', ' New User Successfully Add.');
     }
     public function leaderboard()

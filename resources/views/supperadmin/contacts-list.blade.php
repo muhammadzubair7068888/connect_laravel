@@ -132,7 +132,7 @@
                             @csrf
                             <div class="mb-3 position-relative">
                                 <label for="validationTooltip01" class="form-label">@lang('Avatar')</label>
-                                <input type="file" name="file" value="{{ old('profile') }}" class="form-control"
+                                <input type="file" name="photo" value="{{ old('profile') }}" class="form-control"
                                     id="validationTooltip01" placeholder="Name" required>
                             </div>
                             <div class="row">
