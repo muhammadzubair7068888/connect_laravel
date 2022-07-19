@@ -77,6 +77,7 @@ Route::prefix('/exercises')->group(function () {
     Route::get('/schedule/exercise/{exercise?}',[ExerciseController::class, 'schedule_view'])->name('schedule.view');
     Route::put('/schedule/exercise/{exercise_detail}/strength',[ExerciseController::class, 'update_exercise_strength']);
     Route::post('import', [ExerciseController::class, 'import_exercise'])->name('import.exercise');
+    Route::get('/demo',[ExerciseController::class, 'demo_exercise'])->name('demo.exercise');
 });
 Route::prefix('/users')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('users');

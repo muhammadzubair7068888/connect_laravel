@@ -70,7 +70,7 @@
                                 <tr class="first_row">
                                     <td>{{ $j }}</td>
                                     <td>{{ $file->title }}</td>
-                                    <td>{{ $file->file }}</td>
+                                    <td>{{ $file->name }}</td>
                                     <td>
                                         @if (isset($pdf[1]))
                                         @else
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="modal-body"><video id="playvideo" src="" controls=""
-                            style="width: 100%;"></video></div>
+                            style="width:50%;"></video></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('Close')</button>
@@ -269,15 +269,3 @@
         }
     </script>
 @endsection
-{{-- html += '<td>';
-                        html += view;
-                        html += '<a style="padding-left:10px;" class="link-warning" href=';
-                        html += url;
-                        html += '>';
-                        html += '<i class="bx bx-download">';
-                        html += '</i>';
-                        html += '</a>';
-                        html += '<a style="padding-left:10px;" class="link-danger">';
-                        html += '<i class="fas fa-trash-alt" onclick = "delete_file_js(';
-                        html += value.id;
-                        html += ')" >'; --}}

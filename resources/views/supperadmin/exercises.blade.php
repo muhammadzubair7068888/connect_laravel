@@ -29,6 +29,9 @@
                         <a href="{{ route('add.exercises') }}"><button type="button"
                                 class="btn btn-success">@lang('New Exercise')</button></a>
                         <a><button type="button" class="btn btn-info" onclick="impot_cvs()">@lang('Import CSV')</button></a>
+                        <a href="{{ route('demo.exercise') }}"><button type="button"
+                                class="btn btn-primary">@lang('Demo CSV')</button></a>
+
 
                     </div>
                     <br>

@@ -281,5 +281,9 @@ class ExerciseController extends Controller
         }
         return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
     }
+    public function demo_exercise(){
+      $path  = 'demo/import_file_demo.csv';
+        return response()->download($path);
+    }
   
 }

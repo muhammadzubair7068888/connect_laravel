@@ -49,6 +49,7 @@ class FileController extends Controller
         if ($request->hasFile('file')) {
             $fileName = $this->fileUploadRepository->addAttachment($request->file('file'), $files::$PATH);
             $files->file = $fileName;
+            $files->name = $fileName;
             $files->user_id = $user_id;
             $files->title = $request->title;
             $files->save();
@@ -66,7 +67,8 @@ class FileController extends Controller
     public function download_file($id)
     {
         $file = File::find($id);
-        $data =  $file->file;
-        return response()->download(public_path('uploads/' . $data));
+        $data =  $file->name;
+        $path  = 'storage/user-files/'.$data;
+        return response()->download($path);
     }
 }

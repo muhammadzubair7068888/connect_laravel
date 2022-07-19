@@ -22,7 +22,9 @@ class FileUploadRepository
      */
     public function addAttachment($file, $path)
     {
+      
         $extension = strtolower($file->getClientOriginalExtension());
+      
         if (!in_array(
             $extension,
             [

@@ -51,7 +51,6 @@ trait ImageTrait
     public static function makeImage($file, $path, $options = [])
     {
         try {
-
             $fileName = '';
             if (! empty($file)) {
                 $extension = $file->getClientOriginalExtension(); // getting image extension
@@ -73,7 +72,6 @@ trait ImageTrait
                     Storage::putFileAs($path, $file, $fileName, 'public');
                 }
             }
-
             return $fileName;
         } catch (Exception $e) {
             Log::info($e->getMessage());
