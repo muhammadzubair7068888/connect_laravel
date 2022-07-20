@@ -31,7 +31,7 @@ class ApiController extends Controller
         ])) {
             $date = date('Y-m-d');
             $user_id = auth()->user()->id;
-            User::where('id', $user_id)->update(['last_login' => $date,'is_online' => 1, 'last_seen' => null]);
+            User::where('id', $user_id)->update(['last_login' => $date, 'is_online' => 1, 'last_seen' => null]);
             $user = Auth::user();
             $token = $user->createToken('api-application')->accessToken;
             $response = [
@@ -978,7 +978,8 @@ class ApiController extends Controller
 
         try {
             $validator = Validator::make($request->all(), [
-                'file' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,qt,pdf',
+                // 'file' => 'required|mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,qt,pdf',
+                'file' => 'required',
                 'id' => 'required'
             ]);
             if ($validator->fails()) {
@@ -1242,7 +1243,8 @@ class ApiController extends Controller
         } else {
             $user_id = auth()->user()->created_by;
         }
-        $velocities = Velocity::where('admin_id', $user_id)->where('status', '1')->get();
+        // $velocities = Velocity::where('admin_id', $user_id)->where('status', '1')->get();
+        $graphs = Velocity::where('admin_id', $user_id)->get();
         $users = User::where('created_by', $user_id)->latest()->get();
 
         if ($request->start_date != null && $request->end_date != null && $request->name != null) {
@@ -1332,6 +1334,7 @@ class ApiController extends Controller
         }
         $response = [
             'status' => 'success',
+            'graphs' => $graphs,
             'weight' =>  $weight_all,
             'arm_pain' => $arm_pain_all,
             'pull_down_velocity' => $pull_down_velocity_all,
@@ -1402,7 +1405,8 @@ class ApiController extends Controller
             return response()->json($response, 500);
         }
     }
-    public function exercise_user(){
+    public function exercise_user()
+    {
         try {
             $users = User::where('created_by', auth()->id())->get(['id', 'name'])
                 ->prepend(['id' => auth()->id(), 'name' => 'Me'])->toArray();

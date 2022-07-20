@@ -121,15 +121,18 @@ class NotificationRepository extends BaseRepository
                     'profile_url' => $notification->sender->avatar,
                 ];
             } else {
-                $sender = [
-                    'id'          => $notification->group->id,
-                    'name'        => $notification->group->name,
-                    'is_online'   => 0,
-                    'profile_url' => $notification->group->avatar,
-                ];
+                if ($notification->group)
+                    $sender = [
+                        'id'          => $notification->group->id,
+                        'name'        => $notification->group->name,
+                        'is_online'   => 0,
+                        'profile_url' => $notification->group->avatar,
+                    ];
             }
-            $notificationArray['senderUser'] = $sender;
-            $notificationsArray[] = $notificationArray;
+            if (isset($sender)) {
+                $notificationArray['senderUser'] = $sender;
+                $notificationsArray[] = $notificationArray;
+            }
         }
 
         return $notificationsArray;
@@ -180,7 +183,8 @@ class NotificationRepository extends BaseRepository
                     'conversation_ids' => $groupMessageIds,
                     'read_by_user_id'  => $authId,
                     'read_at'  => Carbon::now()->format('Y-m-d H:i:s'),
-                ]))->toOthers();
+                ]
+            ))->toOthers();
         }
 
         // Group by given conversations record
@@ -202,7 +206,8 @@ class NotificationRepository extends BaseRepository
                         'type'            => Group::GROUP_MESSAGE_READ_BY_ALL_MEMBERS,
                         'conversation_id' => $id,
                         'group_id'        => $records[$id][0]->conversation->to_id,
-                    ]))->toOthers();
+                    ]
+                ))->toOthers();
             }
         }
 
@@ -217,7 +222,9 @@ class NotificationRepository extends BaseRepository
                     'user_id' => $authId,
                     'ids'     => $messageIds,
                     'type'    => User::PRIVATE_MESSAGE_READ,
-                ], $senderId))->toOthers();
+                ],
+                $senderId
+            ))->toOthers();
         }
 
         return array_merge($messageSenderIds, $groupIds);
