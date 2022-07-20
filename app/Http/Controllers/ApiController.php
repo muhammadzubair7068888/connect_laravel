@@ -17,11 +17,19 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\FileUploadRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
+    private $userRepository;
+    private $fileUploadRepository;
+    public function __construct(UserRepository $userRepository , FileUploadRepository $fileUploadRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->fileUploadRepository = $fileUploadRepository;
+    }
 
     public function signIn(Request $request)
     {
@@ -92,12 +100,9 @@ class ApiController extends Controller
                 }
             }
             $user = User::find($id);
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $foldername = 'user/profiles/';
-                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-                $file->move(public_path() . '/' . $foldername, $filename);
-                $user->avatar = $foldername . $filename;
+            if ($request->hasFile('photo')) {
+                // $file = $request->file('photo');
+                $this->updateProfilePhoto($user, $request->all());
             }
             $user->name = $request->name;
             $user->height = $request->height;
@@ -110,7 +115,7 @@ class ApiController extends Controller
             $user->save();
             $response = [
                 'status' => 'success',
-                'data' => $user,
+                'data' => $user->fresh(),
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
@@ -306,13 +311,13 @@ class ApiController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            if ($request->file('file')) {
-                $file = $request->file('file');
-                $foldername = 'user/profiles/';
-                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-                $file->move(public_path() . '/' . $foldername, $filename);
-                $user->avatar = $foldername . $filename;
-            }
+            // if ($request->file('file')) {
+            //     $file = $request->file('file');
+            //     $foldername = 'user/profiles/';
+            //     $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+            //     $file->move(public_path() . '/' . $foldername, $filename);
+            //     $user->avatar = $foldername . $filename;
+            // }
             $user->height = $request->height;
             $user->starting_weight = $request->starting_weight;
             $user->handedness = $request->hand_type;
@@ -323,6 +328,9 @@ class ApiController extends Controller
             $user->created_by = $user_id;
             $user->role = 'user';
             $user->save();
+            if($request->hasFile('photo')){
+                $this->updateProfilePhoto($user, $request->only('photo'));
+            }
             if ($user->role == 'user') {
                 $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
                 if ($phy_assessment) {
@@ -435,12 +443,13 @@ class ApiController extends Controller
                 }
             }
             $user = User::find($id);
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $foldername = 'user/profiles/';
-                $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
-                $file->move(public_path() . '/' . $foldername, $filename);
-                $user->avatar = $foldername . $filename;
+            if ($request->hasFile('photo')) {
+                $this->updateProfilePhoto($user, $request->only('photo'));
+                // $file = $request->file('file');
+                // $foldername = 'user/profiles/';
+                // $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
+                // $file->move(public_path() . '/' . $foldername, $filename);
+                // $user->avatar = $foldername . $filename;
             }
             if ($request->password) {
                 $user->password = $request->password;
@@ -991,9 +1000,12 @@ class ApiController extends Controller
             $files = new File();
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = time() . '_' . $request->file->getClientOriginalName();
-                $file->move('uploads', $fileName);
+                $fileName = $this->fileUploadRepository->addAttachment($request->file('file'), $files::$PATH);
                 $files->file = $fileName;
+                $file->name = $fileName;
+                // $fileName = time() . '_' . $request->file->getClientOriginalName();
+                // $file->move('uploads', $fileName);
+                // $files->file = $fileName;
                 $files->user_id = $user_id;
                 $files->title = $request->title;
                 $files->save();
