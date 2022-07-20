@@ -25,7 +25,7 @@ class ApiController extends Controller
 {
     private $userRepository;
     private $fileUploadRepository;
-    public function __construct(UserRepository $userRepository , FileUploadRepository $fileUploadRepository)
+    public function __construct(UserRepository $userRepository, FileUploadRepository $fileUploadRepository)
     {
         $this->userRepository = $userRepository;
         $this->fileUploadRepository = $fileUploadRepository;
@@ -102,7 +102,7 @@ class ApiController extends Controller
             $user = User::find($id);
             if ($request->hasFile('photo')) {
                 // $file = $request->file('photo');
-                $this->updateProfilePhoto($user, $request->all());
+                $this->userRepository->updateProfilePhoto($user, $request->all());
             }
             $user->name = $request->name;
             $user->height = $request->height;
@@ -328,8 +328,8 @@ class ApiController extends Controller
             $user->created_by = $user_id;
             $user->role = 'user';
             $user->save();
-            if($request->hasFile('photo')){
-                $this->updateProfilePhoto($user, $request->only('photo'));
+            if ($request->hasFile('photo')) {
+                $this->userRepository->updateProfilePhoto($user, $request->only('photo'));
             }
             if ($user->role == 'user') {
                 $phy_assessment = PhysicalAssessment::where('user_id', $user_id)->get();
@@ -444,7 +444,7 @@ class ApiController extends Controller
             }
             $user = User::find($id);
             if ($request->hasFile('photo')) {
-                $this->updateProfilePhoto($user, $request->only('photo'));
+                $this->userRepository->updateProfilePhoto($user, $request->only('photo'));
                 // $file = $request->file('file');
                 // $foldername = 'user/profiles/';
                 // $filename = time() . '-' . rand(0000000, 9999999) . '.' . $request->file('file')->extension();
