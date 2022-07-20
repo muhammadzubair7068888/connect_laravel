@@ -10,14 +10,16 @@
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
-                        <i class="bx bx-home-alt"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
+                        <i
+                            class="bx bx-home-alt"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
                         <span key="t-dashboards">@lang('translation.Dashboards')</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('leaderboard') }}" class="waves-effect">
-                        <i class="bx bx-building"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
+                        <i
+                            class="bx bx-building"></i>{{-- <span class="badge rounded-pill bg-info float-end">04</span> --}}
                         <span key="t-dashboards">@lang('LeaderBoard')</span>
                     </a>
                 </li>
@@ -63,17 +65,18 @@
                 </li> --}}
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-contacts">@lang('translation.Contacts')</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('user.grid.view') }}" key="t-user-grid">@lang('translation.User_Grid')</a></li>
-                            <li><a href="{{ route('users') }}" key="t-user-list">@lang('translation.User_List')</a></li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-contacts">@lang('translation.Contacts')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('user.grid.view') }}" key="t-user-grid">@lang('translation.User_Grid')</a>
+                        </li>
+                        <li><a href="{{ route('users') }}" key="t-user-list">@lang('translation.User_List')</a></li>
 
-                        </ul>
-                    </li>
+                    </ul>
+                </li>
                 @endif
 
                 <li>
@@ -85,12 +88,12 @@
                 </li>
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="{{ route('exercises') }}" class="waves-effect">
-                            <i class="bx bx-cycling"></i>
-                            <span key="t-chat">@lang('Exercises')</span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('exercises') }}" class="waves-effect">
+                        <i class="bx bx-cycling"></i>
+                        <span key="t-chat">@lang('Exercises')</span>
+                    </a>
+                </li>
                 @endif
 
                 <li>
@@ -108,63 +111,64 @@
                 </li>
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-hourglass"></i>
-                            <span key="t-contacts">@lang('Assessments')</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('physical') }}" key="t-user-grid">@lang('Physical Assessment')</a></li>
-                            <li><a href="{{ route('mechanical') }}" key="t-user-list">@lang('Mechanical Assessment')</a></li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-hourglass"></i>
+                        <span key="t-contacts">@lang('Assessments')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('physical') }}" key="t-user-grid">@lang('Physical Assessment')</a></li>
+                        <li><a href="{{ route('mechanical') }}" key="t-user-list">@lang('Mechanical Assessment')</a>
+                        </li>
 
-                        </ul>
-                    </li>
+                    </ul>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="{{ route('questionnaire') }}" class="waves-effect">
-                            <i class="bx bx-question-mark"></i>
-                            <span key="t-chat">@lang('Questionnaire')</span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('questionnaire') }}" class="waves-effect">
+                        <i class="bx bx-question-mark"></i>
+                        <span key="t-chat">@lang('Questionnaire')</span>
+                    </a>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-mail-send"></i>
-                            <span key="t-email">@lang('translation.Email')</span>
-                        </a>
-                        <ul class="supperadmin.sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.email-inbox" key="t-inbox">@lang('translation.Inbox')</a></li>
-                            {{-- <li><a href="email-read" key="t-read-email">@lang('translation.Read_Email')</a></li> --}}
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <span class="badge rounded-pill badge-soft-success float-end"
-                                        key="t-new">@lang('translation.New')</span>
-                                    <span key="t-email-templates">@lang('translation.Templates')</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="supperadmin.email-template-basic"
-                                            key="supperadmin.t-basic-action">@lang('translation.Basic_Action')</a></li>
-                                    <li><a href="supperadmin.email-template-alert"
-                                            key="t-alert-email">@lang('translation.Alert_Email')</a></li>
-                                    <li><a href="supperadmin.email-template-billing"
-                                            key="t-bill-email">@lang('translation.Billing_Email')</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-mail-send"></i>
+                        <span key="t-email">@lang('translation.Email')</span>
+                    </a>
+                    <ul class="supperadmin.sub-menu" aria-expanded="false">
+                        <li><a href="supperadmin.email-inbox" key="t-inbox">@lang('translation.Inbox')</a></li>
+                        {{-- <li><a href="email-read" key="t-read-email">@lang('translation.Read_Email')</a></li> --}}
+                        <li>
+                            <a href="javascript: void(0);">
+                                <span class="badge rounded-pill badge-soft-success float-end"
+                                    key="t-new">@lang('translation.New')</span>
+                                <span key="t-email-templates">@lang('translation.Templates')</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="supperadmin.email-template-basic"
+                                        key="supperadmin.t-basic-action">@lang('translation.Basic_Action')</a></li>
+                                <li><a href="supperadmin.email-template-alert"
+                                        key="t-alert-email">@lang('translation.Alert_Email')</a></li>
+                                <li><a href="supperadmin.email-template-billing"
+                                        key="t-bill-email">@lang('translation.Billing_Email')</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="{{ route('chat') }}" class="waves-effect">
-                            <i class="bx bx-chat"></i>
-                            <span key="t-chat">@lang('translation.Chat')</span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('chat') }}" class="waves-effect">
+                        <i class="bx bx-chat"></i>
+                        <span key="t-chat">@lang('translation.Chat')</span>
+                    </a>
+                </li>
                 @endif
 
                 <li>
@@ -175,57 +179,56 @@
                 </li>
 
                 @if (auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="{{ route('plugin.cards') }}" class="waves-effect">
-                            <i class="bx bx-plug"></i>
-                            <span key="t-dashboards">@lang('Plugin')</span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('plugin.cards') }}" class="waves-effect">
+                        <i class="bx bx-plug"></i>
+                        <span key="t-dashboards">@lang('Plugin')</span>
+                    </a>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-certification"></i>
-                            <span key="t-contacts">@lang('Template')</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('email', ['template' => 'test-email']) }}"
-                                    key="t-profile">@lang('Email')</a></li>
-                            {{-- <li><a href="#" key="t-profile">@lang('SMS')</a></li> --}}
-                        </ul>
-                    </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-certification"></i>
+                        <span key="t-contacts">@lang('Template')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('email', ['template' => 'test-email']) }}"
+                                key="t-profile">@lang('Email')</a></li>
+                        {{-- <li><a href="#" key="t-profile">@lang('SMS')</a></li> --}}
+                    </ul>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-brightness"></i>
-                            <span key="t-contacts">@lang('Settings')</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.settings.site_setting" key="t-profile">@lang('Site Setting')</a>
-                            </li>
-                            <li><a href="{{ route('show_setting') }}" key="t-profile">@lang('Company Setting')</a>
-                            </li>
-                        </ul>
-                    </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-brightness"></i>
+                        <span key="t-contacts">@lang('Settings')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="supperadmin.settings.site_setting" key="t-profile">@lang('Site Setting')</a>
+                        </li>
+                        <li><a href="{{ route('show_setting') }}" key="t-profile">@lang('Company Setting')</a>
+                        </li>
+                    </ul>
+                </li>
                 @endif
 
                 @if (auth()->user()->role == 'superadmin')
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-brightness"></i>
-                            <span key="t-contacts">@lang('General Settings')</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="supperadmin.generalsettings.language" key="t-profile">@lang('Languages')</a>
-                            </li>
-                            <li><a href="supperadmin.generalsettings.currencie"
-                                    key="Currencies">@lang('Currencies')</a>
-                            </li>
-                        </ul>
-                    </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-brightness"></i>
+                        <span key="t-contacts">@lang('General Settings')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="supperadmin.generalsettings.language" key="t-profile">@lang('Languages')</a>
+                        </li>
+                        <li><a href="supperadmin.generalsettings.currencie" key="Currencies">@lang('Currencies')</a>
+                        </li>
+                    </ul>
+                </li>
                 @endif
 
             </ul>

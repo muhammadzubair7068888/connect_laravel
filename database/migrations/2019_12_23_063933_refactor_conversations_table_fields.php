@@ -32,8 +32,8 @@ class RefactorConversationsTableFields extends Migration
      */
     public function down()
     {
-        Schema::table('conversations', function (Blueprint $table) {
-            $table->dropColumn('to_type');
-        });
+        // Schema::table('conversations', function (Blueprint $table) {
+        //     $table->dropColumn('to_type');
+        // });
     }
 }
