@@ -357,4 +357,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Velocity::class);
     }
+    public function rapsodos()
+    {
+        return $this->hasOne(Rapsode::class);
+    }
 }
