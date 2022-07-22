@@ -60,7 +60,9 @@ class RapsodoController extends Controller
         }
 
     }
-    public function team(){
+    public function player(){
+       //  $player = [102048, 101353, 101197, 101316, 104262, 101122, 101276, 101307, 101233, 102058, 102259, 101397, 101268, 101224, 101343, 101303, 101278, 101243, 101147, 101256, 101219, 101833, 104807, 103014, 104251, 104766, 104233, 104028, 102248, 102929, 102237, 105096, 104842, 102583, 104443, 104618, 103384, 103476, 104660, 610961, 611376, 611382, 614051, 614727, 727243, 727244, 727245, 727246, 727248, 727256, 727257, 727258, 727259, 727260, 727261, 732581, 929442, 934196, 934198, 934200, 934203, 934462, 934604, 935670, 979384, 982622];
+     
 
         $user = auth()->user()->rapsodos;
         if($user){
@@ -80,12 +82,12 @@ class RapsodoController extends Controller
             'Referer' => 'https://cloud.rapsodo.com/team',
             'Authorization' => $token,
         ];
-        $client = new Client();
-        $response = $client->request('GET', 'https://cloud.rapsodo.com/v2/group', [
-            'headers' => $headers
-        ])->getBody()->getContents();
-        $Js_data = json_decode($response);
-        $data = $Js_data->data;
-        return view('supperadmin.rapsodo.team',compact('data'));
+            $client = new Client();
+            $response = $client->request('GET', 'https://cloud.rapsodo.com/v3/player/' ,[
+                'headers' => $headers
+            ])->getBody()->getContents();
+            $Js_data = json_decode($response);
+            $data = $Js_data->data;
+        return view('supperadmin.rapsodo.player',compact('data'));
     }
 }

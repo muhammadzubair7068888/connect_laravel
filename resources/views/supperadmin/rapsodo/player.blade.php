@@ -1,7 +1,7 @@
 @extends('supperadmin.layouts.master')
 
 @section('title')
-    @lang('Team')
+    @lang('Player')
 @endsection
 
 @section('css')
@@ -17,10 +17,10 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            @lang('Team')
+            @lang('Player')
         @endslot
         @slot('title')
-            @lang('Team')
+            @lang('Player')
         @endslot
     @endcomponent
     <div class="row">
@@ -36,7 +36,10 @@
                             <tr>
                                 <th>@lang('S.No')</th>
                                 <th>@lang('Name')</th>
-                                <th>@lang('Description')</th>
+                                <th>@lang('Coach')</th>
+                                <th>@lang('Group')</th>
+                                <th>@lang('Status')</th>
+                                <th>@lang('Last Played')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,11 +49,20 @@
                             @forelse ($data as $user)
                                 @php
                                     $j++;
+                                    $last_played = $user->pitcherProfile->lastPlayedTime;
+                                    $day = date('D', $last_played);
+                                    $mounth = date('M', $last_played);
+                                    $year = date('Y', $last_played);
+                                    $C = ',';
                                 @endphp
                                 <tr>
                                     <td>{{ $j }}</td>
-                                    <td>{{ ucfirst($user->name) }}</td>
-                                    <td>{{ $user->description }}</td>
+                                    <td>{{ $user->firstName }}</td>
+                                    <td>{{ auth()->user()->rapsodos->first_name }}</td>
+                                    <td>{{ $user->groups[0]->name ?? '-' }}</td>
+                                    <td>{{ $user->status }}</td>
+                                    <td>{{ $day }}{{ $C }}&nbsp;{{ $mounth }}&nbsp;{{ $year }}
+                                    </td>
                                 </tr>
                             @empty
                             @endforelse

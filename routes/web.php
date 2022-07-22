@@ -138,7 +138,7 @@ Route::prefix('/assessment')->group(function () {
     Route::prefix('/rapsodo')->group(function () {
      Route::get('',[RapsodoController::class,'index'])->name('rapsodo');
      Route::post('',[RapsodoController::class, 'save_rapsodo_credentials'])->name('save.credentials');
-     Route::get('/team', [RapsodoController::class, 'team'])->name('team');
+     Route::get('/player', [RapsodoController::class, 'player'])->name('player');
     });
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
     Route::prefix('/pitct')->group(function () {

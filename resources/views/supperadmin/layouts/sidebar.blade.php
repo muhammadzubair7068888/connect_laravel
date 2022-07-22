@@ -94,7 +94,7 @@
 
                     <li>
                         <a href="{{ route('pitch') }}" class="waves-effect">
-                            <i class="bx bx-cycling"></i>
+                            <i class="bx bx-border-bottom"></i>
                             <span key="t-chat">@lang('Pitch')</span>
                         </a>
                     </li>
@@ -251,7 +251,7 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('rapsodo') }}" key="t-user-grid">@lang('Credentials')</a>
                                 </li>
-                                <li><a href="{{ Route('team') }}" key="">@lang('Teams')</a></li>
+                                <li><a href="{{ Route('player') }}" key="">@lang('Player')</a></li>
                             </ul>
                         </li>
                     @endif
