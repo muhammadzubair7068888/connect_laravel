@@ -49,9 +49,11 @@ return new class extends Migration
             $table->string('spin_axis')->nullable();
             $table->string('tilt')->nullable();
             $table->string('rel_height')->nullable();
+            $table->string('rel_side')->nullable();
             $table->string('extension')->nullable();
             $table->string('vert_break')->nullable();
             $table->string('induced_vert_break')->nullable();
+            $table->string('horz_break')->nullable();
             $table->string('plate_loc_height')->nullable();
             $table->string('plate_loc_side')->nullable();
             $table->string('zone_speed')->nullable();
@@ -73,7 +75,7 @@ return new class extends Migration
             $table->string('pfxz')->nullable();
             $table->string('x0')->nullable();
             $table->string('y0')->nullable();
-            $table->string('zo')->nullable();
+            $table->string('z0')->nullable();
             $table->string('vx0')->nullable();
             $table->string('vy0')->nullable();
             $table->string('vz0')->nullable();
