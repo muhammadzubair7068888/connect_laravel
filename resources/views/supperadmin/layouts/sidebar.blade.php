@@ -91,6 +91,13 @@
                             <span key="t-chat">@lang('Exercises')</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('pitch') }}" class="waves-effect">
+                            <i class="bx bx-cycling"></i>
+                            <span key="t-chat">@lang('Pitch')</span>
+                        </a>
+                    </li>
                 @endif
 
                 <li>

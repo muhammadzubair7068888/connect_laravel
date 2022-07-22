@@ -4,6 +4,7 @@ use App\Http\Controllers\superadmin\AssessmentController;
 use App\Http\Controllers\superadmin\ChatController;
 use App\Http\Controllers\superadmin\ExerciseController;
 use App\Http\Controllers\superadmin\FileController;
+use App\Http\Controllers\superadmin\PitchController;
 use App\Http\Controllers\superadmin\QuestionnaireController;
 use App\Http\Controllers\superadmin\RapsodoController;
 use App\Http\Controllers\superadmin\SettingController;
@@ -140,6 +141,11 @@ Route::prefix('/assessment')->group(function () {
      Route::get('/team', [RapsodoController::class, 'team'])->name('team');
     });
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
-    
+    Route::prefix('/pitct')->group(function () {
+        Route::get('', [PitchController::class, 'index'])->name('pitch');
+        Route::post('', [PitchController::class, 'import_pitch'])->name('import.pitch');
+
+    });
+   
 });
 require __DIR__ . '/chat.php';
