@@ -46,12 +46,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <label for="recipient-name" class="col-form-label">@lang('Email')</label>
-                                <input type="text" name="email" class="form-control" id="recipient-name">
+                                <input type="text" name="email" class="form-control" id="recipient-name"
+                                    placeholder="Email">
                             </div>
                             <div class="col-12">
                                 <label for="recipient-name" class="col-form-label">@lang('Password')</label>
                                 <input type="password" name="password" class="form-control" id="recipient-name"
-                                    placeholder="Value">
+                                    placeholder="Password">
                             </div>
                         </div>
 

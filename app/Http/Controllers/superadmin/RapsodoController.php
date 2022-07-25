@@ -7,6 +7,9 @@ use App\Models\Rapsode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
 class RapsodoController extends Controller
 {
     //
@@ -61,14 +64,81 @@ class RapsodoController extends Controller
 
     }
     public function player(){
-       //  $player = [102048, 101353, 101197, 101316, 104262, 101122, 101276, 101307, 101233, 102058, 102259, 101397, 101268, 101224, 101343, 101303, 101278, 101243, 101147, 101256, 101219, 101833, 104807, 103014, 104251, 104766, 104233, 104028, 102248, 102929, 102237, 105096, 104842, 102583, 104443, 104618, 103384, 103476, 104660, 610961, 611376, 611382, 614051, 614727, 727243, 727244, 727245, 727246, 727248, 727256, 727257, 727258, 727259, 727260, 727261, 732581, 929442, 934196, 934198, 934200, 934203, 934462, 934604, 935670, 979384, 982622];
-     
-
         $user = auth()->user()->rapsodos;
-        if($user){
+         if($user){
+                $password = auth()->user()->rapsodos->password;
+                $email =auth()->user()->rapsodos->email;
+                $players = [];
+            }else{
+                return redirect()->route('rapsodo')->with('error', 'Pleas Save Your Rapsodo Credentials Here!');
+            }
+            $response = Http::post('https://cloud.rapsodo.com/v3/auth/login', [
+                'email' => $email,
+                'password' => $password,
+            ]);
+            $data = json_decode($response);
+            $token =  $data->token;
+            $headers = [
+                'Accept' => 'application/json',
+                'Referer' => 'https://cloud.rapsodo.com/team',
+                'Authorization' => $token,
+            ];
+            $client = new Client();
+            $response = $client->request('GET', 'https://cloud.rapsodo.com/v2/coach/subCoaches', [
+                'headers' => $headers
+            ])->getBody()->getContents();
+              $Js_data = json_decode($response);
+              $player = $Js_data->data[0]->players;
+                for($i=0;$i<count($player);$i++){
+            try {
+                  $response = $client->request('GET', 'https://cloud.rapsodo.com/v3/player/'.$player[$i], [
+                        'headers' => $headers
+                    ])->getBody()->getContents();
+                    $Js_data = json_decode($response);
+                    $players[] = $Js_data->data;
+                    } catch (\Throwable $th) {
+                        $response = [
+                            'success' => 'error',
+                            'message' => $th->getMessage(),
+                        ];
+                         if($response['success'] == 'error'){
+                            $i++;   
+                         } 
+                    }   
+            }
+           //  return $players;
+        return view('supperadmin.rapsodo.player', compact('players'));
+           
+    }
+    public function single_player($id){
+        $password = auth()->user()->rapsodos->password;
+        $email = auth()->user()->rapsodos->email;
+        $response = Http::post('https://cloud.rapsodo.com/v3/auth/login', [
+            'email' => $email,
+            'password' => $password,
+        ]);
+        $data = json_decode($response);
+        $token =  $data->token;
+        $headers = [
+            'Accept' => 'application/json',
+            'Referer' => 'https://cloud.rapsodo.com/team',
+            'Authorization' => $token,
+        ];
+        $client = new Client();
+        $response = $client->request('GET', 'https://cloud.rapsodo.com/v3/player/' .$id, [
+            'headers' => $headers
+        ])->getBody()->getContents();
+         $Js_data = json_decode($response);
+        $player = $Js_data->data;
+        return view('supperadmin.rapsodo.single_player', compact('player'));
+    }
+    public function group(){
+        $user = auth()->user()->rapsodos;
+        if ($user) {
             $password = auth()->user()->rapsodos->password;
-            $email =auth()->user()->rapsodos->email;
-        }else{
+            $email = auth()->user()->rapsodos->email;
+            $players = [];
+        } else {
             return redirect()->route('rapsodo')->with('error', 'Pleas Save Your Rapsodo Credentials Here!');
         }
         $response = Http::post('https://cloud.rapsodo.com/v3/auth/login', [
@@ -82,12 +152,13 @@ class RapsodoController extends Controller
             'Referer' => 'https://cloud.rapsodo.com/team',
             'Authorization' => $token,
         ];
-            $client = new Client();
-            $response = $client->request('GET', 'https://cloud.rapsodo.com/v3/player/' ,[
-                'headers' => $headers
-            ])->getBody()->getContents();
-            $Js_data = json_decode($response);
-            $data = $Js_data->data;
-        return view('supperadmin.rapsodo.player',compact('data'));
+        $client = new Client();
+        $response = $client->request('GET', 'https://cloud.rapsodo.com/v2/group', [
+            'headers' => $headers
+        ])->getBody()->getContents();
+        $Js_data = json_decode($response);
+        $groups = $Js_data->data;
+        return view('supperadmin.rapsodo.groups',compact('groups'));
     }
+   
 }

@@ -36,20 +36,20 @@
                             <tr>
                                 <th>@lang('S.No')</th>
                                 <th>@lang('Name')</th>
-                                <th>@lang('Coach')</th>
-                                <th>@lang('Group')</th>
-                                <th>@lang('Status')</th>
-                                <th>@lang('Last Played')</th>
+                                <th>@lang('Date Created')</th>
+                                <th>@lang('Type')</th>
+                                <th>@lang('# of Players')</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @php
                                 $j = 0;
                             @endphp
-                            @forelse ($players as $player)
+                            @forelse ($groups as $group)
                                 @php
                                     $j++;
-                                    $last_played = $player->pitcherProfile->lastPlayedTime;
+                                    $last_played = $group->timestamp;
                                     $day = date('D', $last_played);
                                     $mounth = date('m', $last_played);
                                     $year = date('Y', $last_played);
@@ -57,14 +57,11 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $j }}</td>
-                                    <td><a href="{{ route('single.rapsodo.player', ['id' => $player->_id]) }}"
-                                            class="link-dark">{{ $player->firstName }}&nbsp;{{ $player->lastName }}<a>
-                                    </td>
-                                    <td>{{ auth()->user()->rapsodos->first_name }}&nbsp;{{ auth()->user()->rapsodos->last_name }}
-                                    </td>
-                                    <td>{{ $player->groups[0]->name ?? '-' }}</td>
-                                    <td>{{ $player->status }}</td>
-                                    <td>{{ $day }}&nbsp;{{ $mounth }}{{ $C }}&nbsp;{{ $year }}
+                                    <td>{{ $group->name }}</td>
+                                    <td>{{ $day }}{{ $C }}&nbsp;{{ $mounth }}&nbsp;{{ $year }}
+                                    <td>{{ $group->groupType }} </td>
+                                    <td>{{ count($group->players) }}</td>
+
                                     </td>
                                 </tr>
                             @empty

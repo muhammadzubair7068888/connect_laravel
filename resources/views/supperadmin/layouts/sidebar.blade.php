@@ -251,7 +251,8 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('rapsodo') }}" key="t-user-grid">@lang('Credentials')</a>
                                 </li>
-                                <li><a href="{{ Route('player') }}" key="">@lang('Player')</a></li>
+                                <li><a href="{{ Route('player') }}" key="">@lang('Players')</a></li>
+                                <li><a href="{{ Route('groups') }}" key="">@lang('Groups')</a></li>
                             </ul>
                         </li>
                     @endif
