@@ -6,7 +6,9 @@
 
 @section('css')
     <!-- DataTables -->
+
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+
     <style>
         .large {
             width: 30px;
@@ -33,6 +35,7 @@
 
                     </div>
                     <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                        {{-- <table id='mtabel' class="table table-bordered dt-responsive  nowrap w-100"> --}}
                         <thead>
                             <tr>
                                 <th>@lang('So.No')</th>
@@ -196,14 +199,12 @@
                                     <td>{{ $pitch->league }}</td>
                                     <td>{{ $pitch->game_id }}</td>
                                     <td>{{ $pitch->pitch_uid }}</td>
-
-
-
                                 </tr>
                             @empty
                             @endforelse
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -245,3 +246,232 @@
         }
     </script>
 @endsection
+{{-- $(document).ready(function() { --}}
+// DataTable
+{{-- $('#mtabel').DataTable({
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                // ajax: "{{ route('file.pitch') }}",
+                columns: [{
+                        data: 'id'
+                    },
+                    {
+                        data: 'date'
+                    },
+                    {
+                        data: "time"
+                    },
+                    {
+                        data: "pa_of_inning"
+                    },
+                    {
+                        data: "pitch_of_pa"
+                    },
+                    {
+                        data: "pitcher"
+                    },
+                    {
+                        data: "pitcher_id"
+                    },
+                    {
+                        data: "pitcher_throws"
+                    },
+                    {
+                        data: "pitcher_team"
+                    },
+                    {
+                        data: "batter"
+                    },
+                    {
+                        data: "batter_id"
+                    },
+                    {
+                        data: "batter_side"
+                    },
+                    {
+                        data: "batter_team"
+                    },
+                    {
+                        data: "pitcher_set"
+                    },
+                    {
+                        data: "inning"
+                    },
+                    {
+                        data: "top_bottom"
+                    },
+                    {
+                        data: "outs"
+                    },
+                    {
+                        data: "balls"
+                    },
+                    {
+                        data: "strikes"
+                    },
+                    {
+                        data: "tagged_pitch_type"
+                    },
+                    {
+                        data: "auto_pitch"
+                    },
+                    {
+                        data: "pitch_call"
+                    },
+                    {
+                        data: "kor_bb"
+                    },
+                    {
+                        data: "hit_type"
+                    },
+                    {
+                        data: "play_result"
+                    },
+                    {
+                        data: "outs_on_play"
+                    },
+                    {
+                        data: "runs_scored"
+                    },
+                    {
+                        data: "notes"
+                    },
+                    {
+                        data: "rel_speed"
+                    }, --}}
+{{-- {
+                        data: "vert_rel_angle"
+                    },
+                    {
+                        data: "horz_rel_angle"
+                    },
+                    {
+                        data: "spin_rate"
+                    },
+                    {
+                        data: "spin_axis"
+                    },
+                    {
+                        data: "tilt"
+                    },
+                    {
+                        data: "rel_height"
+                    },
+                    {
+                        data: "rel_side"
+                    },
+                    {
+                        data: "extension"
+                    },
+                    {
+                        data: "vert_break"
+                    }, --}}
+{{-- {
+                        data: "induced_vert_break"
+                    },
+                    {
+                        data: "horz_break"
+                    },
+                    {
+                        data: "plate_loc_height"
+                    }, --}}
+{{-- {
+                        data: "plate_loc_side"
+                    },
+                    {
+                        data: "zone_speed"
+                    },
+                    {
+                        data: "vert_appr_angle"
+                    },
+                    {
+                        data: "horz_appr_angle"
+                    },
+                    {
+                        data: "zone_time"
+                    },
+                    {
+                        data: "exit_speed"
+                    },
+                    {
+                        data: "angle"
+                    }, --}}
+{{-- {
+                        data: "direction"
+                    },
+                    {
+                        data: "hit_spin_rate"
+                    },
+                    {
+                        data: "position_at_110_x"
+                    }, --}}
+{{-- {
+                        data: "position_at_110_y"
+                    },
+                    {
+                        data: "distance"
+                    },
+                    {
+                        data: "last_tracked_distance"
+                    },
+                    {
+                        data: "bearing"
+                    },
+                    {
+                        data: "hang_time"
+                    },
+                    {
+                        data: "pfxx"
+                    }, --}}
+{{-- {
+                        data: "pfxz"
+                    },
+                    {
+                        data: "x0"
+                    },
+                    {
+                        data: "y0"
+                    },
+                    {
+                        data: "z0"
+                    },
+                    {
+                        data: "vx0"
+                    }, --}}
+{{-- {
+                        data: "vy0"
+                    },
+                    {
+                        data: "vz0"
+                    },
+                    {
+                        data: "ax0"
+                    },
+                    {
+                        data: "ay0"
+                    },
+                    {
+                        data: "az0"
+                    },
+                    {
+                        data: "home_team"
+                    },
+                    {
+                        data: "away_team"
+                    },
+                    {
+                        data: "level"
+                    },
+                    {
+                        data: "league"
+                    },
+                    {
+                        data: "game_id"
+                    },
+                    {
+                        data: "pitch_uid"
+                    }, --}}
+{{-- ]
+            });
+        }); --}}

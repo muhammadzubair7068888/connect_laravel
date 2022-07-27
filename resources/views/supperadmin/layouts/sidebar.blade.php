@@ -221,7 +221,7 @@
                 @endif
 
                 @if (auth()->user()->role == 'superadmin')
-                    <li>
+                    {{-- <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="bx bx-brightness"></i>
                             <span key="t-contacts">@lang('General Settings')</span>
@@ -234,7 +234,7 @@
                             <li><a href="{{ route('email', ['template' => 'test-email']) }}"
                                     key="t-profile">@lang('Email')</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- <li>
                         <a href="{{ route('rapsodo') }}" class="waves-effect">
                             <i class="bx bx-building"></i>

@@ -141,11 +141,13 @@ Route::prefix('/assessment')->group(function () {
      Route::get('/player', [RapsodoController::class, 'player'])->name('player');
      Route::get('player/{id}', [RapsodoController::class, 'single_player'])->name('single.rapsodo.player');
      Route::get('/groups',[RapsodoController::class,'group'])->name('groups');
+     Route::post('/filter', [RapsodoController::class, 'filter'])->name('filter.rapsodo');
 
     });
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
     Route::prefix('/pitct')->group(function () {
         Route::get('', [PitchController::class, 'index'])->name('pitch');
+       // Route::get('/data', [PitchController::class, 'pitch'])->name('file.pitch');
         Route::post('', [PitchController::class, 'import_pitch'])->name('import.pitch');
 
     });

@@ -129,7 +129,7 @@ class RapsodoController extends Controller
             'headers' => $headers
         ])->getBody()->getContents();
          $Js_data = json_decode($response);
-        $player = $Js_data->data;
+          $player = $Js_data->data;
         return view('supperadmin.rapsodo.single_player', compact('player'));
     }
     public function group(){
@@ -159,6 +159,34 @@ class RapsodoController extends Controller
         $Js_data = json_decode($response);
         $groups = $Js_data->data;
         return view('supperadmin.rapsodo.groups',compact('groups'));
+    }
+    public function filter(Request $request){
+        $start =date('d-m-y', strtotime($request->start));
+        $start = strtotime($start);
+        $end = date('d-m-Y', strtotime($request->end));
+        $end = strtotime($end);
+        $url = 'https://cloud.rapsodo.com/v3/player-overview/'.$request->player_id.'/pitch?fromDate='.$start.'&toDate='.$end;
+       // $url = 'https://cloud.rapsodo.com/v3/player-overview/732581/pitch?fromDate=1595703600&toDate=1658861999';
+        $password = auth()->user()->rapsodos->password;
+        $email = auth()->user()->rapsodos->email;
+        $response = Http::post('https://cloud.rapsodo.com/v3/auth/login', [
+            'email' => $email,
+            'password' => $password,
+        ]);
+        $data = json_decode($response);
+        $token =  $data->token;
+        $headers = [
+            'Accept' => 'application/json',
+            'Referer' => 'https://cloud.rapsodo.com/team'.$request->player_id,
+            'Authorization' => $token,
+        ];
+        $client = new Client();
+        $response = $client->request('GET',$url, [
+            'headers' => $headers
+        ])->getBody()->getContents();
+        $Js_data = json_decode($response);
+        $player = $Js_data->data;
+        return $player;
     }
    
 }
