@@ -115,7 +115,7 @@ class ApiController extends Controller
             $user->save();
             $response = [
                 'status' => 'success',
-                'data' => $user->fresh(),
+                // 'data' => $user->fresh(),
             ];
             return response()->json($response, 200);
         } catch (\Throwable $th) {
