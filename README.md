@@ -1,45 +1,45 @@
 ## Instructions
-- ***Install Composer Dependencies***
 
-````
+- **_Install Composer Dependencies_**
+
+```
 composer install
-````
+```
 
-- ***install npm***
+- **_install npm_**
 
-````
+```
 npm install && npm run dev
-````
+```
 
-- ***Set Env Credentials and run migrations***
+- **_Set Env Credentials and run migrations_**
 
-````
+```
 php artisan migrate:fresh --seed
-````
+```
 
-- ***Install Laravel passport***
+- **_Install Laravel passport_**
 
-````
+```
 php artisan passport:install
-````
+```
 
-- ***Link Storage***
+- **_Link Storage_**
 
-````
+```
 php artisan storage:link
-````
+```
 
-- ***Start Socket server***
+- **_Start Socket server_**
 
-````
+```
 php artisan websockets:serve
-````
+```
 
+- **_run the App_**
 
-- ***run the App***
-
-````
+```
 php artisan serve
-````
+```
 
 - **Dont't forget to Set app URL in ENV**

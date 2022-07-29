@@ -4,11 +4,14 @@ use App\Http\Controllers\superadmin\AssessmentController;
 use App\Http\Controllers\superadmin\ChatController;
 use App\Http\Controllers\superadmin\ExerciseController;
 use App\Http\Controllers\superadmin\FileController;
+use App\Http\Controllers\superadmin\PitchController;
 use App\Http\Controllers\superadmin\QuestionnaireController;
+use App\Http\Controllers\superadmin\RapsodoController;
 use App\Http\Controllers\superadmin\SettingController;
 use App\Http\Controllers\superadmin\UserController;
 use App\Http\Controllers\superadmin\TrackController;
 use App\Http\Controllers\superadmin\VelocityController;
+use App\Models\Rapsode;
 use App\Models\Velocity;
 
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +39,7 @@ Route::prefix('')->middleware('isAuthUser')->group(function () {
     //Update User Details
     // Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
     // Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
-    Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('index', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
     //Language Translation
    
 
@@ -132,7 +135,22 @@ Route::prefix('/assessment')->group(function () {
         Route::post('/delete', [FileController::class, 'delete_file'])->name('delete.file');
         Route::get('/download/{id}', [FileController::class, 'download_file'])->name('download.file');
     });
+    Route::prefix('/rapsodo')->group(function () {
+     Route::get('',[RapsodoController::class,'index'])->name('rapsodo');
+     Route::post('',[RapsodoController::class, 'save_rapsodo_credentials'])->name('save.credentials');
+     Route::get('/player', [RapsodoController::class, 'player'])->name('player');
+     Route::get('player/{id}', [RapsodoController::class, 'single_player'])->name('single.rapsodo.player');
+     Route::get('/groups',[RapsodoController::class,'group'])->name('groups');
+     Route::post('/filter', [RapsodoController::class, 'filter'])->name('filter.rapsodo');
+
+    });
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
-    
+    Route::prefix('/pitct')->group(function () {
+        Route::get('', [PitchController::class, 'index'])->name('pitch');
+       // Route::get('/data', [PitchController::class, 'pitch'])->name('file.pitch');
+        Route::post('', [PitchController::class, 'import_pitch'])->name('import.pitch');
+
+    });
+   
 });
 require __DIR__ . '/chat.php';
