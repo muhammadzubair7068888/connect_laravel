@@ -4,6 +4,7 @@ namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Questionnaire;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,15 @@ class QuestionnaireController extends Controller
         $question->user_id = $user_id;
         $question->name = $request->question;
         $question->save();
+        $users = User::where('created_by', $user_id)->get();
+        if ($users) {
+            foreach($users as $user){
+                $question = new Questionnaire();
+                $question->user_id = $user->id;
+                $question->name = $request->question;
+                $question->save();
+            } 
+        }
         return redirect()->back()->with('success', 'Question Successfully Add.');
     }
     public function delete_question(Request $request)

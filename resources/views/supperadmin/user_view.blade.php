@@ -101,14 +101,14 @@
                             @forelse ($user->physical_assessment as $physical)
                                 <tr data-id="1">
                                     <td>{{ $physical->name }}</td>
-                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}"
-                                            id="" {{ $physical->status == 1 ? 'checked' : '' }}
+                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}" id=""
+                                            {{ $physical->status == 1 ? 'checked' : '' }}
                                             onclick="phy_status_change({{ $physical->id }},{{ 1 }})" /></td>
-                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}"
-                                            id="" {{ $physical->status == 2 ? 'checked' : '' }}
+                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}" id=""
+                                            {{ $physical->status == 2 ? 'checked' : '' }}
                                             onclick="phy_status_change({{ $physical->id }},{{ 2 }})" /></td>
-                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}"
-                                            id="" {{ $physical->status == 3 ? 'checked' : '' }}
+                                    <td><input type="radio" class="form-radio" name="{{ $physical->id }}" id=""
+                                            {{ $physical->status == 3 ? 'checked' : '' }}
                                             onclick="phy_status_change({{ $physical->id }},{{ 3 }})" /></td>
                                     <td><input type="number" class="form-control phy_left" name="left"
                                             onclick="get_id({{ $physical->id }});" value="{{ $physical->left }}"
@@ -186,27 +186,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @forelse ($user->question as $question)
                                     <tr data-id="1">
                                         <td>{{ $question->name }}</td>
                                         <td></td>
                                     </tr>
                                 @empty
-                                    <tr data-id="1">
-                                        <td>What are your goals regarding training?</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-id="2">
-                                        <td>Have you had any significant injuries? (anything keeping you off the field 2
-                                            weeks
-                                            or more)</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-id="3">
-                                        <td>Rank yourself amongst your peers worldwide in velocity, command, secondary
-                                            stuff,
-                                            and competitiveness (average, below average, above average)</td>
-                                        <td></td>
+
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -227,10 +214,10 @@
                 data: {},
                 dataType: "json",
                 success: function(response) {
-                    swal("Saved", "Status SuccessFully Change", "success")
+                    // swal("Saved", "Status SuccessFully Change", "success")
                 },
                 error: function(response) {
-                    alert("Failed")
+                    //alert("Failed")
                 }
             });
         }
@@ -243,10 +230,10 @@
                 data: {},
                 dataType: "json",
                 success: function(response) {
-                    swal("Saved", "Status SuccessFully Change", "success")
+                    // swal("Saved", "Status SuccessFully Change", "success")
                 },
                 error: function(response) {
-                    alert("Failed")
+                    // alert("Failed")
                 }
             });
         }
@@ -265,10 +252,10 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        swal("Saved", "Left SuccessFully Change", "success")
+                        // swal("Saved", "Left SuccessFully Change", "success")
                     },
                     error: function(response) {
-                        alert("Failed")
+                        //alert("Failed")
                     }
                 });
             });
@@ -284,10 +271,10 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        swal("Saved", "Right SuccessFully Change", "success")
+                        // swal("Saved", "Right SuccessFully Change", "success")
                     },
                     error: function(response) {
-                        alert("Failed")
+                        //alert("Failed")
                     }
                 });
             });
@@ -304,10 +291,10 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        swal("Saved", "Left SuccessFully Change", "success")
+                        // swal("Saved", "Left SuccessFully Change", "success")
                     },
                     error: function(response) {
-                        alert("Failed")
+                        ///alert("Failed")
                     }
                 });
             });
@@ -323,10 +310,10 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        swal("Saved", "Right SuccessFully Change", "success")
+                        //swal("Saved", "Right SuccessFully Change", "success")
                     },
                     error: function(response) {
-                        alert("Failed")
+                        //alert("Failed")
                     }
                 });
             });

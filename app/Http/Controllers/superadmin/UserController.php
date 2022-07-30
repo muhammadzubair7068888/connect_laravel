@@ -88,7 +88,7 @@ class UserController extends Controller
     }
     public function add_user(Request $request)
     {
-        
+       
         $request->validate([
             'name' => 'required',
             //'email' => 'required|unique:users',

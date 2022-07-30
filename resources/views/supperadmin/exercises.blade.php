@@ -73,8 +73,11 @@
                                         <a style="padding-left:10px;" class="link-warning"
                                             href='{{ route('copy.exercise', ['id' => $exercise->id]) }}'><i
                                                 class="far fa-clone"></i></a>
-                                        <a style="padding-left:10px;" class="link-info"><i class="fas fa-share"
-                                                onclick="shair_exercise({{ $exercise }})"></i></a>
+                                        @if (auth()->user()->role == 'superadmin')
+                                            <a style="padding-left:10px;" class="link-info"><i class="fas fa-share"
+                                                    onclick="shair_exercise({{ $exercise }})"></i></a>
+                                        @endif
+
                                     </td>
 
                                 </tr>

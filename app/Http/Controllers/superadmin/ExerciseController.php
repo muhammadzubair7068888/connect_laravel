@@ -43,7 +43,7 @@ class ExerciseController extends Controller
         ]);
         $user_id = auth()->user()->id;
         $exercise = new Exercise();
-        $exercise->name = $request->name;
+        $exercise->name = "6-4-5 bullpen " . $request->name;
         $exercise->user_id = $user_id;
         $exercise->exercises_type_id = $request->ex_type;
         $exercise->description = $request->description;
@@ -89,7 +89,7 @@ class ExerciseController extends Controller
             'notes' => 'required',
         ]);
         $exercise = Exercise::find($id);
-        $exercise->name = $request->name;
+        $exercise->name =  $request->name;
         $exercise->exercises_type_id = $request->ex_type;
         $exercise->description = $request->description;
         $exercise->copy_id = null;
@@ -156,7 +156,7 @@ class ExerciseController extends Controller
         }
         $exercise = Exercise::find($id);
         $shair_exercise = new Exercise();
-        $shair_exercise->name = "6-4-5 bullpen " . $exercise->name;
+        $shair_exercise->name =  $exercise->name;
         $shair_exercise->user_id = $user_id;
         $shair_exercise->exercises_type_id = $exercise->exercises_type_id;
         $shair_exercise->description = $exercise->description;
