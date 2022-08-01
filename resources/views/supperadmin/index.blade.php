@@ -279,6 +279,7 @@
             var dataTable = $('#custom_data').DataTable({
                 processing: true,
                 serverSide: true,
+                retrieve: true,
                 ajax: {
                     url: "{{ route('pitch.filter') }}",
                     data: {
