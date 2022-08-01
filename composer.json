@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.3",
-        "pusher/pusher-php-server": "^7.0"
+        "pusher/pusher-php-server": "^7.0",
+        "yajra/laravel-datatables-oracle": "^10.1"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",

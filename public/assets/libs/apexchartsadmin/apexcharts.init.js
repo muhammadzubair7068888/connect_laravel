@@ -30,7 +30,7 @@ var options = {
     curve: "straight"
   },
   series: [{
-    name: "",
+    name: "weight",
     data: weight
   }, ],
   title: {
@@ -68,7 +68,7 @@ var options = {
       text: ""
     },
     min: -1.0,
-    max: max_weight+1
+    max: 2445,
   },
   legend: {
     position: "top",

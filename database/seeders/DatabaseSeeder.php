@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         ExerciseTypeSeeder::class,
         VelocitySeeder::class,
         ChartSeeder::class,
+        PitcherSeeder::class,
         ]);
     }
 }

@@ -19,8 +19,10 @@ return new class extends Migration
             $table->time('time')->nullable();
             $table->bigInteger('pa_of_inning')->nullable();
             $table->bigInteger('pitch_of_pa')->nullable();
-            $table->string('pitcher')->nullable();
-            $table->string('pitcher_id')->nullable();
+            // $table->string('pitcher')->nullable();
+            $table->bigInteger('pitcher_id');
+            $table->foreign('pitcher_id')->references('pitcher_id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->string('pitcher_throws')->nullable();
             $table->string('pitcher_team')->nullable();
             $table->string('batter')->nullable();
