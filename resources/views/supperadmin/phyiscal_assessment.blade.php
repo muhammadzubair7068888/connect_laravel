@@ -172,12 +172,12 @@
                         <tbody>
                             <form action="{{ route('update.left.right.physical') }}" method="post">
                                 @csrf
-                                    <input type="hidden" name="phy_id" id="phy_id" />
+                                <input type="hidden" name="phy_id" id="phy_id" />
                                 <tr>
                                     <td id="phy_name"></td>
-                                    <td><input type="number" class="form-control" name="left" id="phy_left"  />
+                                    <td><input type="number" class="form-control" name="left" id="phy_left" />
                                     </td>
-                                    <td><input type="number" class="form-control" name="right" id="phy_right"/>
+                                    <td><input type="number" class="form-control" name="right" id="phy_right" />
                                     </td>
                                 </tr>
                         </tbody>

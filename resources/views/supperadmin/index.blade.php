@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -22,13 +23,44 @@
             @lang('Dashboard')
         @endslot
     @endcomponent
+    <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="modal fade" id="import_cvs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">@lang('Impost CVS File')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('import.pitch') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('Cancel')</button>
+                    <button type="submit" class="btn btn-success">@lang('Import')</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <x-greetings />
                     <div class="center" style="">
                         <form id="dashboard-graph-setting-form">
-                            @csrf
                             <div class="row">
                                 @if (auth()->user()->role == 'user')
                                 @else
@@ -60,26 +92,30 @@
                                     <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
                                         data-date-autoclose="true" data-provide="datepicker"
                                         data-date-container='#datepicker6'>
-                                        <input type="text" class="form-control" name="start" placeholder="Start Date"
-                                            autocomplete="off" value="{{ $start_date }}" />
-                                        <input type="text" class="form-control" name="end" placeholder="End Date"
-                                            autocomplete="off" value="{{ $end_date }}" />
+                                        <input type="text" class="form-control" name="start" id="start"
+                                            placeholder="Start Date" autocomplete="off" value="{{ $start_date }}" />
+                                        <input type="text" class="form-control" name="end" id="start"
+                                            placeholder="End Date" autocomplete="off" value="{{ $end_date }}" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="mb-3" style="margin-top: 27px;">
-                                        <button type="submit" class="btn btn-success">@lang('Search')</button>
+                                        <button type="submit" class="btn btn-success">@lang('Search')</button>&nbsp;
                                         <button type="button" class="btn btn-light"
-                                            id="btnClear">@lang('Clear')</button>
+                                            id="btnClear">@lang('Clear')</button>&nbsp;
+                                        @if (auth()->user()->role == 'superadmin' || auth()->user()->role == 'admin')
+                                            <a><button type="button" class="btn btn-info"
+                                                    onclick="impot_cvs()">@lang('Import CSV')</button></a>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div> <!-- end col -->
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -87,7 +123,7 @@
                     <table id="custom_data" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
-                                <th>@lang('So.No')</th>
+
                                 <th>@lang('Date')</th>
                                 <th>@lang('Time')</th>
                                 <th>@lang('PaOfInning')</th>
@@ -100,14 +136,14 @@
                                 <th>@lang('BatterSide')</th>
                                 <th>@lang('BatterTeam')</th>
                                 <th>@lang('PitcherSet')</th>
-                                {{-- <th>@lang('Inning')</th>
+                                <th>@lang('Inning')</th>
                                 <th>@lang('Top/Bottom')</th>
                                 <th>@lang('Outs')</th>
                                 <th>@lang('Balls')</th>
                                 <th>@lang('Strikes')</th>
                                 <th>@lang('Tagged Pitch Type')</th>
-                                <th>@lang('Auto Pitch')</th> --}}
-                                {{-- <th>@lang('Pitch Call')</th>
+                                <th>@lang('Auto Pitch')</th>
+                                <th>@lang('Pitch Call')</th>
                                 <th>@lang('Kor BB')</th>
                                 <th>@lang('Hit Type')</th>
                                 <th>@lang('Play Result')</th>
@@ -160,7 +196,7 @@
                                 <th>@lang('Level')</th>
                                 <th>@lang('League')</th>
                                 <th>@lang('GameID')</th>
-                                <th>@lang('PitchUID')</th> --}}
+                                <th>@lang('PitchUID')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,7 +207,6 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-
     <div class="row">
         @forelse ($velocities as $velocity)
             <div class="col-xl-6">
@@ -186,6 +221,8 @@
         @empty
         @endforelse
     </div>
+
+    {{ $id = auth()->id() }}
 @endsection
 @section('script')
     <!-- Required datatable js -->
@@ -195,6 +232,9 @@
     <!-- Datatable init js -->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
     <script>
+        function impot_cvs() {
+            $('#import_cvs').modal('show');
+        }
         const currentYear = new Date().getFullYear();
         const currentMonth = new Date().getMonth() + 1;
         const date = '' + currentYear + '-' + currentMonth + '-' + '1';
@@ -272,24 +312,34 @@
     <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
     <script>
-        $('#dashboard-graph-setting-form').on('submit', function(event) {
-            event.preventDefault();
-            var form_data = $(this).serialize();
-            var user_id = $("#user").val();
-            var dataTable = $('#custom_data').DataTable({
+        $(document).ready(function() {
+            $('.spinner-grow').hide();
+        });
+        load_data();
+
+        function load_data(user_id = '') {
+            if (user_id == '') {
+                user_id = {{ $id }}
+            }
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#custom_data').DataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
-                retrieve: true,
+                searching: true,
+                ordering: false,
                 ajax: {
                     url: "{{ route('pitch.filter') }}",
+                    method: 'post',
                     data: {
                         user_id: user_id,
                     }
                 },
                 columns: [{
-                        data: 'id'
-                    },
-                    {
                         data: 'date'
                     },
                     {
@@ -301,7 +351,6 @@
                     {
                         data: "pitch_of_pa"
                     },
-
                     {
                         data: "pitcher_id"
                     },
@@ -326,7 +375,7 @@
                     {
                         data: "pitcher_set"
                     },
-                    {{-- {
+                    {
                         data: "inning"
                     },
                     {
@@ -346,8 +395,184 @@
                     },
                     {
                         data: "auto_pitch"
-                    }, --}}
+                    },
+                    {
+                        data: "pitch_call"
+                    },
+                    {
+                        data: "kor_bb"
+                    },
+                    {
+                        data: "hit_type"
+                    },
+                    {
+                        data: "play_result"
+                    },
+                    {
+                        data: "outs_on_play"
+                    },
+                    {
+                        data: "runs_scored"
+                    },
+                    {
+                        data: "notes"
+                    },
+                    {
+                        data: "rel_speed"
+                    },
+                    {
+                        data: "vert_rel_angle"
+                    },
+                    {
+                        data: "horz_rel_angle"
+                    },
+                    {
+                        data: "spin_rate"
+                    },
+                    {
+                        data: "spin_axis"
+                    },
+                    {
+                        data: "tilt"
+                    },
+                    {
+                        data: "rel_height"
+                    },
+                    {
+                        data: "rel_side"
+                    },
+                    {
+                        data: "extension"
+                    },
+                    {
+                        data: "vert_break"
+                    },
+                    {
+                        data: "induced_vert_break"
+                    },
+                    {
+                        data: "horz_break"
+                    },
+                    {
+                        data: "plate_loc_height"
+                    },
+                    {
+                        data: "plate_loc_side"
+                    },
+                    {
+                        data: "zone_speed"
+                    },
+                    {
+                        data: "vert_appr_angle"
+                    },
+                    {
+                        data: "horz_appr_angle"
+                    },
+                    {
+                        data: "zone_time"
+                    },
+                    {
+                        data: "exit_speed"
+                    },
+                    {
+                        data: "angle"
+                    },
+                    {
+                        data: "direction"
+                    },
+                    {
+                        data: "hit_spin_rate"
+                    },
+                    {
+                        data: "position_at_110_x"
+                    },
+                    {
+                        data: "position_at_110_y"
+                    },
+                    {
+                        data: "position_at_110_z"
+                    },
+                    {
+                        data: "distance"
+                    },
+                    {
+                        data: "last_tracked_distance"
+                    },
+                    {
+                        data: "bearing"
+                    },
+                    {
+                        data: "hang_time"
+                    },
+                    {
+                        data: "pfxx"
+                    },
+                    {
+                        data: "pfxz"
+                    },
+                    {
+                        data: "x0"
+                    },
+                    {
+                        data: "y0"
+                    },
+                    {
+                        data: "z0"
+                    },
+                    {
+                        data: "vx0"
+                    },
+                    {
+                        data: "vy0"
+                    },
+                    {
+                        data: "vz0"
+                    },
+                    {
+                        data: "ax0"
+                    },
+                    {
+                        data: "ay0"
+                    },
+                    {
+                        data: "az0"
+                    },
+                    {
+                        data: "home_team"
+                    },
+                    {
+                        data: "away_team"
+                    },
+                    {
+                        data: "stadium"
+                    },
+                    {
+                        data: "level"
+                    },
+                    {
+                        data: "league"
+                    },
+                    {
+                        data: "game_id"
+                    },
+                    {
+                        data: "pitch_uid"
+                    },
                 ]
+            });
+        }
+        $('#dashboard-graph-setting-form').on('submit', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            var user_id = $("#user").val();
+            var start = $("#start").val();
+            var end = $("#end").val();
+            $('#custom_data').DataTable().destroy();
+            load_data(user_id, );
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
             $.ajax({
                 url: "{{ route('search.velocity') }}",
@@ -355,90 +580,6 @@
                 data: form_data,
                 dataType: "json",
                 success: function(response) {
-                    var i = 0;
-                    var html = '';
-                    var view = '';
-
-                    $(response.pitcher).each(function(index, value) {
-                        i++;
-                        {{-- html += `  <tr>
-                        <td>` + i + `</td>
-                        <td>` + value.date + `</td>
-                        <td>` + value.time + `</td>
-                        <td>` + value.pa_of_inning + `</td>
-                        <td>` + value.pitch_of_pa + `</td>
-                        <td>` + value.pitcher_throws + `</td>
-                        <td>` + value.pitcher_team + `</td>
-                        <td>` + value.batter + `</td>
-                        <td>` + value.batter_id + `</td>
-                        <td>` + value.batter_side + `</td>
-                        <td>` + value.batter_team + `</td>
-                        <td>` + value.pitcher_set + `</td>
-                        <td>` + value.inning + `</td>
-                        <td>` + value.top_bottom + `</td>
-                        <td>` + value.outs + `</td>
-                        <td>` + value.balls + `</td>
-                        <td>` + value.strikes + `</td>
-                        <td>` + value.tagged_pitch_type + `</td>
-                        <td>` + value.auto_pitch + `</td>
-                        <td>` + value.pitch_call + `</td>
-                        <td>` + value.kor_bb + `</td>
-                        <td>` + value.hit_type + `</td>
-                        <td>` + value.play_result + `</td>
-                        <td>` + value.outs_on_play + `</td>
-                        <td>` + value.runs_scored + `</td>
-                        <td>` + value.notes + `</td>
-                        <td>` + value.rel_speed + `</td>
-                        <td>` + value.vert_rel_angle + `</td>
-                        <td>` + value.horz_rel_angle + `</td>
-                        <td>` + value.spin_rate + `</td>
-                        <td>` + value.spin_axis + `</td>
-                        <td>` + value.tilt + `</td>
-                        <td>` + value.rel_height + `</td>
-                        <td>` + value.rel_side + `</td>
-                        <td>` + value.extension + `</td>
-                        <td>` + value.vert_break + `</td>
-                        <td>` + value.induced_vert_break + `</td>
-                        <td>` + value.horz_break + `</td>
-                        <td>` + value.plate_loc_height + `</td>
-                        <td>` + value.plate_loc_side + `</td>
-                        <td>` + value.zone_speed + `</td>
-                        <td>` + value.vert_appr_angle + `</td>
-                        <td>` + value.horz_appr_angle + `</td>
-                        <td>` + value.zone_time + `</td>
-                        <td>` + value.exit_speed + `</td>
-                        <td>` + value.angle + `</td>
-                        <td>` + value.direction + `</td>
-                        <td>` + value.hit_spin_rate + `</td>
-                        <td>` + value.position_at_110_x + `</td>
-                        <td>` + value.position_at_110_y + `</td>
-                        <td>` + value.position_at_110_z + `</td>
-                        <td>` + value.distance + `</td>
-                        <td>` + value.last_tracked_distance + `</td>
-                        <td>` + value.bearing + `</td>
-                        <td>` + value.hang_time + `</td>
-                        <td>` + value.pfxx + `</td>
-                        <td>` + value.pfxz + `</td>
-                        <td>` + value.x0 + `</td>
-                        <td>` + value.y0 + `</td>
-                        <td>` + value.z0 + `</td>
-                        <td>` + value.vx0 + `</td>
-                        <td>` + value.vy0 + `</td>
-                        <td>` + value.vz0 + `</td>
-                        <td>` + value.ax0 + `</td>
-                        <td>` + value.ay0 + `</td>
-                        <td>` + value.az0 + `</td>
-                        <td>` + value.home_team + `</td>
-                        <td>` + value.away_team + `</td>
-                        <td>` + value.stadium + `</td>
-                        <td>` + value.level + `</td>
-                        <td>` + value.league + `</td>
-                        <td>` + value.game_id + `</td>
-                        <td>` + value.pitch_uid + `</td>
-                        </tr>`; --}}
-                    });
-                    $('tbody').html(html);
-
                     weight = response.weight;
                     arm_pain = response.arm_pain;
                     mound_throw_velocit = response.mound_throw_velocit;
@@ -464,9 +605,15 @@
                     }]);
                 },
                 error: function(response) {
-                    swal("Error", "Something is wrong", "error");
+                    {{-- swal("Error", "Something is wrong", "error"); --}}
                 }
             })
+        });
+        $('#custom_data').DataTable({
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+
         });
     </script>
 @endsection

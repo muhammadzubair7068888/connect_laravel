@@ -5,7 +5,9 @@ namespace App\Http\Controllers\superadmin;
 use App\Http\Controllers\Controller;
 use App\Models\Pitch;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class PitchController extends Controller
@@ -17,13 +19,11 @@ class PitchController extends Controller
     }
     public function pitch(Request $request)
     {
+        
+      
         $user = User::where('id',$request->user_id)->first();
-        $records = Pitch::where('pitcher_id',$user->pitcher_Id)->get();
-        return Datatables::of($records)
-            // ->addIndexColumn()
-            // ->rawColumns(['action'])
-            ->make(true);
-    
+         $records = Pitch::query()->where('pitcher_id',$user->pitcher_Id);
+        return Datatables::of($records)->make(true);
     }
     public function import_pitch(Request $request)
     {
@@ -43,20 +43,50 @@ class PitchController extends Controller
                 $record = array_combine($fields, $record);
                 $this->rows[] = $this->clear_encoding_str($record);
             }
-         //   dd($this->rows);
+  
             $user_id = auth()->user()->id;
             foreach ($this->rows as $data) {
+                $pitcher_id = (int)$data['pitcherid'];
+                  $user = User::where('pitcher_Id',$pitcher_id)->first();
+                if($user){
+                    
+                }else{
+                     $name = explode(',',$data['pitcher']);
+                     $last_name = $name[0];
+                     $first_name = $name[1];
+                     $pitcher_id = (int)$data['pitcherid'];
+                     $user = new User();
+                     $user_id = auth()->user()->id;
+                     $user = new User();
+                     $user->first_name = $first_name;
+                     $user->last_name = $last_name;
+                     $user->pitcher_Id  = $pitcher_id;
+                     $user->email = $first_name.'@example.com';
+                     $user->password = Hash::make('123456');
+                     $user->height = '7';
+                     $user->starting_weight = '75';
+                     $user->handedness = $request->hand_type;
+                     $user->age = '24';
+                     $user->school = 'School';
+                     $user->level = '1';
+                     $user->role = 'user';
+                     $user->status = '1';
+                     $user->created_by = $user_id;
+                     $user->save();
+                     
+                }
+              $date=  date('Y-m-d', strtotime($data['date']));
                 $pitch = new Pitch();
-                $pitch->date = $data['date'];
+                $pitch->date = $date;//$data['date'];
                 $pitch->time = $data['time'];
                 $pitch->pa_of_inning = $data['paofinning'];
                 $pitch->pitch_of_pa = $data['pitchofpa'];
-                $pitch->pitcher = $data['pitcher'];
+                // $pitch->pitcher = $data['pitcher'];
                 $pitch->pitcher_id =$data['pitcherid'];
                 $pitch->pitcher_throws =$data['pitcherthrows'];
                 $pitch->pitcher_team = $data['pitcherteam'];
                 $pitch->batter = $data['batter'];
-                $pitch->batter_id = $data['batterid'];
+                 $pitch->batter_id = $data['batterid'];
                 $pitch->batter_side = $data['batterside'];
                 $pitch->batter_team = $data['batterteam'];
                 $pitch->pitcher_set = $data['pitcherset'];

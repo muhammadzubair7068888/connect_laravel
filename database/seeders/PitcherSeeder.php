@@ -16,8 +16,8 @@ class PitcherSeeder extends Seeder
     public function run()
     {
         //
-         $path = 'database/seeders/pitchers.sql';
-         DB::unprepared(file_get_contents($path));
+        //  $path = 'database/seeders/pitchers.sql';
+        //  DB::unprepared(file_get_contents($path));
        
     }
 }

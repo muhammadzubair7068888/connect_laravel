@@ -92,12 +92,12 @@
                         </a>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a href="{{ route('pitch') }}" class="waves-effect">
                             <i class="bx bx-border-bottom"></i>
                             <span key="t-chat">@lang('Pitch')</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
 
                 <li>
