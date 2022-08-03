@@ -1467,6 +1467,9 @@ var options = {
 },
   chart = new ApexCharts(document.querySelector("#vertical_jump"), options);
       chart.render();
+
+
+      
 /***/ }),
 
 /***/ "./resources/scss/bootstrap.scss":
@@ -1688,4 +1691,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
-;
+  ;
+
+
+    

@@ -115,98 +115,100 @@
             </div>
         </div>
     </div> <!-- end col -->
+    @if (auth()->user()->role == 'admin' || auth()->user()->role == 'superadmin')
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="custom_data" class="table table-bordered dt-responsive  nowrap w-100">
+                            <thead>
+                                <tr>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table id="custom_data" class="table table-bordered dt-responsive  nowrap w-100">
-                        <thead>
-                            <tr>
+                                    <th>@lang('Date')</th>
+                                    <th>@lang('Time')</th>
+                                    <th>@lang('PaOfInning')</th>
+                                    <th>@lang('PitchOfPa')</th>
+                                    <th>@lang('PitcherID')</th>
+                                    <th>@lang('PitcherThrows')</th>
+                                    <th>@lang('PitcherTeam')</th>
+                                    <th>@lang('Batter')</th>
+                                    <th>@lang('BatterID')</th>
+                                    <th>@lang('BatterSide')</th>
+                                    <th>@lang('BatterTeam')</th>
+                                    <th>@lang('PitcherSet')</th>
+                                    <th>@lang('Inning')</th>
+                                    <th>@lang('Top/Bottom')</th>
+                                    <th>@lang('Outs')</th>
+                                    <th>@lang('Balls')</th>
+                                    <th>@lang('Strikes')</th>
+                                    <th>@lang('Tagged Pitch Type')</th>
+                                    <th>@lang('Auto Pitch')</th>
+                                    <th>@lang('Pitch Call')</th>
+                                    <th>@lang('Kor BB')</th>
+                                    <th>@lang('Hit Type')</th>
+                                    <th>@lang('Play Result')</th>
+                                    <th>@lang('Outs On Play')</th>
+                                    <th>@lang('Runs Scored')</th>
+                                    <th>@lang('Notes')</th>
+                                    <th>@lang('Rel Speed')</th>
+                                    <th>@lang('Vert Rel Angle')</th>
+                                    <th>@lang('Horz Rel Angle')</th>
+                                    <th>@lang('Spin Rate')</th>
+                                    <th>@lang('Spin Axis')</th>
+                                    <th>@lang('Tilt')</th>
+                                    <th>@lang('Rel Height')</th>
+                                    <th>@lang('Rel Side')</th>
+                                    <th>@lang('Extension')</th>
+                                    <th>@lang('Vert Break')</th>
+                                    <th>@lang('Induced Vert Break')</th>
+                                    <th>@lang('Horz Break')</th>
+                                    <th>@lang('Plate Loc Height')</th>
+                                    <th>@lang('Plate Loc Side')</th>
+                                    <th>@lang('Zone Speed')</th>
+                                    <th>@lang('Vert Appr Angle')</th>
+                                    <th>@lang('Horz Appr Angle')</th>
+                                    <th>@lang('Zone Time')</th>
+                                    <th>@lang('Exit Speed')</th>
+                                    <th>@lang('Angle')</th>
+                                    <th>@lang('Direction')</th>
+                                    <th>@lang('Hit Spin Rate')</th>
+                                    <th>@lang('Position At 110 X')</th>
+                                    <th>@lang('Position At 110 Y')</th>
+                                    <th>@lang('Position At 110 Z')</th>
+                                    <th>@lang('Distance')</th>
+                                    <th>@lang('Last Tracked Distance')</th>
+                                    <th>@lang('Bearing')</th>
+                                    <th>@lang('Hang Time')</th>
+                                    <th>@lang('Pfxx')</th>
+                                    <th>@lang('Pfxz')</th>
+                                    <th>@lang('X0')</th>
+                                    <th>@lang('Y0')</th>
+                                    <th>@lang('Z0')</th>
+                                    <th>@lang('VX0')</th>
+                                    <th>@lang('VY0')</th>
+                                    <th>@lang('VZ0')</th>
+                                    <th>@lang('AX0')</th>
+                                    <th>@lang('AY0')</th>
+                                    <th>@lang('AZ0')</th>
+                                    <th>@lang('Home Team')</th>
+                                    <th>@lang('Away Team')</th>
+                                    <th>@lang('Stadium')</th>
+                                    <th>@lang('Level')</th>
+                                    <th>@lang('League')</th>
+                                    <th>@lang('GameID')</th>
+                                    <th>@lang('PitchUID')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
 
-                                <th>@lang('Date')</th>
-                                <th>@lang('Time')</th>
-                                <th>@lang('PaOfInning')</th>
-                                <th>@lang('PitchOfPa')</th>
-                                <th>@lang('PitcherID')</th>
-                                <th>@lang('PitcherThrows')</th>
-                                <th>@lang('PitcherTeam')</th>
-                                <th>@lang('Batter')</th>
-                                <th>@lang('BatterID')</th>
-                                <th>@lang('BatterSide')</th>
-                                <th>@lang('BatterTeam')</th>
-                                <th>@lang('PitcherSet')</th>
-                                <th>@lang('Inning')</th>
-                                <th>@lang('Top/Bottom')</th>
-                                <th>@lang('Outs')</th>
-                                <th>@lang('Balls')</th>
-                                <th>@lang('Strikes')</th>
-                                <th>@lang('Tagged Pitch Type')</th>
-                                <th>@lang('Auto Pitch')</th>
-                                <th>@lang('Pitch Call')</th>
-                                <th>@lang('Kor BB')</th>
-                                <th>@lang('Hit Type')</th>
-                                <th>@lang('Play Result')</th>
-                                <th>@lang('Outs On Play')</th>
-                                <th>@lang('Runs Scored')</th>
-                                <th>@lang('Notes')</th>
-                                <th>@lang('Rel Speed')</th>
-                                <th>@lang('Vert Rel Angle')</th>
-                                <th>@lang('Horz Rel Angle')</th>
-                                <th>@lang('Spin Rate')</th>
-                                <th>@lang('Spin Axis')</th>
-                                <th>@lang('Tilt')</th>
-                                <th>@lang('Rel Height')</th>
-                                <th>@lang('Rel Side')</th>
-                                <th>@lang('Extension')</th>
-                                <th>@lang('Vert Break')</th>
-                                <th>@lang('Induced Vert Break')</th>
-                                <th>@lang('Horz Break')</th>
-                                <th>@lang('Plate Loc Height')</th>
-                                <th>@lang('Plate Loc Side')</th>
-                                <th>@lang('Zone Speed')</th>
-                                <th>@lang('Vert Appr Angle')</th>
-                                <th>@lang('Horz Appr Angle')</th>
-                                <th>@lang('Zone Time')</th>
-                                <th>@lang('Exit Speed')</th>
-                                <th>@lang('Angle')</th>
-                                <th>@lang('Direction')</th>
-                                <th>@lang('Hit Spin Rate')</th>
-                                <th>@lang('Position At 110 X')</th>
-                                <th>@lang('Position At 110 Y')</th>
-                                <th>@lang('Position At 110 Z')</th>
-                                <th>@lang('Distance')</th>
-                                <th>@lang('Last Tracked Distance')</th>
-                                <th>@lang('Bearing')</th>
-                                <th>@lang('Hang Time')</th>
-                                <th>@lang('Pfxx')</th>
-                                <th>@lang('Pfxz')</th>
-                                <th>@lang('X0')</th>
-                                <th>@lang('Y0')</th>
-                                <th>@lang('Z0')</th>
-                                <th>@lang('VX0')</th>
-                                <th>@lang('VY0')</th>
-                                <th>@lang('VZ0')</th>
-                                <th>@lang('AX0')</th>
-                                <th>@lang('AY0')</th>
-                                <th>@lang('AZ0')</th>
-                                <th>@lang('Home Team')</th>
-                                <th>@lang('Away Team')</th>
-                                <th>@lang('Stadium')</th>
-                                <th>@lang('Level')</th>
-                                <th>@lang('League')</th>
-                                <th>@lang('GameID')</th>
-                                <th>@lang('PitchUID')</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
+                    </div>
                 </div>
-            </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    @endif
+
     <div class="row">
         @forelse ($velocities as $velocity)
             <div class="col-xl-6">
@@ -224,6 +226,7 @@
 
     <div id="chart"></div>
     {{ $id = auth()->id() }}
+
 @endsection
 @section('script')
     <!-- Required datatable js -->
@@ -307,123 +310,13 @@
             max_deadlift += deadlift[i];
         }
     </script>
+    <script></script>
     <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('/assets/libs/apexchartsadmin/charts.js') }}"></script> --}}
     <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
-    <script>
-        var options = {
-                chart: {
-                    height: 380,
-                    type: "line",
-                    zoom: {
-                        enabled: !1
-                    },
-                    toolbar: {
-                        show: !1
-                    }
-                },
-                colors: ["#556ee6", "#34c38f"],
-                dataLabels: {
-                    enabled: !1
-                },
-                stroke: {
-                    width: [3, 3],
-                    curve: "straight"
-                },
-                series: [{
-                    name: "",
-                    data: weight
-                }, ],
-                title: {
-                    text: "",
-                    align: "left",
-                    style: {
-                        fontWeight: "500"
-                    }
-                },
-                grid: {
-                    row: {
-                        colors: ["transparent", "transparent"],
-                        opacity: .2
-                    },
-                    borderColor: "#f1f1f1"
-                },
-                markers: {
-                    style: "inverted",
-                    size: 6
-                },
-                xaxis: {
-                    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' +
-                        currentYear + '-' + currentMonth +
-                        '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3',
-                        '' + currentYear + '-' +
-                        currentMonth + '-' + '4',
-                        '' + currentYear + '-' + currentMonth + '-' + '5', '' +
-                        currentYear + '-' + currentMonth + '-' +
-                        '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' +
-                        currentYear + '-' + currentMonth +
-                        '-' + '8',
-                        '' + currentYear + '-' + currentMonth + '-' + '9', '' +
-                        currentYear + '-' + currentMonth + '-' +
-                        '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' +
-                        currentYear + '-' +
-                        currentMonth + '-' + '12', '' +
-                        currentYear + '-' + currentMonth + '-' + '13', '' +
-                        currentYear + '-' + currentMonth + '-' +
-                        '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' +
-                        currentYear + '-' +
-                        currentMonth + '-' + '16',
-                        '' + currentYear + '-' + currentMonth + '-' + '17', '' +
-                        currentYear + '-' + currentMonth +
-                        '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19',
-                        '' + currentYear + '-' +
-                        currentMonth + '-' + '20',
-                        '' + currentYear + '-' + currentMonth + '-' + '21', '' +
-                        currentYear + '-' + currentMonth +
-                        '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23',
-                        '' + currentYear + '-' +
-                        currentMonth + '-' + '24',
-                        '' + currentYear + '-' + currentMonth + '-' + '25', '' +
-                        currentYear + '-' + currentMonth +
-                        '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27',
-                        '' + currentYear + '-' +
-                        currentMonth + '-' + '28'
-                    ],
-                    title: {
-                        text: "Month"
-                    }
-                },
-                yaxis: {
-                    title: {
-                        text: ""
-                    },
-                    min: -1.0,
-                    max: max_weight + 1
-                },
-                legend: {
-                    position: "top",
-                    horizontalAlign: "right",
-
-                },
-                responsive: [{
-                    breakpoint: 600,
-                    options: {
-                        chart: {
-                            toolbar: {
-                                show: !1
-                            }
-                        },
-                        legend: {
-                            show: !1
-                        }
-                    }
-                }]
-            },
-            chart = new ApexCharts(document.querySelector("#weight"), options);
-        chart.render();
-    </script>
     <script>
         $(document).ready(function() {
             $('.spinner-grow').hide();
@@ -674,56 +567,65 @@
                 ]
             });
         }
+    </script>
 
-        $('#dashboard-graph-setting-form').on('submit', function(event) {
-            event.preventDefault();
-            var form_data = $(this).serialize();
-            var user_id = $("#user").val();
-            var start = $("#start").val();
-            var end = $("#end").val();
-            $('#custom_data').DataTable().destroy();
-            load_data(user_id, );
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+
+    <script>
+        $(document).ready(function() {
+            $('#dashboard-graph-setting-form').on('submit', function(event) {
+                event.preventDefault();
+                var form_data = $(this).serialize();
+                var user_id = $("#user").val();
+                var start = $("#start").val();
+                var end = $("#end").val();
+                $('#custom_data').DataTable().destroy();
+                load_data(user_id, );
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ route('search.velocity') }}",
+                    method: "POST",
+                    data: form_data,
+                    dataType: "json",
+                    async: true,
+                    cache: false,
+                    success: function(response) {
+                        weight = response.weight;
+                        arm_pain = response.arm_pain;
+                        mound_throw_velocit = response.mound_throw_velocit;
+                        pull_down_3 = response.pull_down_3;
+                        pull_down_4 = response.pull_down_4;
+                        pull_down_5 = response.pull_down_5;
+                        pull_down_6 = response.pull_down_6;
+                        pull_down_7 = response.pull_down_7;
+                        bench = response.bench;
+                        squat = response.squat;
+                        vertical_jump = response.vertical_jump;
+                        pull_down_velocity = response.pull_down_velocity;
+                        long_toss_distance = response.long_toss_distance;
+                        pylo7 = response.pylo7;
+                        pylo5 = response.pylo5;
+                        pylo3 = response.pylo3;
+                        deadlift = response.deadlift;
+                        weight_respon(weight);
+                        arm_pain_respon(weight);
+                        standing_long_toss_respon(pull_down_velocity);
+                        mound_throws_velocity_respon(pull_down_3);
+                        pull_down_3_respon(pull_down_3);
+                        pull_down_4_respon(pull_down_4);
+                        pull_down_5_respon(pull_down_5);
+                        pull_down_6_respon(pull_down_6);
+                        pull_down_7_respon(pull_down_7);
+                    },
+                    error: function(response) {
+                        // swal("Error", "Something is wrong", "error");
+                    }
+                })
             });
-            $.ajax({
-                url: "{{ route('search.velocity') }}",
-                method: "POST",
-                data: form_data,
-                dataType: "json",
-                success: function(response) {
-                    weight = response.weight;
-                    arm_pain = response.arm_pain;
-                    mound_throw_velocit = response.mound_throw_velocit;
-                    pull_down_3 = response.pull_down_3;
-                    pull_down_4 = response.pull_down_4;
-                    pull_down_5 = response.pull_down_5;
-                    pull_down_6 = response.pull_down_6;
-                    pull_down_7 = response.pull_down_7;
-                    bench = response.bench;
-                    squat = response.squat;
-                    vertical_jump = response.vertical_jump;
-                    pull_down_velocity = response.pull_down_velocity;
-                    long_toss_distance = response.long_toss_distance;
-                    pylo7 = response.pylo7;
-                    pylo5 = response.pylo5;
-                    pylo3 = response.pylo3;
-                    deadlift = response.deadlift;
-                    weight = [2345, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    alert(weight);
-                    chart = new ApexCharts(document.querySelector("#weight"), options);
-                    chart.updateSeries([{
-                        name: 'weight',
-                        data: [7, 47, 4, 2000, 75, 2345, 92, 7, 52, 26, 45, 47]
-                    }]);
-
-                },
-                error: function(response) {
-                    swal("Error", "Something is wrong", "error");
-                }
-            })
         });
     </script>
+    <script src="{{ URL::asset('/assets/libs/apexchartsadmin/charts.js') }}"></script>
 @endsection
