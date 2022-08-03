@@ -71,6 +71,12 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/mechanical/add', [ApiController::class, 'add_mechanical']);
         Route::post('/mechanical/del', [ApiController::class, 'delete_mechanical']);
         Route::post('/mechanical/update', [ApiController::class, 'mechanical_update_status']);
+        Route::post('/physical/lr', [ApiController::class, 'physical_left_right']);
+        Route::post('/mechanical/lr', [ApiController::class, 'mechnical_left_right']);
+        Route::post('/phy/l', [ApiController::class, 'phyl']);
+        Route::post('/phy/r', [ApiController::class, 'phyr']);
+        Route::post('/mech/l', [ApiController::class, 'mechl']);
+        Route::post('/mech/r', [ApiController::class, 'mechr']);
     });
     Route::prefix('/exercises')->group(function () {
         Route::get('/index', [ApiController::class, 'index']);
@@ -86,7 +92,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/schedule/print', [ApiController::class, 'schedule_print']);
         Route::get('/schedule/exercise/{id}', [ApiController::class, 'schedule_view']);
         Route::put('/schedule/exercise/{exercise_detail}/strength', [ApiController::class, 'update_exercise_strength']);
-        Route::get('/users',[ApiController::class,'exercise_user']);
+        Route::get('/users', [ApiController::class, 'exercise_user']);
+        Route::post('/csv', [ApiController::class, 'import_exercise']);
     });
     Route::prefix('/files')->group(function () {
         Route::get('/index/{id?}', [ApiController::class, 'files']);
@@ -103,23 +110,23 @@ Route::middleware('auth:api')->group(function () {
     // Route::get('logout', [AuthAPIController::class, 'logout']);
 
     //get all user list for chat
-    Route::get('users-list', [UserAPIController::class,'getUsersList']);
-    Route::post('change-password', [UserAPIController::class,'changePassword']);
+    Route::get('users-list', [UserAPIController::class, 'getUsersList']);
+    Route::post('change-password', [UserAPIController::class, 'changePassword']);
 
     // Route::get('profile', [UserAPIController::class,'getProfile'])->name('myprofile');
-    Route::post('profile', [UserAPIController::class,'updateProfile']);
-    Route::post('update-last-seen', [UserAPIController::class,'updateLastSeen']);
+    Route::post('profile', [UserAPIController::class, 'updateProfile']);
+    Route::post('update-last-seen', [UserAPIController::class, 'updateLastSeen']);
 
     Route::post('send-message', [ChatAPIController::class, 'sendMessage'])->name('conversations.store');
-    Route::get('users/{id}/conversation', [UserAPIController::class,'getConversation']);
+    Route::get('users/{id}/conversation', [UserAPIController::class, 'getConversation']);
     Route::get('conversations', [ChatAPIController::class, 'getLatestConversations']);
     Route::post('read-message', [ChatAPIController::class, 'updateConversationStatus']);
     Route::post('file-upload', [ChatAPIController::class, 'addAttachment'])->name('file-upload');
     Route::get('conversations/{userId}/delete', [ChatAPIController::class, 'deleteConversation']);
 
     /** Update Web-push */
-    Route::put('update-web-notifications', [UserAPIController::class,'updateNotification']);
+    Route::put('update-web-notifications', [UserAPIController::class, 'updateNotification']);
 
     /** create group **/
-    Route::post('groups', [GroupAPIController::class,'create'])->name('create-group');
+    Route::post('groups', [GroupAPIController::class, 'create'])->name('create-group');
 });

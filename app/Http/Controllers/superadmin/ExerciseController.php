@@ -220,47 +220,46 @@ class ExerciseController extends Controller
     }
     public function import_exercise(Request $request)
     {
-         try{
-        $path = $request->file('file')->getRealPath();
-        $records = array_map('str_getcsv', file($path));
-        if (!count($records) > 0) {
-            return back()->with('error', 'Something Is Wrong!');
-        }
-        $fields = array_map('strtolower', $records[0]);
-        array_shift($records);
-        foreach ($records as $record) {
-            if (count($fields) != count($record)) {
-               return back()->with('error', 'Invailed Dat!');;
+        try {
+            $path = $request->file('file')->getRealPath();
+            $records = array_map('str_getcsv', file($path));
+            if (!count($records) > 0) {
+                return back()->with('error', 'Something Is Wrong!');
             }
-            $record =  array_map("html_entity_decode", $record);
-            $record = array_combine($fields, $record);
-            $this->rows[] = $this->clear_encoding_str($record);
-                
-        }
-         
-        $user_id = auth()->user()->id;
-        foreach ($this->rows as $data) {
-              $ex_type = ExerciseType::where('name',$data['exercise_type'])->first();
-            if($ex_type){
-                $type_id = $ex_type->id;
-            }else{
-                $type_id = 1;
+            $fields = array_map('strtolower', $records[0]);
+            array_shift($records);
+            foreach ($records as $record) {
+                if (count($fields) != count($record)) {
+                    return back()->with('error', 'Invalid Data!');;
+                }
+                $record =  array_map("html_entity_decode", $record);
+                $record = array_combine($fields, $record);
+                $this->rows[] = $this->clear_encoding_str($record);
             }
-            $exercise = new Exercise();
-            $exercise->name ="6-4-5 bullpen ".$data['name'];
-            $exercise->user_id = $user_id;
-            $exercise->exercises_type_id = $type_id; //$request->ex_type;
-            $exercise->description = $data['description'];
-            $exercise->save();
-            $shair_detail = new ExerciseDetail();
-            $shair_detail->title = $data['title'];
-            $shair_detail->link = $data['link'];
-            $shair_detail->sets = $data['sets'];
-            $shair_detail->reps = $data['reps'];
-            $shair_detail->notes = $data['notes'];
-            $shair_detail->exercise_id = $exercise->id;
-            $shair_detail->save();
-        }
+
+            $user_id = auth()->user()->id;
+            foreach ($this->rows as $data) {
+                $ex_type = ExerciseType::where('name', $data['exercise_type'])->first();
+                if ($ex_type) {
+                    $type_id = $ex_type->id;
+                } else {
+                    $type_id = 1;
+                }
+                $exercise = new Exercise();
+                $exercise->name = "6-4-5 bullpen " . $data['name'];
+                $exercise->user_id = $user_id;
+                $exercise->exercises_type_id = $type_id; //$request->ex_type;
+                $exercise->description = $data['description'];
+                $exercise->save();
+                $shair_detail = new ExerciseDetail();
+                $shair_detail->title = $data['title'];
+                $shair_detail->link = $data['link'];
+                $shair_detail->sets = $data['sets'];
+                $shair_detail->reps = $data['reps'];
+                $shair_detail->notes = $data['notes'];
+                $shair_detail->exercise_id = $exercise->id;
+                $shair_detail->save();
+            }
         } catch (\Throwable $th) {
             $response = [
                 'error' => false,
@@ -281,9 +280,9 @@ class ExerciseController extends Controller
         }
         return mb_convert_encoding($value, 'UTF-8', 'UTF-8');
     }
-    public function demo_exercise(){
-      $path  = 'demo/import_file_demo.csv';
+    public function demo_exercise()
+    {
+        $path  = 'demo/import_file_demo.csv';
         return response()->download($path);
     }
-  
 }
