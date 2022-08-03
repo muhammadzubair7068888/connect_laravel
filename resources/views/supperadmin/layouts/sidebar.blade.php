@@ -181,15 +181,14 @@
                         <span key="t-dashboards">@lang('Schedule')</span>
                     </a>
                 </li>
-
-                @if (auth()->user()->role == 'superadmin')
+                {{-- @if (auth()->user()->role == 'superadmin')
                     <li>
                         <a href="{{ route('plugin.cards') }}" class="waves-effect">
                             <i class="bx bx-plug"></i>
                             <span key="t-dashboards">@lang('Plugin')</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 @if (auth()->user()->role == 'superadmin')
                     {{-- <li>

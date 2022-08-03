@@ -213,8 +213,6 @@ class UserController extends Controller
         return view('supperadmin.user_view', compact('user'));
     }
     public function passport_api(){
-
-       
         return redirect()->route('chart.velocity');
     }
 }

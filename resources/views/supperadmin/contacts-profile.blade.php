@@ -119,9 +119,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="avatar">
-                            <img alt="" src="{{ asset($user->avatar) }}"
-                                class="users-avatar-shadow rounded-circle" height="150" width="150"
-                                style="object-fit: cover; object-position: 0% 0%;">
+                            <img alt="" src="{{ asset($user->avatar) }}" class="users-avatar-shadow rounded-circle"
+                                height="150" width="150" style="object-fit: cover; object-position: 0% 0%;">
                         </div>
 
                         <hr>
@@ -183,6 +182,8 @@
                                     <th>@lang('Acceptable')</th>
                                     <th>@lang('Caution')</th>
                                     <th>@lang('Opportunity')</th>
+                                    <th>@lang('L')</th>
+                                    <th>@lang('R')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -201,26 +202,14 @@
                                                 id="" {{ $physical->status == 3 ? 'checked' : '' }}
                                                 onclick="phy_status_change({{ $physical->id }},{{ 3 }})" />
                                         </td>
+                                        <td><input type="number" class="form-control phy_left" name="left"
+                                                value="{{ $physical->left }}" id="left_right" />
+                                        </td>
+                                        <td><input type="number" class="form-control phy_right" name="right"
+                                                id="left_right" value="{{ $physical->right }}" />
+                                        </td>
                                     </tr>
                                 @empty
-                                    <tr data-id="1">
-                                        <td>Gross Posture Anomalies</td>
-                                        <td><input type="radio" name="phy_1" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="phy_1" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="phy_1" class="form-radio" value="2"></td>
-                                    </tr>
-                                    <tr data-id="2">
-                                        <td>Shrugging</td>
-                                        <td><input type="radio" name="phy_2" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="phy_2" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="phy_2" class="form-radio" value="2"></td>
-                                    </tr>
-                                    <tr data-id="3">
-                                        <td>Asymmetrical Upward Rotation</td>
-                                        <td><input type="radio" name="phy_3" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="phy_3" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="phy_3" class="form-radio" value="2"></td>
-                                    </tr>
                                 @endforelse
 
                             </tbody>
@@ -235,6 +224,8 @@
                                     <th>@lang('Acceptable')</th>
                                     <th>@lang('Caution')</th>
                                     <th>@lang('Opportunity')</th>
+                                    <th>@lang('L')</th>
+                                    <th>@lang('R')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -253,28 +244,15 @@
                                                 id="" {{ $mechanical->status == 3 ? 'checked' : '' }}
                                                 onclick="mach_status_change({{ $mechanical->id }},{{ 3 }})" />
                                         </td>
+                                        <td><input type="number" class="form-control mech_left" name="left"
+                                                value="{{ $mechanical->left }}" id="left_right" />
+                                        </td>
+                                        <td><input type="number" class="form-control mech_right" name="right"
+                                                id="left_right" value="{{ $mechanical->right }}" />
+                                        </td>
                                     </tr>
                                 @empty
-                                    <tr data-id="1">
-                                        <td>Back leg co-contraction</td>
-                                        <td><input type="radio" name="mech_1" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="mech_1" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="mech_1" class="form-radio" value="2"></td>
-                                    </tr>
-                                    <tr data-id="2">
-                                        <td>Does Not Counter Rotate</td>
-                                        <td><input type="radio" name="mech_2" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="mech_2" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="mech_2" class="form-radio" value="2"></td>
-                                    </tr>
-                                    <tr data-id="3">
-                                        <td>Shifts to Ball of Foot on Time</td>
-                                        <td><input type="radio" name="mech_3" class="form-radio" value="0"></td>
-                                        <td><input type="radio" name="mech_3" class="form-radio" value="1"></td>
-                                        <td><input type="radio" name="mech_3" class="form-radio" value="2"></td>
-                                    </tr>
                                 @endforelse
-
                             </tbody>
                         </table>
                     </div>

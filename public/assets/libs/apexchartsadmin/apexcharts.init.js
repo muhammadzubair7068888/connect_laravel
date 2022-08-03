@@ -12,6 +12,7 @@ const currentMonth = new Date().getMonth() + 1;
       // weight
 var options = {
   chart: {
+    id: 'weight',
     height: 380,
     type: "line",
     zoom: {

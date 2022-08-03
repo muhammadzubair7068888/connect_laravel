@@ -53,36 +53,6 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td>{{ $j }}</td>
-                                <td>Gloria Little</td>
-                                <td>Systems Administrator</td>
-                                <td>New York</td>
-                                <td>
-                                    <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ $j }}</td>
-                                <td>Bradley Greer</td>
-                                <td>Software Engineer</td>
-                                <td>London</td>
-                                <td>
-                                    <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ $j }}</td>
-                                <td>Dai Rios</td>
-                                <td>Personnel Lead</td>
-                                <td>Edinburgh</td>
-                                <td>
-                                    <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
                         @endforelse
                         <tbody>
                         </tbody>
@@ -100,7 +70,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action ="{{ route('save.velocity') }}" method="post">
+                    <form action="{{ route('save.velocity') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-6">

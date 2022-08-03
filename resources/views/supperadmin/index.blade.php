@@ -222,6 +222,7 @@
         @endforelse
     </div>
 
+    <div id="chart"></div>
     {{ $id = auth()->id() }}
 @endsection
 @section('script')
@@ -311,6 +312,118 @@
     <script src="{{ URL::asset('/assets/libs/apexchartsadmin/apexcharts.init.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
+    <script>
+        var options = {
+                chart: {
+                    height: 380,
+                    type: "line",
+                    zoom: {
+                        enabled: !1
+                    },
+                    toolbar: {
+                        show: !1
+                    }
+                },
+                colors: ["#556ee6", "#34c38f"],
+                dataLabels: {
+                    enabled: !1
+                },
+                stroke: {
+                    width: [3, 3],
+                    curve: "straight"
+                },
+                series: [{
+                    name: "",
+                    data: weight
+                }, ],
+                title: {
+                    text: "",
+                    align: "left",
+                    style: {
+                        fontWeight: "500"
+                    }
+                },
+                grid: {
+                    row: {
+                        colors: ["transparent", "transparent"],
+                        opacity: .2
+                    },
+                    borderColor: "#f1f1f1"
+                },
+                markers: {
+                    style: "inverted",
+                    size: 6
+                },
+                xaxis: {
+                    categories: ['' + currentYear + '-' + currentMonth + '-' + '1', '' +
+                        currentYear + '-' + currentMonth +
+                        '-' + '2', '' + currentYear + '-' + currentMonth + '-' + '3',
+                        '' + currentYear + '-' +
+                        currentMonth + '-' + '4',
+                        '' + currentYear + '-' + currentMonth + '-' + '5', '' +
+                        currentYear + '-' + currentMonth + '-' +
+                        '6', '' + currentYear + '-' + currentMonth + '-' + '7', '' +
+                        currentYear + '-' + currentMonth +
+                        '-' + '8',
+                        '' + currentYear + '-' + currentMonth + '-' + '9', '' +
+                        currentYear + '-' + currentMonth + '-' +
+                        '10', '' + currentYear + '-' + currentMonth + '-' + '11', '' +
+                        currentYear + '-' +
+                        currentMonth + '-' + '12', '' +
+                        currentYear + '-' + currentMonth + '-' + '13', '' +
+                        currentYear + '-' + currentMonth + '-' +
+                        '14', '' + currentYear + '-' + currentMonth + '-' + '15', '' +
+                        currentYear + '-' +
+                        currentMonth + '-' + '16',
+                        '' + currentYear + '-' + currentMonth + '-' + '17', '' +
+                        currentYear + '-' + currentMonth +
+                        '-' + '18', '' + currentYear + '-' + currentMonth + '-' + '19',
+                        '' + currentYear + '-' +
+                        currentMonth + '-' + '20',
+                        '' + currentYear + '-' + currentMonth + '-' + '21', '' +
+                        currentYear + '-' + currentMonth +
+                        '-' + '22', '' + currentYear + '-' + currentMonth + '-' + '23',
+                        '' + currentYear + '-' +
+                        currentMonth + '-' + '24',
+                        '' + currentYear + '-' + currentMonth + '-' + '25', '' +
+                        currentYear + '-' + currentMonth +
+                        '-' + '26', '' + currentYear + '-' + currentMonth + '-' + '27',
+                        '' + currentYear + '-' +
+                        currentMonth + '-' + '28'
+                    ],
+                    title: {
+                        text: "Month"
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: ""
+                    },
+                    min: -1.0,
+                    max: max_weight + 1
+                },
+                legend: {
+                    position: "top",
+                    horizontalAlign: "right",
+
+                },
+                responsive: [{
+                    breakpoint: 600,
+                    options: {
+                        chart: {
+                            toolbar: {
+                                show: !1
+                            }
+                        },
+                        legend: {
+                            show: !1
+                        }
+                    }
+                }]
+            },
+            chart = new ApexCharts(document.querySelector("#weight"), options);
+        chart.render();
+    </script>
     <script>
         $(document).ready(function() {
             $('.spinner-grow').hide();
@@ -561,6 +674,7 @@
                 ]
             });
         }
+
         $('#dashboard-graph-setting-form').on('submit', function(event) {
             event.preventDefault();
             var form_data = $(this).serialize();
@@ -598,22 +712,18 @@
                     pylo3 = response.pylo3;
                     deadlift = response.deadlift;
                     weight = [2345, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
+                    alert(weight);
+                    chart = new ApexCharts(document.querySelector("#weight"), options);
                     chart.updateSeries([{
                         name: 'weight',
-                        data: weight
+                        data: [7, 47, 4, 2000, 75, 2345, 92, 7, 52, 26, 45, 47]
                     }]);
+
                 },
                 error: function(response) {
-                    {{-- swal("Error", "Something is wrong", "error"); --}}
+                    swal("Error", "Something is wrong", "error");
                 }
             })
-        });
-        $('#custom_data').DataTable({
-            processing: true,
-            serverSide: true,
-            retrieve: true,
-
         });
     </script>
 @endsection
