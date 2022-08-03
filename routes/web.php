@@ -112,7 +112,7 @@ Route::prefix('/velocity')->group(function () {
 Route::prefix('/questionnaire')->group(function () {
     Route::get('/index', [QuestionnaireController::class, 'index'])->name('questionnaire');
     Route::post('/index', [QuestionnaireController::class, 'save_question'])->name('save.questionnaire');
-    Route::post('/del', [QuestionnaireController::class, 'delete_question'])->name('delete.questionnaire');
+    Route::get('/del', [QuestionnaireController::class, 'delete_question'])->name('delete.questionnaire');
     Route::post('/filter',[QuestionnaireController::class,'filter_question'])->name('filter.question');
 });
 Route::prefix('/assessment')->group(function () {
@@ -147,8 +147,8 @@ Route::prefix('/assessment')->group(function () {
     Route::view('admin/dashboard', 'supperadmin.index')->name('dashboard');
     Route::prefix('/pitct')->group(function () {
         Route::get('', [PitchController::class, 'index'])->name('pitch');
-       // Route::get('/data', [PitchController::class, 'pitch'])->name('file.pitch');
         Route::post('', [PitchController::class, 'import_pitch'])->name('import.pitch');
+        Route::post('/data', [PitchController::class, 'pitch'])->name('pitch.filter');
 
     });
    

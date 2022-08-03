@@ -5,6 +5,7 @@
 @endsection
 @section('css')
     <!-- DataTables -->
+    <link href="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -42,33 +43,14 @@
                     </div>
                     <br>
 
-                    <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                    <table id="question_table" class="table table-bordered dt-responsive  nowrap w-100">
                         <thead>
                             <tr>
-                                <th>@lang('#')</th>
                                 <th>@lang('Question')</th>
                                 <th class="col-1">@lang('Action')</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $j = 0;
-                            @endphp
-                            @forelse ($questionnaires as $question)
-                                @php
-                                    $j++;
-                                @endphp
-                                <tr>
-                                    <td>{{ $j }}</td>
-                                    <td>{{ $question->name }}</td>
-                                    <td>
-                                        <a style="padding-left:10px;" class="link-danger" href='#'><i
-                                                class="fas fa-trash-alt"
-                                                onclick="delete_question({{ $question }})"></i></a>
-                                    </td>
-                                </tr>
-                            @empty
-                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -104,30 +86,12 @@
         </div>
     </div>
     </div> <!-- end preview-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">@lang('Delete Question')</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="text-danger">@lang('Are you sure you want to delete this track?')</h4>
-                </div>
-                <form action="{{ route('delete.questionnaire') }}" method="post">
-                    @csrf
-                    <input type="hidden" id="delete_id" name="question_id">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">@lang('Cancel')</button>
-                        <button type="submit" class="btn btn-danger">@lang('Delete')</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('script')
+    <!-- Sweet Alerts js -->
+    <script src="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/sweet-alerts.init.js') }}"></script>
+
     <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/form-repeater.int.js') }}"></script>
     <!-- Required datatable js -->
@@ -138,58 +102,64 @@
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
 
     <script>
-        function delete_question(question) {
-            $('#delete_id').val(question.id);
-            $('#staticBackdrop').modal('show');
+        function delete_question(id) {
+            $.ajax({
+                url: "{{ route('delete.questionnaire') }}",
+                mehtod: "GET",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('#question_table').DataTable().ajax.reload();
+                }
+            });
         }
         $("#filter").change(function() {
             var value = this.value;
+            $('#question_table').DataTable().destroy();
+            load_data(value);
+        });
+        load_data();
 
-            $.ajax({
-                url: "{{ url('/questionnaire/filter') }}",
-                type: "POST",
-                data: {
-                    value: value
+        function load_data(value = '') {
+            if (value == '') {
+                value = 'all';
+            }
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#question_table').DataTable({
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ordering: false,
+                ajax: {
+                    url: "{{ url('/questionnaire/filter') }}",
+                    type: "POST",
+                    data: {
+                        value: value
+                    },
                 },
-                dataType: "json",
-                success: function(response) {
-                    var i = 0;
-                    var html = '';
-                    var view = '';
+                columns: [{
+                        data: 'name'
+                    },
+                    {
+                        data: 'action'
+                    },
+                ]
+            });
+        }
 
-                    if (response) {
-                        $.each(response, function(key, value) {
-                            i++;
-                            var delete_url = "{{ url('/questionnaire/del') }}" + "/" + value
-                                .id;
-                            html += '<tr>';
-                            html += '<td>';
-                            html += i;
-                            html += '</td>';
-                            html += '<td>';
-                            html += value.name;
-                            html += '</td>';
-                            html += '<td>';
-                            html += '</a>';
-                            html += '<a style="padding-left:10px;" class="link-danger" href=';
-                            html += '#'
-                            html += '>';
-                            html +=
-                                '<i class = "fas fa-trash-alt">';
-
-                            html += '</i>';
-                            html += '</a>';
-                            html += '</td>';
-                            html += '</tr>';
-                        });
-                    } else {
-                        alert("Sorry No data found");
-                    }
-
-                    $('tbody').html(html);
-                },
-                error: function(response) {
-                    alert("Failed")
+        $('#dashboard-graph-setting-form').on('submit', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            load_data(user_id);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
         });

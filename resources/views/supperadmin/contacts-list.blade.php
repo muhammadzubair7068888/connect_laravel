@@ -71,7 +71,11 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $j }}</td>
-                                    <td>{{ ucfirst($user->name) }}</td>
+                                    @if ($user->name)
+                                        <td>{{ ucfirst($user->name) }}</td>
+                                    @else
+                                        <td>{{ ucfirst($user->first_name) }}&nbsp;{{ $user->last_name }}</td>
+                                    @endif
                                     <td>{{ $user->email }}</td>
                                     <td>{{ ucfirst($user->role) }}</td>
                                     <td>{{ ucfirst(auth()->user()->name) }}</td>
@@ -244,8 +248,8 @@
                                 @endif
                                 <div class="col-md-6">
                                     <label for="formrow-inputState" class="form-label">@lang('User Status')</label>
-                                    <select id="formrow-inputState" name="user_status"
-                                        value="{{ old('user_status') }}" class="form-select">
+                                    <select id="formrow-inputState" name="user_status" value="{{ old('user_status') }}"
+                                        class="form-select">
                                         <option selected>@lang('Select Status')</option>
                                         <option value="0">@lang('Banned')</option>
                                         <option value="1">@lang('Active')</option>

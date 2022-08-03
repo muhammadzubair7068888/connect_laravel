@@ -88,7 +88,7 @@ class UserController extends Controller
     }
     public function add_user(Request $request)
     {
-        
+       
         $request->validate([
             'name' => 'required',
             //'email' => 'required|unique:users',
@@ -213,8 +213,6 @@ class UserController extends Controller
         return view('supperadmin.user_view', compact('user'));
     }
     public function passport_api(){
-
-       
         return redirect()->route('chart.velocity');
     }
 }

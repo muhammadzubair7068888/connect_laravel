@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pitch;
 use App\Models\User;
 use App\Models\UserVelocity;
 use App\Models\Velocity;
@@ -23,7 +24,6 @@ class VelocityController extends Controller
     }
     public function save_velocity(Request $request){
         $request->validate([
-            
             'date' => 'required',
             'value' => 'required',
             'velocity_type' => 'required',
@@ -95,6 +95,8 @@ class VelocityController extends Controller
             ]); 
     }
     public function search_velocity(Request $request){
+       
+       
         $start_date = $request->start;
         $end_date = $request->end;
         $timestamp_start = strtotime($start_date);
